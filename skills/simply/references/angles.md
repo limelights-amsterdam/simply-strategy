@@ -60,7 +60,7 @@ Deliver, per contradiction:
 - **Which one the plan quietly depends on**
 
 Rank by how expensive it is if nobody notices. Name a minimum of one. If you genuinely find none,
-say so plainly and say what you looked for — that is a finding too, and a rare one.
+say so plainly and say what you looked for. That is a finding too, and a rare one.
 
 Never soften a contradiction into "tension". Two things that cannot both be true are not in tension.
 

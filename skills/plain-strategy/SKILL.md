@@ -80,7 +80,6 @@ A linter ships with this skill. It counts the mechanical part: strategy jargon, 
 
 ```bash
 python3 scripts/stratlint.py strategy.md
-python3 scripts/stratlint.py strategy.md --lang nl
 python3 scripts/stratlint.py docs/*.md --fail-over 3.0
 ```
 

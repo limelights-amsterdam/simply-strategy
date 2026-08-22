@@ -334,6 +334,11 @@ def main() -> int:
     check_artifact(artifact, r)
     if a.material:
         check_pointers(artifact, a.material, r)
+    else:
+        # Silence here was the same failure this tool exists to catch: the table would
+        # read 'all checks pass' on a page whose pointers were never validated.
+        r.add("Pointers name real files", None,
+              "not run, no --material given. Pointer shape was checked, existence was not")
     if os.path.exists(reasoning):
         check_reasoning(reasoning, r)
         files.append(reasoning)
@@ -347,7 +352,8 @@ def main() -> int:
                           "warned": len(r.warned)}, indent=2))
     else:
         print(render(r, files))
-    return 1 if r.failed_hard else 0
+    # not-run blocks shipping too. A page nobody could check is not a page that passed.
+    return 1 if (r.failed_hard or r.not_run) else 0
 
 
 if __name__ == "__main__":

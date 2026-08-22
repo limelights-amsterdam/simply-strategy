@@ -37,7 +37,7 @@ Full list in `skills/stop-slop/references/`.
 
 **Never invent a number.** An unknown figure, owner or date becomes `[TO FILL: what is needed]`.
 A board can act on a flagged gap. It cannot act on a fabricated one. This includes dates dressed up
-as periods — "over the plan period" is not a date, it is `[TO FILL: by which date]`.
+as periods. "Over the plan period" is not a date, it is `[TO FILL: by which date]`.
 
 **Every claim carries a pointer.** Document name and page, in brackets, at the end of the claim.
 No pointer, no claim.

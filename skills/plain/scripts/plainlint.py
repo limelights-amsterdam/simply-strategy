@@ -4,19 +4,20 @@
 Works on English and Dutch input. Returns a score in weighted findings per 100
 words. Lower is better. Under 1.5 is clean, over 8 is a lot of noise.
 
-De linter is bewust dom. Hij telt patronen die je kunt aanwijzen en vervangen.
-Daar zit ook de winst: je hebt een systeem waar de tekst langs kan, in plaats
-than a list of banned words.
+The linter is deliberately dumb. It counts patterns you can point at and replace.
+That is where the gain is: something the text can pass through, rather than a
+list of banned words.
 
-Gebruik:
-    python3 plainlint.py tekst.md
-    python3 plainlint.py tekst.md --mode strict
+Usage:
+    python3 plainlint.py text.md
+    python3 plainlint.py text.md --mode strict
+    python3 plainlint.py text.md --max-sentence 15     # the L1 limit
     python3 plainlint.py README.md docs/*.md --lang en
-    echo "je tekst" | python3 plainlint.py -
-    python3 plainlint.py tekst.md --fail-over 2.0     # exit 1 bij een hogere score
+    echo "your text" | python3 plainlint.py -
+    python3 plainlint.py text.md --fail-over 2.0       # exit 1 above that score
 
-The linter judges form, not content. An empty paragraph that scores zero is still
-steeds leeg.
+The linter judges form, not content. An empty paragraph that scores zero is
+still empty.
 """
 
 from __future__ import annotations
@@ -24,6 +25,17 @@ from __future__ import annotations
 import argparse
 import re
 import sys
+
+import sys as _sys
+from pathlib import Path as _Path
+
+# The primitives live next to this file so that skills/plain/ still works when it
+# is copied out on its own.
+_sys.path.insert(0, str(_Path(__file__).resolve().parent))
+from textlib import (  # noqa: E402
+    ABBREV, CODE_BLOCK, FRONTMATTER, IGNORE_BLOCK, INLINE_CODE, SENTENCE_SPLIT, URL,
+    blank_out, count_words, excerpt, split_sentences, strip_noise,
+)
 from collections import Counter
 from dataclasses import dataclass, field
 
@@ -141,7 +153,7 @@ WEIGHTS = {
     "em dash": 0.5,
     "formal word": 0.5,
     "passive": 0.5,
-    "synoniemenrotatie": 0.5,
+    "synonym rotation": 0.5,
 }
 
 
@@ -168,8 +180,8 @@ class Report:
     def add(self, finding: Finding) -> None:
         """Add a finding, but never the same one twice in the same place.
 
-        Meerdere patronen kunnen op hetzelfde stuk tekst aanslaan. Dubbel tellen
-        maakt de score onbetrouwbaar.
+        Several patterns can match the same piece of text. Counting it twice
+        makes the score unreliable.
         """
         key = (finding.rule, finding.line, finding.excerpt.strip().lower())
         if key in self._seen:
@@ -196,44 +208,8 @@ class Report:
 
 # ---------------------------------------------------------------- hulpfuncties
 
-FRONTMATTER = re.compile(r"\A---\r?\n.*?\r?\n---[ \t]*\r?\n", re.S)
-IGNORE_BLOCK = re.compile(
-    r"<!--\s*plainlint-ignore-start\s*-->.*?<!--\s*plainlint-ignore-end\s*-->", re.S)
-CODE_BLOCK = re.compile(r"```.*?```", re.S)
-INLINE_CODE = re.compile(r"`[^`]+`")
-URL = re.compile(r"https?://\S+")
 MD_TABLE_ROW = re.compile(r"^\s*\|.*\|\s*$")
 MD_HEADING = re.compile(r"^\s{0,3}#{1,6}\s")
-SENTENCE_SPLIT = re.compile(r"(?<=[.!?])\s+(?=[A-ZÀ-Þ\"'(\[])")
-ABBREV = re.compile(r"\b(bijv|bijz|resp|enz|etc|nr|z\.o\.z|i\.v\.m|d\.w\.z|"
-                    r"o\.a|m\.b\.t|t\.o\.v|a\.u\.b|e\.g|i\.e|vs|approx|fig)\.$",
-                    re.I)
-
-
-def blank_out(match: re.Match) -> str:
-    """Replace a block with as many blank lines, so line numbers stay correct."""
-    return "\n" * match.group(0).count("\n")
-
-
-def strip_noise(text: str) -> str:
-    """Haal frontmatter, code, links en genegeerde blokken weg.
-
-    Die tellen niet mee als proza. Regelnummers blijven kloppen doordat
-    removed blocks are replaced by the same number of blank lines.
-
-    If a text discusses the very words this linter flags, wrap that part in
-    stuk dan tussen `<!-- plainlint-ignore-start -->` en
-    `<!-- plainlint-ignore-end -->`. The linter cannot tell mention from use.
-    onderscheiden.
-    """
-    text = FRONTMATTER.sub(blank_out, text)
-    text = IGNORE_BLOCK.sub(blank_out, text)
-    text = CODE_BLOCK.sub(blank_out, text)
-    text = INLINE_CODE.sub(" CODE ", text)
-    text = URL.sub(" URL ", text)
-    return text
-
-
 def prose_lines(text: str) -> list[tuple[int, str]]:
     """Return numbered lines, without headings and table rows."""
     out = []
@@ -244,42 +220,9 @@ def prose_lines(text: str) -> list[tuple[int, str]]:
     return out
 
 
-def split_sentences(block: str) -> list[str]:
-    parts = SENTENCE_SPLIT.split(block)
-    merged: list[str] = []
-    for part in parts:
-        if merged and ABBREV.search(merged[-1]):
-            merged[-1] = merged[-1] + " " + part
-        else:
-            merged.append(part)
-    return [p.strip() for p in merged if p.strip()]
-
-
-def count_words(sentence: str) -> int:
-    """Count words the way ASD-STE100 does (rules 8.5 to 8.7).
-
-    Tekst tussen haakjes telt als een woord. Getallen met eenheid, afkortingen
-    and hyphenated words each count as one word.
-    """
-    s = re.sub(r"\([^)]*\)", " X ", sentence)
-    s = re.sub(r"\b(\d[\d.,]*)\s*([A-Za-z°%]{1,4})\b", r"\1\2", s)
-    tokens = re.findall(r"[A-Za-zÀ-ÿ0-9][\wÀ-ÿ'’\-/°%]*", s)
-    return len(tokens)
-
-
 def detect_lang(text: str) -> str:
     """English only. The pipeline writes English, so there is nothing to detect."""
     return "en"
-
-
-def excerpt(text: str, span: tuple[int, int], width: int = 60) -> str:
-    start = max(0, span[0] - 15)
-    end = min(len(text), span[1] + 25)
-    frag = " ".join(text[start:end].split())
-    return (("…" if start else "") + frag + ("…" if end < len(text) else ""))[:width + 10]
-
-
-# ---------------------------------------------------------------- controles
 
 
 def scan_phrases(report: Report, lines, table, rule: str, label: str) -> None:
@@ -388,8 +331,8 @@ def _inflections(word: str) -> set[str]:
 def scan_synonyms(report: Report, text: str) -> None:
     """Report clusters with two or more members in the same paragraph.
 
-    Eén melding per cluster per document. Wie hetzelfde ding drie namen geeft
-    doet dat overal, en dan is één melding genoeg om het op te lossen.
+    One finding per cluster per document. Giving one thing three names
+    does it throughout, so one finding is enough to fix it.
     """
     paragraphs = [p for p in re.split(r"\n\s*\n", text) if p.strip()]
     reported: set[int] = set()
@@ -399,7 +342,7 @@ def scan_synonyms(report: Report, text: str) -> None:
         lineno += para.count("\n") + 2
         words = set(re.findall(r"[a-zà-ÿ]+", para.lower()))
         if len(re.findall(r"[a-zà-ÿ0-9]+", para)) < 25:
-            continue  # te kort om iets zinnigs over rotatie te zeggen
+            continue  # too short to say anything meaningful about rotation
         for idx, cluster in enumerate(SYNONYM_CLUSTERS.get(report.lang, [])):
             if idx in reported:
                 continue
@@ -407,8 +350,8 @@ def scan_synonyms(report: Report, text: str) -> None:
             if len(used) > 1:
                 reported.add(idx)
                 report.add(
-                    Finding("synoniemenrotatie",
-                            "zelfde ding, meerdere namen: " + ", ".join(used),
+                    Finding("synonym rotation",
+                            "same thing, several names: " + ", ".join(used),
                             start, "")
                 )
 
@@ -468,7 +411,7 @@ def render(reports: list[Report], show: int) -> str:
 
     for r in reports:
         if not r.findings:
-            out.append(f"### {r.name}\n\nNiets gevonden.\n")
+            out.append(f"### {r.name}\n\nNothing found.\n")
             continue
         counts = Counter(f.rule for f in r.findings)
         out.append(f"### {r.name}\n")

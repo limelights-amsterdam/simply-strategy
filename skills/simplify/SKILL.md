@@ -29,7 +29,7 @@ usually the most uncomfortable line in the whole job.
 
 Most documents ship at L5 while the room believes they are at L2. You deliver L1.
 
-## The five moves
+## The seven moves
 
 1. **Every sentence under 15 words.** No exceptions. Split, do not compress.
 2. **Every abstract noun becomes a person doing something.** Not "the transformation journey" but
@@ -77,11 +77,11 @@ python3 ../plain/scripts/plainlint.py output.md --mode strict --lang en
 python3 ../plain-strategy/scripts/stratlint.py output.md --lang en
 ```
 
-Under 1.5 weighted findings per 100 words is clean. Then count the sentences over 15 words by hand.
-The linter will not do that count for you, and it is the claim the whole skill rests on.
+Under 1.5 weighted findings per 100 words is clean. The sentence count is measured, not estimated:
+`--max-sentence 15` is the claim the whole skill rests on, so it is the flag that checks it.
 
 ## Rules and further reading
 
-- [references/rules.md](references/rules.md) — the five moves in full, with the failure mode of each
+- [references/rules.md](references/rules.md) — the first five moves in full, with the failure mode of each
 - [references/before-after.md](references/before-after.md) — worked pairs. Read this one first
 - [references/output.md](references/output.md) — the six sections, and what may be left unanswered

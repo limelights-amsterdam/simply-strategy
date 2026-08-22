@@ -55,13 +55,10 @@ Apply these to the actual document, not to strategy in general.
 5. **Close with energy, not gloom.** No strong strategy survives an honest red team without
    scratches, and that is good news. Ask the team to pick the one or two that hurt most.
 
-## Rules
+## Two tests the weapons do not cover
 
-- Accept no subjective language. Force concreteness.
 - **Only beats best.** A strategy should make you unique, not the best in the same race.
-- The action is everything. A strategy that never becomes visible from outside does not exist.
-- Attack assumptions, not people.
-- Default to distrust. Let the strategy prove itself.
+- **The action is everything.** A strategy that never becomes visible from outside does not exist.
 
 ## Output
 

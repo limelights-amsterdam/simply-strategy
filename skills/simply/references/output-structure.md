@@ -17,7 +17,9 @@ per run cannot be checked and cannot be trusted twice.
 | 3 | Section 3 | What stops, and what starts |
 | 4 | Section 4 | The bet: assumption, test, date |
 
-Their form, type sizes and rules live in `design/DESIGN.md` section 7. Do not restate them here.
+Their form, type sizes and rules live in `design/DESIGN.md` section 7. The drawings themselves are
+in `{root}/templates/figures.html`: copy from there and fill in the numbers rather than writing SVG
+from scratch. Do not restate the specs here.
 
 A slot whose content is missing is dropped, and its section carries the unanswered line instead. An
 empty graphic is worse than no graphic.

@@ -116,7 +116,7 @@ DATE_PATTERN = re.compile(
     re.I)
 
 OWNER_COLUMN = re.compile(
-    r"\|\s*(?:eigenaar|owner|wie|verantwoordelijk|responsible|dri)\s*\|", re.I)
+    r"\|\s*(?:owner|responsible|accountable|dri)\s*\|", re.I)
 OWNER_INLINE = re.compile(
     r"\b[A-Z][a-zà-ÿ]{2,}\s+(?:levert|doet|maakt|belt|schrijft|bouwt|test|"
     r"analyseert|owns|delivers|ships|runs|leads)\b")

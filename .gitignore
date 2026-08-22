@@ -10,5 +10,8 @@ __pycache__/
 
 # The intake belongs in material/<client>/, never in the project root.
 # Ignored here as a safety net in case one lands at the top level.
+# kompas.md is the pre-rename spelling and is kept on purpose: the point is to
+# catch a file nobody meant to create, so a stale name costs a line and a client
+# intake reaching a public repo costs more.
 /compass.md
 /kompas.md

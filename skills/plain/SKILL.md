@@ -72,7 +72,7 @@ You do not improve text by banning words. In one test a banned-word list improve
 percent. A complete rule system improved the same text by 74 percent.
 
 ```bash
-python3 scripts/plainlint.py text.md --lang en
+python3 scripts/plainlint.py text.md --lang en --max-sentence 15
 python3 scripts/plainlint.py text.md --mode strict --lang en
 ```
 

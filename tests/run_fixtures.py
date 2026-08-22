@@ -50,14 +50,17 @@ EXPECT = {
 # fixtures that are the green page run without --material on purpose
 NO_MATERIAL_ON_PURPOSE = {"green-no-material"}
 
-# fixtures that carry their own material/ folder and must be run with --material
-WITH_MATERIAL = {"missing-source"}
+# Every fixture carries the material folder its pointers cite, so pointer
+# validation runs on all of them. green-no-material is the exception on purpose:
+# it is the same page run without the flag, to prove a check that cannot run
+# stops the artifact.
+NO_MATERIAL = {"green-no-material"}
 
 
 def run(name: str) -> tuple[int, dict]:
     d = ROOT / "tests" / "fixtures" / ("green" if name == "green-no-material" else name)
     cmd = [sys.executable, str(CHECKER), str(d), "--json"]
-    if name in WITH_MATERIAL:
+    if name not in NO_MATERIAL:
         cmd += ["--material", str(d / "material")]
     p = subprocess.run(cmd, capture_output=True, text=True)
     try:

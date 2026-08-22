@@ -144,7 +144,8 @@ in `reasoning.html`.
 
 ## 7. The figure vocabulary
 
-Six figures. The renderer picks from these and fills in numbers. It does not invent a seventh,
+Six figures, drawn in `templates/figures.html`. The renderer copies from that file and fills in
+numbers. It does not invent a seventh,
 because a layout that varies per run cannot be checked and cannot be trusted twice.
 
 All are inline SVG, drawn in `--ink` on `--paper` with `--rule` for axes. No `<img>`, no library.
