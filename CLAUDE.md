@@ -32,7 +32,6 @@ skills/humanizer/           the last pass, so it reads like a person
 scripts/check_facts.py      every figure traced back to the material
 scripts/check_artifact.py   the rendered page
 scripts/check_headings.py   the headings have to read as a story
-design/DESIGN.md            two colours, one column, print-clean, six figures
 templates/                  artifact.html, reasoning.html, figures.html
 tests/                      eighteen fixtures and their expected verdicts
 material/<client>/          input, plus that client's compass.md. Git-ignored
@@ -111,7 +110,7 @@ When you add a rule, put it where it belongs and link to it:
 |---|---|
 | The six sections, and what may be unanswered | `skills/flatten/references/output.md` |
 | The four visual slots, and what fills them | `skills/simply/references/output-structure.md` |
-| How anything looks, colour, type, print | `design/DESIGN.md` |
+| How anything looks, colour, type, print | `templates/`, and the rules for filling them in `skills/simply/references/output-structure.md` |
 | The filter and the rules no agent may break | `skills/simply/references/house-rules.md` |
 | What each step gets and must produce | `skills/simply/references/pipeline.md` |
 | The seven substance tests, in full | `skills/plain-strategy/references/tests.md` |

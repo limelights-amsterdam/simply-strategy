@@ -56,8 +56,8 @@ MIN_CONTENT = {"one": 30, "must-solve": 120, "stop": 120,
 
 # What matters is whether the page fetches anything, not whether a URL appears in
 # it. An inline SVG declares xmlns="http://www.w3.org/2000/svg" and fetches
-# nothing, so a bare https?:// match rejected exactly the output DESIGN.md asks
-# for. Match the loading constructs instead.
+# nothing, so a bare https?:// match rejected exactly the output the templates
+# produce. Match the loading constructs instead.
 NETWORK = re.compile(
     r"""<img\b                          # an image element
       | <script\b                       # a script element

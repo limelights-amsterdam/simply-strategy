@@ -156,7 +156,6 @@ skills/plain-strategy/    substance filter, stratlint.py
 skills/stop-slop/         de-slop filter
 skills/humanizer/         the last pass, so it reads like a person
 scripts/                  the three checks
-design/DESIGN.md          two colours, one column, print-clean, six figures
 templates/                artifact.html, reasoning.html, figures.html
 tests/                    eighteen fixtures and their expected verdicts
 material/<client>/        input, plus that client's compass.md. Git-ignored

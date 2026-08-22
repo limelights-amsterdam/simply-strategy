@@ -187,7 +187,7 @@ step to touch the text, and a free hand here undoes the ranking.
 ## 6 · artifact: render, then check the page
 
 **Gets:** `04-plain.md` for the page. `01-spec.md`, `02-angles.md`, `03-plan.md` and
-`05-verdict.md` for the log. Plus `<material>/compass.md` and `design/DESIGN.md`
+`05-verdict.md` for the log. Plus `<material>/compass.md` and the three files in `templates/`
 **Writes:** `simple-strategy-artifact.html`, `reasoning.html`
 
 Read `output-structure.md` first. It says what to fill and what to check.
