@@ -13,7 +13,7 @@ Material: $ARGUMENTS
 Three things a strategy needs that a topic does not:
 
 - Say only what the material says. If it contains no decision, the page says so. Do not invent one.
-- Never invent a number, owner or date. Write `[TO FILL: what is needed]`.
+- Never invent a number, owner or date. If the material does not give one, the page says so in plain words.
 - Every figure on the page comes from the material, and the page says where.
 
 Four short files under `references/` say how. Read them before you write:
@@ -21,6 +21,9 @@ Four short files under `references/` say how. Read them before you write:
 - [material.md](references/material.md): how to read what the user gave you, and where the page goes.
 - [decision.md](references/decision.md): how to tell whether the material contains a decision, and what the page says when it does not.
 - [words.md](references/words.md): how the page sounds.
-- [page.md](references/page.md): what the page looks like, screen by screen.
+- [page.md](references/page.md): what the page looks like, section by section.
+
+Start from [assets/page.html](assets/page.html). Keep its CSS and its section shape. Replace the
+bracketed content, draw the pictures, add or drop sections. Do not design a new page.
 
 Write the artifact beside the material as `simply-strategy.html`.

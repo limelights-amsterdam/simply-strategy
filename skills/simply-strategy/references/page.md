@@ -1,63 +1,74 @@
 # The page
 
-One HTML file. No build step. It opens from the folder it sits in. Big type, few words, and the
-material's own pictures when it has any. You read it top to bottom as one argument. Each screen
-answers the question a person who knows nothing would ask next.
+The skeleton is `assets/page.html`. Start from it. This file says what goes in it and why.
 
-## The screens, in order
+A picture book, not a poster. One narrow column you read top to bottom. Numbered sections. Each
+section asks one plain question, answers it in one claim, draws it, says two sentences, and names
+the page it came from. Someone who knows nothing reads it in a few minutes and can retell it.
 
-| Screen | Question it answers | What is on it |
-|---|---|---|
-| Hero | What is this? | Title of the material, one sentence in the material's own words, the date and size of the material |
-| The case | Why change at all? | The reasons the material gives, numbered, one sentence each |
-| From → To | What changes? | One row per shift. What stops on the left, what replaces it on the right, the source under the row |
-| What grows | Where does the effort go? | What the material says it will build or grow, as cards, biggest first |
-| The numbers | What does it cost, in people and money? | Every figure in the material, set huge, with its source and the material's own caveat next to it |
-| The bets | What does it assume about the world? | The trends or assumptions the material names |
-| The gaps | What does it not say? | Owner, dates, amounts, sequence, as `[TO FILL: ...]`. Then one sentence that places the material (see decision.md) |
-| Sources | Where did all this come from? | Every file and slide, as a thumbnail or a name, linked |
+## The shape
 
-If the material has nothing for a screen, drop the screen and say so in the gaps. Do not fill a
-screen with something the material does not say.
+- One column, about 44rem wide, on warm paper. Dark ink, one sans, two accents at most (one warm,
+  one cool) and one green for "decided". No web fonts needed. It prints clean.
+- Header: a small kicker with the document's name, then a headline that tells the whole story in
+  two or three short sentences, then one lead line: "This page only says what the document says.
+  Each picture names the page it comes from."
+- Then the sections, numbered. Each one has the same five parts, in this order:
+  1. Kicker: the number and the question, in plain words. "3. The problem they name"
+  2. Headline: the answer as one claim. "The allowance system is hard. Three things go wrong."
+  3. Picture: an inline SVG drawn for this idea (see below).
+  4. One or two sentences that say what the document says, in plain words.
+  5. Source line: "Source: p. 5", and the document's own sentence in its own language when it
+     carries the point. "De visie is een kompas en geen routekaart."
+- The last section is always "What is decided, and what is not": two lists. Filled dots for what
+  the document says, each with its page. Dashed circles for what it does not say, each as a plain
+  sentence: "what each building block costs", "who owns each building block". Under the lists, one
+  sentence that places the document (see decision.md).
+- Footer: the document's full title, author, place, date, how pages are counted, and that every
+  number on the page comes from it.
 
-## The look
+## The questions
 
-Pick one direction and hold it. Think poster.
+The sections follow the document, not a template. Ask the questions a newcomer would ask, in the
+order they would ask them. Usually some of these, rarely all:
 
-- One dark ground, one light break for the numbers, one accent. If the material has a brand colour,
-  use that as the accent. Use a second, warmer colour for everything you strike through.
-- Three typefaces, each with a job: a condensed display face for headings and the ledger, an italic
-  serif for the material's own sentences, a mono for labels and sources. Do not use Inter, Roboto,
-  Arial or a system stack. Load from Google Fonts and give each a fallback, so the page still reads
-  offline.
-- Headings in capitals, set tight. Body short. Labels letter-spaced.
-- When a ledger row scrolls into view, strike the "from" side through and slide the arrow in. Give
-  each screen one staggered reveal. Nothing else moves.
-- Set figures huge. Under them, a bar of blocks, one block per unit the material uses. Dashed blocks
-  show the difference between two figures. The caption says what one block is.
-- Keep `[TO FILL: ...]` visible, in the warm colour. Do not hide it in a footnote.
-- A grain overlay and one soft radial glow give the dark ground depth. No purple gradients, no drop
-  shadows, no icons.
-- On a phone the ledger stacks, the arrow points down and the cards go full width.
+| Question | Typical headline |
+|---|---|
+| Who is this about | One service, six million households, twenty-two billion euro a year |
+| What kind of plan is this | A compass, not a route map |
+| The problem they name | Three things go wrong |
+| Where they want to go | One front door. You get what you are owed |
+| How they want to get there | Four building blocks. Two for citizens, two for the organisation |
+| What stops, what starts | Legacy platforms go. One foundation replaces them |
+| What it costs, in people and money | Thirty percent fewer people, money moves from people to software |
+| The clearest promise in the plan | Risk moves from the citizen to the government |
+| What is decided, and what is not | Directions are chosen. Numbers, owners and dates are not in the document |
 
-## Tokens to start from
+Drop a question the document does not answer. Do not add one it does not raise. If a deck has
+eight slides on the market and one on the choice, the page still spends most of its room on the
+choice, and says the market slides exist.
 
-```css
-:root{
-  --ink:#0c0d0c; --coal:#161816; --ash:#2a2d2a; --fog:#8d938d; --bone:#e9e6dc; --paper:#f4f2ea;
-  --accent:#00c300;            /* replace with the material's brand colour */
-  --struck:#d9643a;            /* what stops, and the TO FILL markers */
-  --display:"Anton","Impact","Arial Narrow",sans-serif;
-  --serif:"Fraunces","Georgia",serif;
-  --mono:"IBM Plex Mono","Menlo","Courier New",monospace;
-}
-```
+## The pictures
 
-Change the faces from run to run so no two pages look alike. Keep the three jobs.
+Every picture is drawn for the idea it explains. Inline SVG, `viewBox`, the page's own colours as
+`var(--ink)` and so on, an `aria-label` that says what it shows. Never a stock icon, never a
+decorative shape. Use a small vocabulary and keep it:
 
-## Sources on the page
+| To show | Draw |
+|---|---|
+| How many | A row of the thing, one shape per unit, and the figure next to it, huge |
+| Today and tomorrow | Left half and right half, many small boxes on the left, one on the right |
+| A choice made | A compass, an arrow, a filled dot |
+| A choice not made | A crossed-out map, a dashed outline, a `?` |
+| A problem | A tangled line, a coin with a line through it, an arrow turning back |
+| Who carries what | Two figures and a weight that moves from one to the other |
+| A number from the document | The number itself, set huge, with its unit and its page |
+| What stops and what starts | The old thing struck through, the new thing next to it |
 
-Every row, card and figure names its source right under it, in the mono face: `Slide 6`,
-`plan-2026.md p. 4`. The last screen lists each file once, with a thumbnail when the material is
-slides or pages. The footer says which files you built the page from, and that you used nothing
-else.
+When the material is a deck with good slides, you may show a slide render as the picture, but only
+when the slide itself is the clearest picture. A drawn pictogram beats a busy slide.
+
+## Colours
+
+The three colour values in the template are a start. Vary the accents and the paper tint from run to
+run, or take them from the material's brand. Keep the shape.

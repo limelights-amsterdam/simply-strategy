@@ -16,8 +16,8 @@ row in the From → To ledger.
 
 | Test | Question | If it fails, the gaps screen says |
 |---|---|---|
-| Number | Is there a quantity, a figure and a date? | `[TO FILL: the number that shows this worked, and by when]` |
-| Owner | Who, by name or role, and by when? | `[TO FILL: owner]` |
+| Number | Is there a quantity, a figure and a date? | "The material names no number that shows this worked, and no date" |
+| Owner | Who, by name or role, and by when? | "The material names no owner" |
 | Mechanism | How does A lead to B? | Keep the claim and mark the missing middle step |
 | Already true | What changes on Monday that was not true on Friday? | Nothing. But do not present a continuation as a choice |
 

@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>[Document], [Organisation], explained simply</title>
+<style>
+/* Keep this CSS. Change only the three colour values if the material has its own. */
+:root{--ink:#141414;--paper:#faf8f3;--muted:#6e6a62;--rule:#d9d4c8;--accent:#e4572e;--accent2:#2c6e8a;--ok:#2e7d4f;
+  --sans:ui-sans-serif,-apple-system,"Helvetica Neue",Arial,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:18px;-webkit-font-smoothing:antialiased}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.5}
+.page{max-width:44rem;margin:0 auto;padding:4rem 1.5rem 6rem}
+.kicker{font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+h1{font-size:clamp(2.2rem,6vw,3.8rem);line-height:1.04;letter-spacing:-.025em;font-weight:800;margin:.6rem 0 1rem}
+h2{font-size:clamp(1.6rem,3.6vw,2.3rem);line-height:1.1;letter-spacing:-.02em;font-weight:800;margin:.5rem 0 1rem}
+h3{font-size:1.1rem;line-height:1.25;margin:.25rem 0 .5rem}
+p.lead{font-size:1.2rem;line-height:1.4;max-width:32rem}
+section{margin:5.5rem 0}
+figure{margin:1.5rem 0 .75rem}
+svg{display:block;width:100%;height:auto}
+svg text{font-family:var(--sans)}
+figcaption,.src{font-size:.8rem;color:var(--muted)}
+.src{margin-top:.4rem}
+.src b{font-weight:700;color:var(--ink)}
+.say{font-size:1.15rem;max-width:34rem;margin:.75rem 0}
+.quote{font-style:italic;color:var(--muted)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+.block{border-top:4px solid var(--ink);padding-top:.75rem}
+.block .n{font-size:3rem;font-weight:800;line-height:1;letter-spacing:-.04em}
+.block p{font-size:.95rem}
+ul.plain{list-style:none;margin:1rem 0}
+ul.plain li{padding:.55rem 0;border-bottom:1px solid var(--rule);display:flex;gap:.75rem;align-items:baseline}
+ul.plain li::before{content:"";flex:0 0 .7rem;height:.7rem;border-radius:50%;background:var(--ok);position:relative;top:.1rem}
+ul.plain.open li::before{background:transparent;border:2px dashed var(--accent)}
+ul.plain li .pg{margin-left:auto;font-size:.8rem;color:var(--muted);white-space:nowrap}
+footer{margin-top:5rem;border-top:1px solid var(--rule);padding-top:1rem;font-size:.85rem;color:var(--muted)}
+@media(max-width:600px){.grid2{grid-template-columns:1fr}}
+@media print{body{background:#fff}.page{max-width:none}section{break-inside:avoid}}
+</style>
+</head>
+<body>
+<main class="page">
+
+<header>
+  <div class="kicker">[Organisation], [Document], in plain words</div>
+  <h1>[The whole story in two or three short sentences. What they do. What they want. What they have not said.]</h1>
+  <p class="lead">This page only says what the document says. Each picture names the page it comes from.</p>
+</header>
+
+<!-- One section per question the document answers. Same five parts every time, in this order.
+     Number them. Usually five to eight sections. See references/page.md for the questions. -->
+<section>
+  <div class="kicker">1. [The question, in plain words]</div>
+  <h2>[The answer, as one claim.]</h2>
+  <figure>
+    <!-- Draw the idea. Inline SVG, viewBox, the page's colours as var(--ink), var(--accent), var(--accent2), var(--ok), var(--muted).
+         Big figures as <text> with font-size 72 to 96 and font-weight 800. One shape per unit for counts. -->
+    <svg viewBox="0 0 800 300" role="img" aria-label="[what the picture shows]">
+      <text x="40" y="140" font-size="96" font-weight="800" letter-spacing="-4" fill="var(--ink)">[figure]</text>
+      <text x="42" y="180" font-size="24" fill="var(--muted)">[what the figure is]</text>
+    </svg>
+    <figcaption>[One line under the picture, only if the picture needs it.]</figcaption>
+  </figure>
+  <p class="say">[One or two sentences that say what the document says, in plain words.]</p>
+  <p class="src">Source: <b>p. 0</b>. <span class="quote">"[The document's own sentence, in its own language, when it carries the point.]"</span></p>
+</section>
+
+<!-- Two things side by side: stops and starts, citizens and organisation, today and tomorrow. -->
+<section>
+  <div class="kicker">2. [The question]</div>
+  <h2>[The claim.]</h2>
+  <div class="grid2">
+    <div class="block"><h3 style="color:var(--accent)">[Left]</h3><p>[What the document says.]</p></div>
+    <div class="block"><h3 style="color:var(--ok)">[Right]</h3><p>[What the document says.]</p></div>
+  </div>
+  <p class="src">Source: <b>p. 0</b>.</p>
+</section>
+
+<!-- The last section is always this one. -->
+<section>
+  <div class="kicker">[N]. What is decided, and what is not</div>
+  <h2>[What is chosen. What is not in the document.]</h2>
+  <div class="grid2">
+    <div>
+      <h3 style="font-size:1rem;color:var(--ok)">Said in the document</h3>
+      <ul class="plain">
+        <li>[A choice the document makes] <span class="pg">p. 0</span></li>
+      </ul>
+    </div>
+    <div>
+      <h3 style="font-size:1rem;color:var(--accent)">Not in the document</h3>
+      <ul class="plain open">
+        <li>[What it does not say, as a plain phrase: who owns it, what it costs, when]</li>
+      </ul>
+    </div>
+  </div>
+  <p class="say">[One sentence that places the document: strategy, strategy without execution, plan, direction, wish. See references/decision.md.]</p>
+  <p class="src">Source: [where the absence was checked].</p>
+</section>
+
+<footer>
+  Source: <b>[Full title]</b>, [author], [place], [date]. [How pages or slides are counted.] Every number on this page comes from that document; [where the main figures are].
+</footer>
+
+</main>
+</body>
+</html>

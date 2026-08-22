@@ -14,7 +14,7 @@ The argument is a folder, a file, or a set of images. Read all of it before you 
 | A text extract next to the images | Read both. Where the extract garbles something, the image settles it |
 
 Note everything the material names but does not contain: a budget sheet it refers to, an appendix
-that is missing. Each of those goes on the gaps screen as `[TO FILL: ...]`.
+that is missing. Each of those goes on the gaps screen: "The deck refers to a budget sheet that is not in the material."
 
 ## What counts as a figure
 
