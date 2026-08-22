@@ -73,16 +73,20 @@ this whole step.
 
 ## 5 · review — three reviewers, in parallel
 
-**Gets:** `03-plan.md` and `04-plain.md`
+**Gets:** the four `02-*.md` files, `03-plan.md` and `04-plain.md`
 **Writes:** `05-true.md`, `05-simple.md`, `05-invented.md`
 
 Each reviewer returns findings marked **fatal** or **minor**, with the line it applies to.
 
 | Reviewer | Question | Fatal means |
 |---|---|---|
-| `true` | Does the flattened text still say what the plan said? | A claim changed meaning, reversed, or disappeared |
+| `true` | Did anything get lost between what the panel found and what is on the page? Check both hops: `02-*` to `03-plan`, and `03-plan` to `04-plain` | A finding disappeared, changed meaning, or reversed at either hop |
 | `simple` | Is it actually L1? | A sentence over 15 words, an abstraction with no actor, a number with no comparison |
 | `invented` | Does every number trace to a document? | A figure, date or owner that appears in `04-plain.md` but not in the material |
+
+The `true` reviewer covers two hops on purpose. Nothing else checks the plan itself, so a
+mis-ranked plan would flatten faithfully into a confident, wrong page. Fidelity to the panel and
+fidelity to the plan are the same question asked one step apart.
 
 The `simple` reviewer does not count by eye. That count is the claim the whole product rests on, so
 it is measured:

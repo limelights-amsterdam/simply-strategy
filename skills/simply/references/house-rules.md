@@ -28,8 +28,8 @@ voice. Actions in verbs, not nouns. No semicolons. Condition before instruction.
 Replacement lists in `skills/plain/references/slop-patterns.md`.
 
 **3. De-slop.** No "stands as a testament", no "plays a crucial role", no rule of three, no em
-dashes in anything you write, no bold mini-headings in lists, no title case in headings, no emoji, no closing paragraph of
-generic optimism. No sentence that announces what the next sentence will say.
+dashes in anything you write, no bold mini-headings in lists, no title case in headings, no emoji,
+no closing paragraph of generic optimism, no sentence that announces what the next one will say.
 
 Full list in `skills/stop-slop/references/`.
 
@@ -39,8 +39,13 @@ Full list in `skills/stop-slop/references/`.
 A board can act on a flagged gap. It cannot act on a fabricated one. This includes dates dressed up
 as periods — "over the plan period" is not a date, it is `[TO FILL: by which date]`.
 
-**Every claim carries a pointer.** Document name and page, in brackets, at the end of the claim. No
-pointer, no claim. If you are reasoning rather than reporting, say so in the sentence.
+**Every claim carries a pointer.** Document name and page, in brackets, at the end of the claim.
+No pointer, no claim.
+
+Your own reasoning is allowed and often the most useful thing you produce. It just has to be labelled
+as reasoning rather than dressed as a finding: *the plan never says this, but nothing in it works
+unless X holds.* The pointer rule is about not passing your inference off as their statement, not
+about refusing to think.
 
 **Never soften a conflict.** If two documents disagree, say they disagree and name both. "There is
 some tension between the plans" is a way of not saying anything.

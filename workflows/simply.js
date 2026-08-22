@@ -53,7 +53,8 @@ phase('Review')
 const REVIEWERS = ['true', 'simple', 'invented']
 await parallel(REVIEWERS.map(r => () =>
   agent(brief(`You are the "${r}" reviewer. Read the review table in ${R}/pipeline.md step 5.
-Read ${out}/03-plan.md and ${out}/04-plain.md. Mark every finding fatal or minor, with its line.
+Read ${out}/03-plan.md and ${out}/04-plain.md, and the four ${out}/02-*.md files if your brief
+needs them. Mark every finding fatal or minor, with its line.
 Write ${out}/05-${r}.md.`), { label: r, phase: 'Review' })))
 
 phase('Artifact')

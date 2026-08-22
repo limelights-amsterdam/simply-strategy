@@ -8,6 +8,10 @@ description: Turn a folder of strategy documents into one plain-language HTML pa
 One folder in, one page out. The page says what the documents actually decided, in language a
 ten-year-old follows, with every number traceable to a source.
 
+It is written for the board. The bar is that anyone in a ten-thousand-person company could follow
+it, which is a standard rather than a distribution list. A sentence a new starter reads twice is a
+sentence the CFO reads twice too, out loud, in a room, with an opinion.
+
 The whole design rests on one problem: **flattening a vague document produces a beautifully simple
 lie.** Most strategy documents are vague on purpose. So four angles check the material before
 anything is simplified, and three reviewers check that the simplification stayed true.

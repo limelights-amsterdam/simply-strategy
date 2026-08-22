@@ -1,24 +1,45 @@
 # Simply Strategy
 
-Point it at a folder of strategy documents. Get back one page a CEO reads in four minutes.
+Point it at a folder of strategy documents. Get back one page a board reads in four minutes.
 
 ```
-/kompas ./deck/         once — drafts five fields from their own material, you correct it
+/kompas ./deck/         once, drafts five fields from their own material, you correct it
 /simply ./material/     no questions, about 25 minutes. Watch it with /workflows
 ```
 
-Out comes `simple-strategy-artifact.html`: black and white, big pictures, very few words. Plus
-`reasoning.html`, which shows what it read, what it threw away, and where it is unsure.
+Out comes `simple-strategy-artifact.html`. Black and white, big type, very few words, prints on any
+machine in the room. Next to it `reasoning.html`, which shows what it read, what it threw away, and
+where it is unsure.
 
-## Why it is not a summariser
+---
 
-A summary makes a document shorter. This makes it understandable, which is a different job and
-usually a harder one.
+## Why this exists
 
-Flattening a strategy document without checking it first gives you a beautifully simple lie. Most
-strategy documents are vague on purpose. So four angles read the material before anything gets
-simplified, three reviewers check that the simplification stayed true, and every number on the page
-traces back to a document and a page. A number it cannot trace comes out as `[TO FILL: …]`.
+There is a plugin called `eli5` whose entire instruction is one sentence: explain this to someone who
+knows nothing, using big pictures and few words. It works, and it works because DNS is already true.
+
+A strategy document is usually not. It is vague on purpose, because vagueness is how a document gets
+signed by six people who disagree. Run `eli5` over it and you get a beautifully simple lie: short
+sentences, big type, confident tone, and underneath it the same unmade decision.
+
+So this is `eli5` with the check that has to happen first. Four angles read the material before
+anything is simplified. Three reviewers check that the simplification stayed true. Every number on
+the page traces back to a document and a page, and a number it cannot trace comes out as
+`[TO FILL: what is needed]` rather than as a guess.
+
+It is not a summariser. A summary makes a document shorter. This makes it understandable, which is a
+different job and usually a harder one. Sections often get longer where the original skipped a step.
+
+## Who it is for, and the bar it is held to
+
+The page is written for the board. That is the audience.
+
+The bar is not the same as the audience: anyone in a ten-thousand-person company should be able to
+follow it. Not because they will all read it, but because a sentence a new starter has to read twice
+is a sentence the CFO will also read twice, in a room, out loud, with an opinion.
+
+That is also why every claim carries a document and a page number. Seniority changes what a reader
+already knows. It does not change what makes a page worth trusting.
 
 ## Flatten levels
 
@@ -32,38 +53,41 @@ Every document sits at a level. Most ship at L5 while the room believes they are
 | **L2** | Picture | Every abstraction is a person doing something. Every number has a comparison |
 | **L1** | Child | Every sentence under 15 words. A ten-year-old repeats it back |
 
-The artifact ships at L1. The run reports the level the input came in at, which is often the most
-uncomfortable line in `reasoning.html`.
+The artifact ships at L1. The run also reports the level the input came in at, which is usually the
+most uncomfortable line in `reasoning.html`.
+
+## The Kompas
+
+The intake asks what you refuse before it asks what you want.
+
+A goal list can only tell you things you already knew to ask about. An anti-vision and a boundary let
+an advisor notice something you never wrote a goal for. Describe a Tuesday five years out where this
+strategy quietly failed, and name what you will not give up whatever happens, and a reader can now
+say *this plan walks toward precisely that* or *this plan spends the thing you said you keep.*
+
+Five fields, all optional. Fill it by pointing at their own deck and correcting the draft, or by
+answering five questions. A half-filled Kompas still runs, and the artifact names what was missing.
 
 ## The seven steps
 
-| # | Step | Shape | Produces |
-|---|---|---|---|
-| 1 | Spec Agent | linear | What is in the folder, and the question |
-| 2 | Panel | 4 parallel | substance · contradiction · kompas · red team |
-| 3 | Plan Agent | linear | Four angles into one. Exactly three must-solve |
-| 4 | Flattener | linear | L1 |
-| 5 | Reviewers | 3 parallel | Still true? Actually simple? Anything invented? |
-| 6 | Review Coordinator | linear | Consolidates must-fix and applies it. One round |
-| 7 | Artifact Agent | linear | The two HTML pages |
+Linear where a step needs everything before it, parallel where it does not.
+
+| # | Step | Shape | Writes | Job |
+|---|---|---|---|---|
+| 1 | Spec Agent | linear | `01-spec.md` | Every file: what it is, its date, who owns it. And what the material references but does not contain |
+| 2 | Panel | 4 parallel | `02-*.md` | substance · contradiction · kompas · red team |
+| 3 | Plan Agent | linear | `03-plan.md` | Four angles into one. Tension check, then exactly three must-solve |
+| 4 | Flattener | linear | `04-plain.md` | L1 |
+| 5 | Reviewers | 3 parallel | `05-*.md` | Still true? Actually simple? Anything invented? |
+| 6 | Review Coordinator | linear | `05-verdict.md` | Consolidates must-fix and applies it. One round |
+| 7 | Artifact Agent | linear | two HTML pages | Renders, then verifies its own output |
 
 Ten agents. Two fan-outs, five single minds, one repair round, no loops.
 
-## It checks its own work
-
-The last step is the one nothing downstream would catch, so it verifies itself:
-
-```
-python3 scripts/check_artifact.py runs/<slug>/
-```
-
-Six sections present, no unfilled slots, nothing loaded over the network, exactly three must-solve
-items, every one with a source pointer, every sentence under 15 words, and a reasoning log whose
-"what it threw away" and "where it is unsure" are not empty. Exit code 1 and it does not ship.
-
-Checks a script can make are made by a script. The reviewers spend their judgement on what a script
-cannot see: whether an abstraction is still an abstraction, and whether a sentence got shorter by
-losing meaning.
+The angles are blind to each other on purpose. That is what makes step 3's **tension check** mean
+something: if the four come back agreeing, an angle did not bite, and the Plan Agent sends that one
+back to write from its own blind spot rather than from consensus. Four agents nodding politely is
+worse than one agent, because it reads like confirmation.
 
 ## The rules it will not break
 
@@ -71,30 +95,80 @@ losing meaning.
   to weigh.
 - **Two reviewers calling something fatal stops it shipping.** One critic is an opinion, two is a
   signal.
-- **It never invents a number.** Unknown figure, owner or date comes out as `[TO FILL: …]`. A board
-  can act on a flagged gap. It cannot act on a fabricated one.
-- **Every claim carries a pointer** — document name and page.
-- **The "where I'm unsure" section is never empty.** A thinking process with nothing discarded is a
-  pass-through, not a process.
+- **It never invents a number.** An unknown figure, owner or date comes out as `[TO FILL: …]`,
+  including dates dressed up as periods. A board can act on a flagged gap. It cannot act on a
+  fabricated one.
+- **Every claim carries a pointer.** No pointer, no claim. Your own reasoning is allowed and often
+  the most useful thing in the run, but it is labelled as reasoning rather than dressed as a finding.
+- **Nothing is softened.** If two documents disagree, the page says they disagree and names both.
+- **The "where I'm unsure" section is never empty.** A run that discarded nothing is a pass-through,
+  not a process.
+- **Unanswered is not absent.** A section the material cannot answer says so in a full sentence. It
+  is never dropped, because a missing section reads as a complete answer.
 
-## The Kompas
+## It checks its own work
 
-The intake asks what you refuse before it asks what you want. A goal list can only tell you things
-you already knew to ask about. An anti-vision and a boundary let an advisor notice something you
-never wrote a goal for.
+Rendering is the only step nothing downstream would catch, so it verifies itself:
 
-Five fields, all optional. A half-filled Kompas still runs, and the artifact names what was missing.
+```
+python3 scripts/check_artifact.py runs/<slug>/
+```
+
+Thirteen checks: six sections present, no unfilled slots, nothing loaded over the network, exactly
+three must-solve items, every one with a source pointer, every sentence under 15 words, no silently
+empty section, every `[TO FILL]` describing what is needed, no em dashes, and a reasoning log whose
+"what it threw away" and "where it is unsure" are not empty. Exit code 1 and it does not ship.
+
+Checks a script can make are made by a script. The reviewers spend their judgement on what a script
+cannot see: whether an abstraction is still an abstraction, whether a number has a real comparison,
+and whether a sentence got shorter by losing meaning.
+
+The two language linters run on the flattened markdown:
+
+```
+python3 skills/plain/scripts/plainlint.py runs/<slug>/04-plain.md --mode strict
+python3 skills/plain-strategy/scripts/stratlint.py runs/<slug>/04-plain.md
+```
+
+Under 1.5 weighted findings per 100 words is clean.
+
+## What is in here
+
+```
+workflows/simply.js         the run. ~70 lines of wiring, no strategy content
+skills/simply/              what the run's agents read
+  references/house-rules.md   prepended to every agent. The filter and the unbreakable rules
+  references/pipeline.md      what each step gets, must produce, and how it fails
+  references/angles.md        the four panel briefs
+  references/output-structure.md  the four visual slots and the two files
+skills/kompas/              the intake. Read a deck, or ask five questions
+skills/simplify/            the flattener. references/output.md defines the six sections
+skills/plain/               language filter + plainlint.py
+skills/plain-strategy/      substance filter + stratlint.py
+skills/stop-slop/           de-slop filter
+skills/red-team/            the attack angle
+scripts/check_artifact.py   deterministic verification of the rendered output
+design/DESIGN.md            two colours, one column, print-clean
+templates/                  artifact.html, reasoning.html
+runs/<slug>/                output
+```
+
+Everything a human edits is markdown. `simply.js` names files and agents and holds nothing else, so
+changing how the red team thinks means editing a `.md`, never the script.
+
+Every normative rule has exactly one owner file. The table in `CLAUDE.md` says which.
+
+## Install
+
+```
+/plugin marketplace add mondayrunner/limelights-simply-strategy
+/plugin install simply-strategy
+```
+
+Needs Claude Code 2.1.154 or later for the workflow runtime. Python 3 for the three scripts. Nothing
+else, and nothing is fetched at run time.
 
 ## What it is not for
 
 Writing the strategy. This flattens one that already exists. If the folder contains no decision, the
 artifact says so, and that is the most useful thing it can return.
-
-## Install
-
-```
-/plugin marketplace add <this repo>
-/plugin install simply-strategy
-```
-
-Needs Claude Code 2.1.154 or later for the workflow runtime.

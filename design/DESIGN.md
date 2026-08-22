@@ -11,12 +11,20 @@ components → rules.
 ## 1. What this is
 
 **Artefact:** one page that says what a folder of strategy documents actually decided.
-**Reader:** a CEO or CFO with four minutes, standing up, possibly holding it on paper.
+**Reader:** the board. A CEO or CFO with four minutes, standing up, probably holding it on paper.
+**The bar:** anyone in a ten-thousand-person company could follow it. That is the standard the page
+is held to, not its distribution list. Writing for the board is what it is for. Writing so a new
+starter could follow it is how you know the board will not have to re-read a sentence.
 **Feel:** a printed editorial page, not a dashboard and not a deck.
 
 The design has one job. Everything on the page has to look like it was decided by a person who
 already knew the answer. Nothing decorative, nothing that hedges, nothing that suggests a machine
 filled a template.
+
+Those two are the same requirement, not a compromise. What makes a page survive a hostile CFO is
+what makes it readable to anyone: every claim points at where it came from, and nothing is asserted
+that the material does not support. Seniority changes what a reader already knows. It does not
+change what makes a page trustworthy.
 
 ## 2. Philosophy
 
