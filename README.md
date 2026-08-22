@@ -127,7 +127,8 @@ runs/<slug>/<stamp>/
 │    writes  04-plain.md           the page in plain language, at level L1
 │
 ├─ Review · 3 agents, in parallel
-│    reads   the four 02 files, 03-plan.md and 04-plain.md
+│    reads   the four 02 files, 03-plan.md and 04-plain.md. `invented` also re-reads the
+│            material, because checking that a number traces to a document needs the document
 │    writes  05-true.md            did anything get lost between panel, plan and page?
 │            05-simple.md          is it actually L1? The linters count, the reviewer judges
 │            05-invented.md        does every number trace back to a document?
@@ -217,7 +218,7 @@ Two folders you touch:
 
 ```
 material/<client>/          input, plus that client's compass.md. Git-ignored
-runs/<slug>/<stamp>/        output, one directory per run. Git-ignored
+runs/<slug>/<stamp>/        output, one folder per run. Git-ignored. Its files are the phase tree above
 ```
 
 Everything else is the plugin. `workflows/simply.js` is the run, about 90 lines of wiring with no

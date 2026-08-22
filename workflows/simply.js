@@ -48,6 +48,9 @@ writes a bare skills/, scripts/, templates/ or design/ path, prefix it with the 
 
 ${reads === 'material'
   ? `The material is in ${folder}. The intake is ${folder}compass.md.`
+  : reads === 'compass'
+  ? `The intake is ${folder}compass.md and your step needs it. The rest of ${folder} is the source
+material, which the numbered files already carry. Read the intake, not the source.`
   : `Your inputs are the files your step names, which already hold what the material said. Do not
 open ${folder}. If you find yourself needing it, say so in your output instead.`}
 Output goes to ${out}/, which is relative to the working directory and not to the plugin root.
@@ -71,7 +74,7 @@ Write ${out}/02-${a}.md.`, 'material'), { label: a, phase: 'Panel' })))
 phase('Plan')
 await agent(brief(`Your step is "3 · plan" in ${R}/pipeline.md. Read ${out}/01-spec.md and all four
 ${out}/02-*.md files. Run the tension check first, then the forced ranking.
-Write ${out}/03-plan.md.`), { label: 'plan', phase: 'Plan' })
+Write ${out}/03-plan.md.`, 'compass'), { label: 'plan', phase: 'Plan' })
 
 phase('Flatten')
 await agent(brief(`Your step is "4 · flatten" in ${R}/pipeline.md. Load ${root}/skills/simplify/SKILL.md
@@ -103,7 +106,7 @@ Then run: python3 ${root}/scripts/check_artifact.py ${out}/ --material ${folder}
 You pass that folder to the checker. You do not read it yourself.
 The flag is not optional. Without it the pointer check does not run, and a page citing a document
 that does not exist passes. It must exit 0. Fix what it reports and run it again.
-Return the final check table.`),
+Return the final check table.`, 'compass'),
   { label: 'artifact', phase: 'Artifact' })
 
 return { slug, folder, artifact: `${out}/simple-strategy-artifact.html`, reasoning: `${out}/reasoning.html` }
