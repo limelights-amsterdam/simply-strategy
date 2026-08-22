@@ -72,6 +72,7 @@ UNFILLED = re.compile(r"\{\{[A-Z_]+\}\}")
 UNANSWERED = re.compile(r"does not (?:say|answer|name|state)|is not (?:answered|named|stated)"
                         r"|no .{0,30}(?:is named|was named|were found)", re.I)
 TOFILL = re.compile(r"\[TO FILL:([^\]]*)\]")
+SUPREF = re.compile(r"<sup>\s*[\d,\s]+\s*</sup>", re.I)
 POINTER = re.compile(r"\([^()]*\.(?:md|pdf|txt|docx|pptx|csv|xlsx)[^()]*\bp\.?\s?\d+[^()]*\)", re.I)
 EM_DASH = re.compile(r"[—–]")
 
@@ -108,6 +109,9 @@ BLOCK = ("p", "div", "li", "td", "th", "tr", "h1", "h2", "h3", "h4", "section",
          "ul", "ol", "table", "br", "hr", "figcaption", "blockquote")
 
 
+SVG = re.compile(r"<svg\b.*?</svg>", re.S | re.I)
+
+
 def text_of(fragment: str) -> str:
     """Visible text: drop tags, comments, style and script blocks.
 
@@ -115,13 +119,33 @@ def text_of(fragment: str) -> str:
     list items run together into one very long "sentence" and the length check
     reports a failure that is not there.
     """
-    f = re.sub(r"<!--.*?-->", " ", fragment, flags=re.S)
+    # A superscript reference marker is punctuation, not a word, and leaving it in
+    # split one sentence into two and merged the halves of the next.
+    f = SUPREF.sub("", fragment)
+    # Text inside a figure is a label. A reader reads it, but it is not prose and
+    # holding a drawing to a sentence limit measures the wrong thing.
+    f = SVG.sub(" ", f)
+    f = re.sub(r"<!--.*?-->", " ", f, flags=re.S)
     f = re.sub(r"<(style|script)\b.*?</\1>", " ", f, flags=re.S | re.I)
     f = re.sub(rf"</?(?:{'|'.join(BLOCK)})\b[^>]*>", " \u2028 ", f, flags=re.I)
     f = re.sub(r"<[^>]+>", " ", f)
     f = html.unescape(f)
     f = re.sub(r"[ \t]+", " ", f)
     return re.sub(r"(?:\s*\u2028\s*)+", "\u2028", f).strip(" \u2028")
+
+
+DETAILS = re.compile(r"<details\b.*?</details>", re.S | re.I)
+
+
+def drop_provenance(fragment: str) -> str:
+    """Remove the collapsed <details> blocks before measuring.
+
+    They are the log living on the page: the chain that supports a claim, not the
+    claim. Holding provenance to fifteen words would make it useless, and counting
+    it against the page budget would punish a page for showing its working. Same
+    reasoning as reasoning.html, which has no budget either.
+    """
+    return DETAILS.sub(" ", fragment)
 
 
 def section(doc: str, sid: str) -> str:
@@ -153,14 +177,18 @@ def check_artifact(path: str, r: Result) -> None:
           ", ".join(net[:5]) if net else "no img, script, CDN or remote font")
 
     scanned = [s for s in SECTIONS if section(doc, s)]
-    musts = re.findall(r'<div class="must">.*?</div>\s*</div>|<div class="must">.*?(?=<div class="must">|</section>)',
+    musts = re.findall(r'<div class="(?:must|item)">.*?</div>\s*</div>|<div class="must">.*?(?=<div class="must">|</section>)',
                        section(doc, "must-solve"), re.S)
     r.add("Exactly three must-solve items",
           None if not section(doc, "must-solve") else len(musts) == 3,
           "the must-solve section was not found" if not section(doc, "must-solve")
           else f"found {len(musts)}")
 
-    unsourced = [re.sub(r"^\d+\s*", "", text_of(m))[:60] for m in musts if not POINTER.search(m)]
+    # Either form counts: an inline (file.md p. 6) or a superscript numeral that
+    # resolves against the reference list at the foot of the page. The second is
+    # the better one to read, so refusing it would push the page back to clutter.
+    unsourced = [re.sub(r"^\d+\s*", "", text_of(m))[:60]
+                 for m in musts if not (POINTER.search(m) or SUPREF.search(m))]
     unsourced = [u.replace("\u2028", " ") for u in unsourced]
     r.add("Every must-solve carries a source pointer",
           None if not musts else not unsourced,
@@ -173,6 +201,7 @@ def check_artifact(path: str, r: Result) -> None:
         if not body:
             continue
         # the kicker is a label, not a sentence
+        body = drop_provenance(body)
         body = re.sub(r'<span class="kicker">.*?</span>', " ", body, flags=re.S | re.I)
         for s in sentences(text_of(body)):
             n = count_words(s)
@@ -216,7 +245,7 @@ def check_artifact(path: str, r: Result) -> None:
     # The page promises a reading time. Nothing enforced it, and the first real run
     # came out at 2547 words against a promise of a few minutes. Correct is not the same
     # as short enough.
-    total = count_words(text_of(body_only).replace("\u2028", " "))
+    total = count_words(text_of(drop_provenance(body_only)).replace("\u2028", " "))
     minutes = total / WPM
     r.add(f"Fits its reading time, {MAX_PAGE_WORDS} words", total <= MAX_PAGE_WORDS,
           f"{total} words, about {minutes:.1f} minutes at {WPM} a minute"

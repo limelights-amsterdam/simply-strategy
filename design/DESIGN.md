@@ -150,6 +150,23 @@ because a layout that varies per run cannot be checked and cannot be trusted twi
 
 All are inline SVG, drawn in `--ink` on `--paper` with `--rule` for axes. No `<img>`, no library.
 
+### The page, in one paragraph
+
+Heavy sans throughout, set large. Bold inside body text on the two or three phrases that carry the
+claim, because a reader scanning at speed reads the bold and nothing else. Figures sit in a tinted
+frame with a hairline border, and every one carries a caption in words. Source pointers are
+superscript numerals, collected once at the bottom, because a citation in brackets mid-sentence is
+clutter three times a paragraph. Every section closes with a collapsed **How this was decided**.
+
+### How this was decided
+
+A `<details>` element per section. Native HTML, no script, and it prints: the print rules force
+every one open, so paper carries the whole provenance while the screen stays clean.
+
+It answers the question a board actually asks, which is not "what did you find" but "how do you
+know". Inside: which angle found it, whether the others reached it separately or by quoting the same
+line, how many reviewers marked it fatal, and what was demoted around it.
+
 ### What one ink changes
 
 Every rule below follows from having no colour. Identity normally rides on hue; here it has to ride
@@ -168,6 +185,19 @@ baseline, lines at 2px, markers at 8px or more, a 2px paper gap between touching
 hairline axes at 1px solid, never dashed.
 
 ### The six
+
+**0 · `matrix`** — a two by two, every item placed by what it stops rather than by how big it is.
+Column labels above the grid, row labels in a left gutter, never inside a quadrant. This is not a
+framework being added: the run already ranks by must-solve against important, and already splits
+gaps into what stops a decision and what stops the work. The figure draws a ranking that is
+already there.
+
+**0b · `timeline`** — marks left to right. Its strongest use is the empty one: four years and four
+blank ticks says the deck has no dates more plainly than a sentence does.
+
+**0c · `overlap`** — two circles, used **only when the overlap is the finding**. Labels sit outside
+the circles, never on the stroke. Most Venn diagrams are decoration and area without colour is
+guessing, so the bar for this one is high.
 
 **1 · `hero`** — one number, alone. The default when the answer is a single figure.
 Sans, 300 weight, `clamp(4rem, 10vw, 9rem)`, with one line of caption beneath.

@@ -1,137 +1,52 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Simple strategy artifact</title><style>:root{--ink:#0A0A0A;--paper:#FFFFFF;--muted:#6B6B6B;--rule:#C9C9C9;
---sans:ui-sans-serif,-apple-system,"Helvetica Neue",Arial,sans-serif;
---serif:ui-serif,"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
---measure:34rem}
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Simple strategy artifact</title><style>
+:root{--ink:#0A0A0A;--mut:#5A5A5A;--rule:#D4D4D8;--tint:#F4F4F5;--paper:#fff;
+--sans:ui-sans-serif,-apple-system,"Helvetica Neue","Segoe UI",Arial,sans-serif}
 *{box-sizing:border-box;margin:0;padding:0}
-html{font-size:17px;-webkit-font-smoothing:antialiased}
-body{background:var(--paper);color:var(--ink);font-family:var(--serif);line-height:1.6}
-.page{max-width:var(--measure);margin:0 auto;padding:4rem 1.5rem 6rem}
-.kicker{font-family:var(--sans);font-size:.75rem;font-weight:600;letter-spacing:.16em;
-text-transform:uppercase;line-height:1;display:block}
+html{font-size:19px;-webkit-font-smoothing:antialiased}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.55}
+.page{max-width:44rem;margin:0 auto;padding:4.5rem 1.5rem 6rem}
+.kicker{font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
 hr{border:0;border-top:1px solid var(--rule);margin:0}
-.caption{font-family:var(--sans);font-size:.8125rem;line-height:1.45;color:var(--muted)}
-section{margin-bottom:5.5rem}
-section>hr{margin-bottom:1rem}
-section>.kicker{margin-bottom:2.5rem}
-.one{font-size:clamp(2.4rem,5.2vw,4rem);line-height:1.08;letter-spacing:-.02em;text-align:center;
-width:min(46rem,92vw);margin:0 0 3rem calc(50% - min(23rem,46vw))}
-figure{margin:0 0 3rem}
-figure svg{display:block;max-width:100%;height:auto;margin:0 auto}
-figcaption{font-family:var(--sans);font-size:.8125rem;color:var(--muted);margin-top:1rem;
-line-height:1.45;text-align:center}
-.must{margin-bottom:4rem}
-.must .n{font-family:var(--sans);font-weight:300;font-size:4rem;line-height:.8;letter-spacing:-.04em;
-color:var(--ink);margin-bottom:.75rem}
-.must .stmt{font-size:1.7rem;line-height:1.2;letter-spacing:-.01em;margin-bottom:1.25rem}
-.must .cost{font-size:1rem;line-height:1.5}
-.must figure{margin:1.75rem 0 1.25rem}
-ul{list-style:none}
-.split{display:grid;grid-template-columns:1fr 1px 1fr;gap:0 2rem;margin-bottom:1.5rem}
-.split .bar{background:var(--rule)}
-.split li{margin-bottom:.7rem;font-size:1rem;line-height:1.45}
-.split .kicker{margin-bottom:1rem}
-.more{font-family:var(--sans);font-size:.8125rem;color:var(--muted);border-top:1px solid var(--rule);
-padding-top:.75rem}
-.limit{font-size:1.05rem;line-height:1.55;border-left:1px solid var(--rule);padding-left:1.25rem}
-footer hr{margin-bottom:.75rem}
-footer .m{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
-@media(max-width:640px){.split{grid-template-columns:1fr;gap:2rem}.split .bar{display:none}}
-@media print{@page{size:A4;margin:18mm}html{font-size:11pt}.page{max-width:none;padding:0}
-section{break-inside:avoid}.one{break-after:page}.caption,figcaption,.more{color:#000}}</style></head><body><main class="page">
-
-<header style="margin-bottom:4rem"><hr style="margin-bottom:1.25rem">
-<div class="m" style="display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap">
-<span class="kicker">Simple strategy artifact</span>
-<span class="caption">22 August 2026 · material/example</span></div></header>
-
-<section id="one"><hr><span class="kicker">What this is about</span>
-<p class="one">This plan promises a halving nobody costed, and a job cut nobody named.</p>
-<figure><svg viewBox="0 0 205 205" width="205" height="205" role="img" aria-label="95 of every 100 euros"><circle cx="8" cy="8" r="6" fill="#0A0A0A"/><circle cx="29" cy="8" r="6" fill="#0A0A0A"/><circle cx="50" cy="8" r="6" fill="#0A0A0A"/><circle cx="71" cy="8" r="6" fill="#0A0A0A"/><circle cx="92" cy="8" r="6" fill="#0A0A0A"/><circle cx="113" cy="8" r="6" fill="#0A0A0A"/><circle cx="134" cy="8" r="6" fill="#0A0A0A"/><circle cx="155" cy="8" r="6" fill="#0A0A0A"/><circle cx="176" cy="8" r="6" fill="#0A0A0A"/><circle cx="197" cy="8" r="6" fill="#0A0A0A"/><circle cx="8" cy="29" r="6" fill="#0A0A0A"/><circle cx="29" cy="29" r="6" fill="#0A0A0A"/><circle cx="50" cy="29" r="6" fill="#0A0A0A"/><circle cx="71" cy="29" r="6" fill="#0A0A0A"/><circle cx="92" cy="29" r="6" fill="#0A0A0A"/><circle cx="113" cy="29" r="6" fill="#0A0A0A"/><circle cx="134" cy="29" r="6" fill="#0A0A0A"/><circle cx="155" cy="29" r="6" fill="#0A0A0A"/><circle cx="176" cy="29" r="6" fill="#0A0A0A"/><circle cx="197" cy="29" r="6" fill="#0A0A0A"/><circle cx="8" cy="50" r="6" fill="#0A0A0A"/><circle cx="29" cy="50" r="6" fill="#0A0A0A"/><circle cx="50" cy="50" r="6" fill="#0A0A0A"/><circle cx="71" cy="50" r="6" fill="#0A0A0A"/><circle cx="92" cy="50" r="6" fill="#0A0A0A"/><circle cx="113" cy="50" r="6" fill="#0A0A0A"/><circle cx="134" cy="50" r="6" fill="#0A0A0A"/><circle cx="155" cy="50" r="6" fill="#0A0A0A"/><circle cx="176" cy="50" r="6" fill="#0A0A0A"/><circle cx="197" cy="50" r="6" fill="#0A0A0A"/><circle cx="8" cy="71" r="6" fill="#0A0A0A"/><circle cx="29" cy="71" r="6" fill="#0A0A0A"/><circle cx="50" cy="71" r="6" fill="#0A0A0A"/><circle cx="71" cy="71" r="6" fill="#0A0A0A"/><circle cx="92" cy="71" r="6" fill="#0A0A0A"/><circle cx="113" cy="71" r="6" fill="#0A0A0A"/><circle cx="134" cy="71" r="6" fill="#0A0A0A"/><circle cx="155" cy="71" r="6" fill="#0A0A0A"/><circle cx="176" cy="71" r="6" fill="#0A0A0A"/><circle cx="197" cy="71" r="6" fill="#0A0A0A"/><circle cx="8" cy="92" r="6" fill="#0A0A0A"/><circle cx="29" cy="92" r="6" fill="#0A0A0A"/><circle cx="50" cy="92" r="6" fill="#0A0A0A"/><circle cx="71" cy="92" r="6" fill="#0A0A0A"/><circle cx="92" cy="92" r="6" fill="#0A0A0A"/><circle cx="113" cy="92" r="6" fill="#0A0A0A"/><circle cx="134" cy="92" r="6" fill="#0A0A0A"/><circle cx="155" cy="92" r="6" fill="#0A0A0A"/><circle cx="176" cy="92" r="6" fill="#0A0A0A"/><circle cx="197" cy="92" r="6" fill="#0A0A0A"/><circle cx="8" cy="113" r="6" fill="#0A0A0A"/><circle cx="29" cy="113" r="6" fill="#0A0A0A"/><circle cx="50" cy="113" r="6" fill="#0A0A0A"/><circle cx="71" cy="113" r="6" fill="#0A0A0A"/><circle cx="92" cy="113" r="6" fill="#0A0A0A"/><circle cx="113" cy="113" r="6" fill="#0A0A0A"/><circle cx="134" cy="113" r="6" fill="#0A0A0A"/><circle cx="155" cy="113" r="6" fill="#0A0A0A"/><circle cx="176" cy="113" r="6" fill="#0A0A0A"/><circle cx="197" cy="113" r="6" fill="#0A0A0A"/><circle cx="8" cy="134" r="6" fill="#0A0A0A"/><circle cx="29" cy="134" r="6" fill="#0A0A0A"/><circle cx="50" cy="134" r="6" fill="#0A0A0A"/><circle cx="71" cy="134" r="6" fill="#0A0A0A"/><circle cx="92" cy="134" r="6" fill="#0A0A0A"/><circle cx="113" cy="134" r="6" fill="#0A0A0A"/><circle cx="134" cy="134" r="6" fill="#0A0A0A"/><circle cx="155" cy="134" r="6" fill="#0A0A0A"/><circle cx="176" cy="134" r="6" fill="#0A0A0A"/><circle cx="197" cy="134" r="6" fill="#0A0A0A"/><circle cx="8" cy="155" r="6" fill="#0A0A0A"/><circle cx="29" cy="155" r="6" fill="#0A0A0A"/><circle cx="50" cy="155" r="6" fill="#0A0A0A"/><circle cx="71" cy="155" r="6" fill="#0A0A0A"/><circle cx="92" cy="155" r="6" fill="#0A0A0A"/><circle cx="113" cy="155" r="6" fill="#0A0A0A"/><circle cx="134" cy="155" r="6" fill="#0A0A0A"/><circle cx="155" cy="155" r="6" fill="#0A0A0A"/><circle cx="176" cy="155" r="6" fill="#0A0A0A"/><circle cx="197" cy="155" r="6" fill="#0A0A0A"/><circle cx="8" cy="176" r="6" fill="#0A0A0A"/><circle cx="29" cy="176" r="6" fill="#0A0A0A"/><circle cx="50" cy="176" r="6" fill="#0A0A0A"/><circle cx="71" cy="176" r="6" fill="#0A0A0A"/><circle cx="92" cy="176" r="6" fill="#0A0A0A"/><circle cx="113" cy="176" r="6" fill="#0A0A0A"/><circle cx="134" cy="176" r="6" fill="#0A0A0A"/><circle cx="155" cy="176" r="6" fill="#0A0A0A"/><circle cx="176" cy="176" r="6" fill="#0A0A0A"/><circle cx="197" cy="176" r="6" fill="#0A0A0A"/><circle cx="8" cy="197" r="6" fill="#0A0A0A"/><circle cx="29" cy="197" r="6" fill="#0A0A0A"/><circle cx="50" cy="197" r="6" fill="#0A0A0A"/><circle cx="71" cy="197" r="6" fill="#0A0A0A"/><circle cx="92" cy="197" r="6" fill="#0A0A0A"/><circle cx="113" cy="197" r="6" fill="none" stroke="#0A0A0A" stroke-width="1"/><circle cx="134" cy="197" r="6" fill="none" stroke="#0A0A0A" stroke-width="1"/><circle cx="155" cy="197" r="6" fill="none" stroke="#0A0A0A" stroke-width="1"/><circle cx="176" cy="197" r="6" fill="none" stroke="#0A0A0A" stroke-width="1"/><circle cx="197" cy="197" r="6" fill="none" stroke="#0A0A0A" stroke-width="1"/></svg><figcaption>Of every 100 euros spent in 2025, 95 are still spent in 2028.
-Halving means 50 have to go.</figcaption></figure>
-<p style="text-align:center;font-size:1.15rem">Cost falls when work stops.<br>
-Nothing in the folder has a date for stopping.</p>
-</section>
-
-<section id="must-solve"><hr><span class="kicker">Three things must be solved</span>
-
-<div class="must"><div class="n">1</div>
-<p class="stmt">The 50 percent cut has no base year.</p>
-<p class="caption">(plan-2026.md p. 6 and p. 11)</p>
-<figure><svg viewBox="0 0 430 84" width="430" height="84" role="img" aria-label="needs 49m, removes 5m"><line x1="0" y1="0" x2="0" y2="84" stroke="#C9C9C9" stroke-width="1"/><rect x="1" y="4" width="280" height="24" rx="4" fill="none" stroke="#0A0A0A" stroke-width="1.5"/><text x="292" y="21" font-size="13" font-family="sans-serif" fill="#0A0A0A">needs 49m</text><rect x="1" y="52" width="28" height="24" rx="4" fill="#0A0A0A"/><text x="40" y="69" font-size="13" font-family="sans-serif" fill="#0A0A0A">removes 5m</text></svg><figcaption>The plan's own money section removes 5m by 2028. Halving needs 49m.
-The folder holds no figure for 2029 or 2030.</figcaption></figure>
-<p class="cost">Two readings sit in one room. One is a trend the plan already meets.
-The other is a cut it has not started. While both live, no meeting can close.</p></div>
-
-<div class="must"><div class="n">2</div>
-<p class="stmt">Five hundred people must go, and only hiring is funded.</p>
-<p class="caption">(vision-2030.md p. 6)</p>
-<figure><svg viewBox="0 0 168 68" width="168" height="68" role="img" aria-label="one person in three"><circle cx="18" cy="14" r="10" fill="#0A0A0A"/><path d="M2 62 v-14 a16 16 0 0 1 32 0 v14 z" fill="#0A0A0A"/><circle cx="72" cy="14" r="10" fill="none" stroke="#0A0A0A" stroke-width="1.5"/><path d="M56 62 v-14 a16 16 0 0 1 32 0 v14 z" fill="none" stroke="#0A0A0A" stroke-width="1.5"/><circle cx="126" cy="14" r="10" fill="none" stroke="#0A0A0A" stroke-width="1.5"/><path d="M110 62 v-14 a16 16 0 0 1 32 0 v14 z" fill="none" stroke="#0A0A0A" stroke-width="1.5"/></svg><figcaption>One person in three, on one line of one slide.
-"Towards 2030" is not a date. No document names an owner.</figcaption></figure>
-<p class="cost">The plan saves money by changing who works there. The vision saves money by
-having fewer people. The folder never adds the two together.</p></div>
-
-<div class="must"><div class="n">3</div>
-<p class="stmt">Everything the vision stops is being paid for through 2027.</p>
-<p class="caption">(vision-2030.md p. 3 and p. 4)</p>
-<figure><svg viewBox="0 0 430 78" width="430" height="78" role="img" aria-label="HR: headcount stays flat against Sales: we need more people"><defs><pattern id="h45" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#0A0A0A" stroke-width="1.5"/></pattern></defs><line x1="215" y1="4" x2="215" y2="52" stroke="#C9C9C9" stroke-width="1"/><rect x="20" y="16" width="168" height="24" fill="#0A0A0A"/><path d="M188 16 l20 12 l-20 12 z" fill="#0A0A0A"/><rect x="242" y="16" width="168" height="24" fill="url(#h45)" stroke="#0A0A0A" stroke-width="1"/><path d="M242 16 l-20 12 l20 12 z" fill="url(#h45)" stroke="#0A0A0A" stroke-width="1"/><text x="20" y="66" font-size="13" font-family="sans-serif" fill="#0A0A0A">HR: headcount stays flat</text><text x="410" y="66" font-size="13" font-family="sans-serif" text-anchor="end" fill="#0A0A0A">Sales: we need more people</text></svg><figcaption>Four things stop. None carries a date.
-The 2026 and 2027 money runs the other way on all four.</figcaption></figure>
-<p class="cost">You do not rebuild a channel you are closing. This is the only mechanism the
-other two problems have. If the money keeps flowing here, they have no route.</p></div>
-</section>
-
-<section id="stop"><hr><span class="kicker">What we stop doing</span>
-<div class="split">
-<div><span class="kicker">Stops</span><ul>
-<li>Leading on the four ratio numbers.</li>
-<li>The two hiring lines, or the budget that pays for them.</li>
-<li>the service-desk build and the manned-channel agent.</li>
-<li>The 1.3m email saving, or the phase-out.</li></ul></div>
-<div class="bar"></div>
-<div><span class="kicker">Starts</span><ul>
-<li>A money section that reaches 2030.</li>
-<li>A name against the 500.</li>
-<li>A date against each of the four stops.</li>
-<li>A price for the security step-up.</li></ul></div>
-</div>
-<p class="more">Sixteen items with their sources are in the reasoning log.
-The folder gives no date for a single one of the stops.</p>
-</section>
-
-<section id="bet"><hr><span class="kicker">What has to be true</span>
-<figure><svg viewBox="0 0 430 56" width="430" height="56" role="img" aria-label="People trust the site then Ask 200 buyers then 15 September"><line x1="10" y1="20" x2="420" y2="20" stroke="#C9C9C9" stroke-width="1"/><circle cx="10" cy="20" r="5" fill="#0A0A0A"/><text x="10" y="46" font-size="13" font-family="sans-serif" text-anchor="start" fill="#0A0A0A">People trust the site</text><circle cx="215" cy="20" r="5" fill="#0A0A0A"/><text x="215" y="46" font-size="13" font-family="sans-serif" text-anchor="middle" fill="#0A0A0A">Ask 200 buyers</text><circle cx="420" cy="20" r="5" fill="#0A0A0A"/><text x="420" y="46" font-size="13" font-family="sans-serif" text-anchor="end" fill="#0A0A0A">15 September</text></svg><figcaption>Five bets. The folder calls none of them a bet and tests none.
-Every date is empty because no document supplies one.</figcaption></figure>
-<p class="cost">The heaviest: shift-left has to remove work rather than move it. The plan hands
-configuration to the commercial unit. The vision shrinks the commercial unit. If the work only moves,
-the division hits its target and the group saves nothing.</p>
-<p class="more">All five bets, with what would test each one, are in the reasoning log.</p>
-</section>
-
-<section id="conflicts"><hr><span class="kicker">What the documents disagree about</span>
-<figure><svg viewBox="0 0 430 78" width="430" height="78" role="img" aria-label="HR: headcount stays flat against Sales: we need more people"><defs><pattern id="h45" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#0A0A0A" stroke-width="1.5"/></pattern></defs><line x1="215" y1="4" x2="215" y2="52" stroke="#C9C9C9" stroke-width="1"/><rect x="20" y="16" width="168" height="24" fill="#0A0A0A"/><path d="M188 16 l20 12 l-20 12 z" fill="#0A0A0A"/><rect x="242" y="16" width="168" height="24" fill="url(#h45)" stroke="#0A0A0A" stroke-width="1"/><path d="M242 16 l-20 12 l20 12 z" fill="url(#h45)" stroke="#0A0A0A" stroke-width="1"/><text x="20" y="66" font-size="13" font-family="sans-serif" fill="#0A0A0A">HR: headcount stays flat</text><text x="410" y="66" font-size="13" font-family="sans-serif" text-anchor="end" fill="#0A0A0A">Sales: we need more people</text></svg><figcaption>Eight conflicts. In every one, ask which side the money follows.
-Here it follows the 93m, and the 50 percent has no owner.</figcaption></figure>
-<p class="cost">The money follows hiring, not the cut. It follows manned channels surviving.
-It follows selling email, not phasing it out. Eight times the same answer.</p>
-<p class="more">All eight, with both sides quoted, are in the reasoning log.</p>
-</section>
-
-<section id="gaps"><hr><span class="kicker">What we do not know</span>
-<p class="cost"><strong>Eleven things.</strong> Three block a decision on their own.
-Which cost lines the 50 percent covers. The headcount baseline. Who is in the room.</p>
-<p class="cost" style="margin-top:1.25rem">Three documents are named in the material and are not
-in the folder. The workforce plan behind 1400 to 900. Any price for the security step-up.
-Any figure at all for 2029 and 2030.</p>
-<p class="limit" style="margin-top:2rem">What this page cannot tell you. Neither the vision nor
-the brainstorm carries a date. So nobody here can tell which came first. If the plan came first,
-every problem above is a gap. If the vision came first, they are choices already made against it.
-That one fact would re-rank this page.</p>
-<p class="more">This run demoted eighteen further findings and deleted none.
-Five reach this page. Thirteen are in the reasoning log.</p>
-</section>
-
-<footer><hr><div class="m">
-<span class="caption">AI-supported draft</span>
-<span class="caption">flatten level in → out: L5 → L1</span></div></footer>
-
-</main></body></html>
+h1{font-size:clamp(2.6rem,6vw,4.2rem);font-weight:800;letter-spacing:-.035em;line-height:1.02;margin:1.5rem 0 1.75rem}
+.lede{font-size:1.32rem;line-height:1.45;color:var(--mut);max-width:34rem}
+.lede b{color:var(--ink)}
+section{margin-top:5rem}
+h2{font-size:clamp(1.7rem,3.4vw,2.4rem);font-weight:800;letter-spacing:-.025em;line-height:1.1;margin:.9rem 0 1.75rem}
+.item{display:grid;grid-template-columns:4.5rem 1fr;gap:0 1rem;margin-bottom:3.25rem}
+.item .n{font-size:3.4rem;font-weight:800;line-height:.85;letter-spacing:-.05em}
+.item h3{font-size:1.42rem;font-weight:800;letter-spacing:-.02em;line-height:1.2;margin-bottom:.7rem}
+.item p{font-size:1.05rem;margin-bottom:.85rem}
+@media(max-width:640px){.item{grid-template-columns:1fr}.item .n{margin-bottom:.4rem}}
+figure{margin:1.5rem 0 .9rem}
+figure svg{display:block;width:100%;height:auto;border:1px solid var(--rule)}
+figcaption{font-size:.9rem;color:var(--mut);margin-top:.7rem;line-height:1.45}
+figcaption b{color:var(--ink)}
+ul{list-style:none;margin:.4rem 0 1rem}
+li{position:relative;padding-left:1.15rem;margin-bottom:.5rem;font-size:1.02rem}
+li::before{content:"";position:absolute;left:0;top:.62em;width:5px;height:5px;background:var(--ink)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin:1.25rem 0}
+.block{background:var(--tint);padding:1.15rem 1.25rem}
+.block .t{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);margin-bottom:.45rem}
+.block p{font-size:1.02rem;font-weight:600;line-height:1.35}
+@media(max-width:640px){.grid{grid-template-columns:1fr}}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin:1.25rem 0}
+@media(max-width:640px){.split{grid-template-columns:1fr}}
+sup{font-size:.62em;font-weight:700;vertical-align:super;line-height:0}
+details{margin:1rem 0 0;border-top:1px solid var(--rule);padding-top:.8rem}
+summary{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);cursor:pointer;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::after{content:" +";font-weight:700}
+details[open] summary::after{content:" \2013"}
+details .body{font-size:.95rem;color:var(--mut);margin-top:.8rem;line-height:1.5}
+details .body b{color:var(--ink)}
+details .body p{margin-bottom:.55rem}
+.notes{margin-top:5rem;border-top:2px solid var(--ink);padding-top:1.5rem}
+.notes ol{list-style:none;counter-reset:n;column-count:2;column-gap:2rem;margin-top:1rem}
+.notes li{counter-increment:n;padding-left:1.6rem;font-size:.85rem;color:var(--mut);margin-bottom:.42rem;break-inside:avoid}
+.notes li::before{content:counter(n);position:absolute;left:0;top:0;width:auto;height:auto;background:none;font-weight:700;color:var(--ink);font-size:.8rem}
+@media(max-width:640px){.notes ol{column-count:1}}
+footer{margin-top:3.5rem;border-top:1px solid var(--rule);padding-top:.9rem;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;font-size:.8rem;color:var(--mut)}
+@media print{@page{size:A4;margin:16mm}html{font-size:11.5pt}.page{max-width:none;padding:0}
+section,.item,figure,.block{break-inside:avoid}
+details>.body{display:block!important}summary::after{content:""}}
+</style></head><body><main class="page"><hr><div style="display:flex;justify-content:space-between;padding-top:.9rem;flex-wrap:wrap;gap:1rem"><span class="kicker">Simple strategy artifact</span><span class="kicker" style="letter-spacing:.04em;text-transform:none">22 August 2026 · vision-2030</span></div><section id="one"><h1>The plan cuts 500 people, and the work that must grow needs them.</h1><p class="lede">One deck, seven slides. It promises a <b>cut of about 500 people</b>. It calls a <b>security step-up non-negotiable</b>. It names <b>two growth pillars</b>. The same staff sit under all three. Here is what that means, one picture at a time.</p><details><summary>How this was decided</summary><div class="body"><p>The deck states the cut on slide 6 and the growth pillars on slide 3.<sup>1</sup> Neither slide mentions the other.</p><p><b>Four angles read it blind.</b> Three reached the same collision by different routes: substance through the ownership test, contradiction by pairing slides 4 and 3, and the Compass angle by reading it against the boundary the client set.</p><p>The fourth, red team, produced findings that duplicated the contradiction angle, so the plan agent weighted them down rather than counting them twice.</p></div></details></section><section id="must-solve"><hr><span class="kicker">Three things must be solved</span><h2>Each one has a number missing, a name missing, or both.</h2><div class="item"><div class="n">1</div><div><h3>The cut is counted two ways, and it takes the cheap people.</h3><p>Slide 6 gives <b>two sizes for one cut</b>.<sup>1</sup> Slide 4 removes the cheapest staff and keeps the dearest.<sup>2</sup> the unit can reach 900 on time and buy the hands back as contractors.</p><figure><svg viewBox="0 0 420 158" role="img" aria-label="two sizes for one cut"><rect x="0" y="0" width="420" height="158" fill="#F4F4F5"/><rect x="26" y="42" width="300" height="30" fill="#0A0A0A"/><text x="26" y="32" font-size="13" font-family="sans-serif" font-weight="700" fill="#0A0A0A">500 cut, 1400 to 900</text><rect x="26" y="100" width="252" height="30" fill="none" stroke="#0A0A0A" stroke-width="2"/><text x="26" y="90" font-size="13" font-family="sans-serif" font-weight="700" fill="#0A0A0A">420 cut, at about 30 percent</text><line x1="278" y1="100" x2="278" y2="146" stroke="#0A0A0A" stroke-width="1" stroke-dasharray="3 3"/><line x1="326" y1="42" x2="326" y2="146" stroke="#0A0A0A" stroke-width="1" stroke-dasharray="3 3"/><text x="336" y="122" font-size="11" font-family="sans-serif" fill="#5A5A5A">80 people</text></svg><figcaption>The solid bar is the indicative cut. The outline is the same cut at 30 percent. <b>The 80-person gap is a sixth of it.</b><sup>1</sup></figcaption></figure><details><summary>How this was decided</summary><div class="body"><p>Found by the substance angle on the falsification test: two numbers for one commitment cannot both be the target.</p><p>The contradiction angle reached it separately and ranked it first of nine by cost if nobody notices.</p><p><b>Two of three reviewers</b> marked the first wording fatal, because it stated the gap without naming which figure is the plan of record.</p></div></details></div></div><div class="item"><div class="n">2</div><div><h3>The one thing that cannot slip has no price on it.</h3><p>The deck calls the step-up <b>non-negotiable</b>.<sup>1</sup> No slide gives it a cost, a scope, an owner or a date.</p><ul><li>No amount, anywhere in the deck</li><li>No owner named</li><li>No date between today and 2030</li><li>The works council must advise first, which is our reading of Dutch law</li></ul><p class="kicker" style="text-transform:none;letter-spacing:0;font-weight:400;font-size:.9rem">The deck does not price the step-up, so this one gets no figure. <b style="color:var(--ink)">An empty graphic would be worse than none.</b></p><details><summary>How this was decided</summary><div class="body"><p>The Compass names the step-up as a boundary the client will not trade.<sup>4</sup> The deck names it non-negotiable and never returns to it.</p><p>All four angles quoted the same sentence here. <b>That is one finding, not four</b>, and the plan agent counted it once, which is why it sits second rather than first.</p></div></details></div></div><div class="item"><div class="n">3</div><div><h3>Both growth bets run on the labour the plan removes.</h3><p>In-home service means <b>someone walks into a house</b>. Slide 5 answers with cheaper integrators.<sup>3</sup> You can buy hands, not the promise slide 4 makes.<sup>2</sup></p><figure><svg viewBox="0 0 420 250" role="img" aria-label="the cut and the growth need the same people"><rect x="0" y="0" width="420" height="250" fill="#F4F4F5"/><circle cx="168" cy="104" r="72" fill="none" stroke="#0A0A0A" stroke-width="2"/><circle cx="252" cy="104" r="72" fill="none" stroke="#0A0A0A" stroke-width="2" stroke-dasharray="5 4"/><text x="210" y="98" font-size="13" font-family="sans-serif" font-weight="700" text-anchor="middle" fill="#0A0A0A">the same</text><text x="210" y="116" font-size="13" font-family="sans-serif" font-weight="700" text-anchor="middle" fill="#0A0A0A">people</text><line x1="118" y1="186" x2="118" y2="200" stroke="#D4D4D8" stroke-width="1"/><line x1="302" y1="186" x2="302" y2="200" stroke="#D4D4D8" stroke-width="1"/><text x="118" y="216" font-size="13" font-family="sans-serif" font-weight="700" text-anchor="middle" fill="#0A0A0A">The cut</text><text x="118" y="234" font-size="11" font-family="sans-serif" text-anchor="middle" fill="#5A5A5A">field engineers, L1 and L2</text><text x="302" y="216" font-size="13" font-family="sans-serif" font-weight="700" text-anchor="middle" fill="#0A0A0A">The growth</text><text x="302" y="234" font-size="11" font-family="sans-serif" text-anchor="middle" fill="#5A5A5A">in-home, security</text></svg><figcaption>Two circles the deck never draws. <b>The overlap is the finding.</b><sup>1,2</sup></figcaption></figure><details><summary>How this was decided</summary><div class="body"><p>The Compass angle found this by reading the anti-vision: the client described a 2030 where rivals deliver at a lower unit cost, and this plan removes the people who deliver.</p><p>The red-team angle reached the same place from outside, asking what a rival does on Monday. Its version was ruled a duplicate.</p></div></details></div></div></section><section id="stop"><hr><span class="kicker">What we stop doing</span><h2>The deck names four real stops. A rival could sensibly keep all four.</h2><div class="split"><div><span class="kicker">Stops</span><ul><li>Email, on-prem video, Digitenne<sup>1</sup></li><li>Manned channels and channel software<sup>2</sup></li><li>Field engineers, L1 and L2 roles<sup>2</sup></li><li>Netflix stays non-white-label<sup>1</sup></li></ul></div><div><span class="kicker">Starts</span><ul><li>A security step-up<sup>1</sup></li><li>Security and in-home as growth<sup>1</sup></li><li>Selling to smaller SME customers<sup>1</sup></li><li>More work bought from integrators<sup>3</sup></li></ul></div></div><p><b>Under the three must-solves, nothing stops.</b> The deck asks for a different seniority mix and never says which grades leave.<sup>1</sup></p></section><section id="bet"><hr><span class="kicker">What has to be true</span><h2>Six bets. The deck states none of them as a bet.</h2><figure><svg viewBox="0 0 420 120" role="img" aria-label="four years with no dates"><rect x="0" y="0" width="420" height="120" fill="#F4F4F5"/><line x1="34" y1="60" x2="386" y2="60" stroke="#0A0A0A" stroke-width="2"/><circle cx="34" cy="60" r="7" fill="none" stroke="#0A0A0A" stroke-width="2"/><text x="34" y="88" font-size="13" font-family="sans-serif" font-weight="700" text-anchor="middle" fill="#0A0A0A">2026</text><text x="34" y="106" font-size="11" font-family="sans-serif" text-anchor="middle" fill="#5A5A5A">no date</text><circle cx="151" cy="60" r="7" fill="none" stroke="#0A0A0A" stroke-width="2"/><text x="151" y="88" font-size="13" font-family="sans-serif" font-weight="700" text-anchor="middle" fill="#0A0A0A">2027</text><text x="151" y="106" font-size="11" font-family="sans-serif" text-anchor="middle" fill="#5A5A5A">no date</text><circle cx="268" cy="60" r="7" fill="none" stroke="#0A0A0A" stroke-width="2"/><text x="268" y="88" font-size="13" font-family="sans-serif" font-weight="700" text-anchor="middle" fill="#0A0A0A">2028</text><text x="268" y="106" font-size="11" font-family="sans-serif" text-anchor="middle" fill="#5A5A5A">no date</text><circle cx="386" cy="60" r="7" fill="none" stroke="#0A0A0A" stroke-width="2"/><text x="386" y="88" font-size="13" font-family="sans-serif" font-weight="700" text-anchor="middle" fill="#0A0A0A">2030</text><text x="386" y="106" font-size="11" font-family="sans-serif" text-anchor="middle" fill="#5A5A5A">no date</text><text x="210" y="30" font-size="13" font-family="sans-serif" font-weight="700" text-anchor="middle" fill="#0A0A0A">Four years, four empty marks</text></svg><figcaption><b>Every test below needs a date, and the deck gives none.</b> Four years, four empty marks.<sup>1</sup></figcaption></figure><div class="grid"><div class="block"><div class="t">The heaviest bet</div><p>900 people hold reliability end to end, without L1 and L2.<sup>2</sup></p></div><div class="block"><div class="t">How we would test it</div><p>Name who answers at 03:00 when an integrator breaks it.</p></div></div><details><summary>How this was decided</summary><div class="body"><p>Six assumptions were extracted by the substance angle. The test column is ours: no document proposes a test for any of them.</p><p><b>Two cannot be tested at all yet</b>, because whether security slips or the 900 slips depends on who holds a veto, and the Compass does not name the room.<sup>4</sup></p></div></details></section><section id="conflicts"><hr><span class="kicker">What the documents disagree about</span><h2>Nine pairs in one deck cannot both be true.</h2><div class="grid"><div class="block"><div class="t">Slide 4 says</div><p>IT takes end-to-end responsibility for reliability, security and continuity.<sup>2</sup></p></div><div class="block"><div class="t">Slide 5 says</div><p>Increased use of lower-cost system integrators.<sup>3</sup></p></div></div><p><b>You cannot hand out the work and keep the answer.</b> That is the costliest of the nine. The other eight are in the reasoning log, with both sides quoted.</p><ul><li>One deck says tech grows and shrinks<sup>1,3</sup></li><li>Integrator hours are people cost, and land in OPEX<sup>1,3</sup></li><li>A subscription is OPEX, not CAPEX<sup>1,3</sup></li><li>The reason for the hurry names no competitor and no unit cost<sup>4</sup></li></ul><details><summary>How this was decided</summary><div class="body"><p>The contradiction angle was the only one reading every document at once, and found nine.</p><p>It ranked them by <b>what it costs if nobody says it out loud</b>, not by how obvious they are. The one above is first because the money follows the integrators while the promise stays with IT.</p></div></details></section><section id="gaps"><hr><span class="kicker">What we do not know</span><h2>Eight of these stop a decision. The rest stop the work.</h2><figure><svg viewBox="0 0 480 300" role="img" aria-label="gaps placed by what they stop"><rect x="0" y="0" width="480" height="300" fill="#F4F4F5"/><text x="180" y="28" font-size="10" font-family="sans-serif" font-weight="700" letter-spacing="0.08em" text-anchor="middle" fill="#5A5A5A">STOPS THE DECISION</text><text x="370" y="28" font-size="10" font-family="sans-serif" font-weight="700" letter-spacing="0.08em" text-anchor="middle" fill="#5A5A5A">STOPS THE WORK</text><line x1="86" y1="38" x2="464" y2="38" stroke="#D4D4D8" stroke-width="1"/><text x="74" y="90" font-size="10" font-family="sans-serif" font-weight="700" letter-spacing="0.08em" text-anchor="end" fill="#5A5A5A">MUST</text><text x="74" y="104" font-size="10" font-family="sans-serif" font-weight="700" letter-spacing="0.08em" text-anchor="end" fill="#5A5A5A">SOLVE</text><text x="74" y="204" font-size="10" font-family="sans-serif" font-weight="700" letter-spacing="0.08em" text-anchor="end" fill="#5A5A5A">IMPOR-</text><text x="74" y="218" font-size="10" font-family="sans-serif" font-weight="700" letter-spacing="0.08em" text-anchor="end" fill="#5A5A5A">TANT</text><line x1="275" y1="42" x2="275" y2="284" stroke="#D4D4D8" stroke-width="1"/><line x1="86" y1="170" x2="464" y2="170" stroke="#D4D4D8" stroke-width="1"/><circle cx="94" cy="78" r="3" fill="#0A0A0A"/><text x="104" y="82" font-size="11.5" font-family="sans-serif" fill="#0A0A0A">Who is in the room</text><circle cx="94" cy="98" r="3" fill="#0A0A0A"/><text x="104" y="102" font-size="11.5" font-family="sans-serif" fill="#0A0A0A">What the step-up costs</text><circle cx="94" cy="118" r="3" fill="#0A0A0A"/><text x="104" y="122" font-size="11.5" font-family="sans-serif" fill="#0A0A0A">Who decides, by when</text><circle cx="94" cy="138" r="3" fill="#0A0A0A"/><text x="104" y="142" font-size="11.5" font-family="sans-serif" fill="#0A0A0A">Any amount at all</text><circle cx="285" cy="192.0" r="3" fill="#0A0A0A"/><text x="295" y="196.0" font-size="11.5" font-family="sans-serif" fill="#0A0A0A">Which grades leave</text><circle cx="285" cy="212.0" r="3" fill="#0A0A0A"/><text x="295" y="216.0" font-size="11.5" font-family="sans-serif" fill="#0A0A0A">Who signs the partner deal</text><circle cx="285" cy="232.0" r="3" fill="#0A0A0A"/><text x="295" y="236.0" font-size="11.5" font-family="sans-serif" fill="#0A0A0A">The reskilling budget</text><circle cx="285" cy="252.0" r="3" fill="#0A0A0A"/><text x="295" y="256.0" font-size="11.5" font-family="sans-serif" fill="#0A0A0A">Revenue today and in 2030</text></svg><figcaption>Every gap, placed by <b>what it blocks</b> rather than by how big it is. The top-left quadrant is the meeting agenda.</figcaption></figure><div class="grid"><div class="block"><div class="t">Blocks the decision</div><p>Who is in the room, and who is hostile to this.<sup>4</sup></p></div><div class="block"><div class="t">Blocks the decision</div><p>What the step-up costs, and whether it sits inside the 900.</p></div><div class="block"><div class="t">Blocks the decision</div><p>Whether 1400 counts the unit IT or all of the unit.</p></div><div class="block"><div class="t">Blocks the decision</div><p>Any money at all. The deck names no amount.</p></div></div><details><summary>How this was decided</summary><div class="body"><p>Eleven gaps were carried from the spec and the four angles. <b>Nothing here is an estimate:</b> each line is missing from the source rather than guessed.</p><p>The split between blocking a decision and blocking the work is the plan agent&rsquo;s, made when it forced the ranking to three.</p></div></details></section><section class="notes"><span class="kicker">References</span><ol><li>vision-2030.md, slide 6 and slide 3. The cut, the step-up, the growth pillars, the seniority mix</li><li>vision-2030.md, slide 4. Manned channels, field engineers, L1 and L2, end-to-end responsibility</li><li>vision-2030.md, slide 5. Lower-cost integrators, SaaS delivery, the operating model shift</li><li>compass.md, sections 1 to 5. Anti-vision, boundaries, the room, off limits</li><li>01-spec.md. Inventory, what the renders add, what is named but absent</li><li>03-plan.md. The tension check and the forced ranking to three</li><li>05-verdict.md. Sixteen fatal marks, seven fixed, nine shipped with a flag</li></ol></section><footer><span>AI-supported draft</span><span>flatten level in &rarr; out: L5 &rarr; L1</span></footer></main></body></html>
