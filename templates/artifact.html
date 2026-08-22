@@ -17,8 +17,8 @@ html{font-size:17px;-webkit-font-smoothing:antialiased}
 body{background:var(--paper);color:var(--ink);font-family:var(--serif);line-height:1.6}
 .page{max-width:var(--measure);margin:0 auto;padding:5rem 1.5rem 7rem}
 
-.kicker{font-family:var(--sans);font-size:.75rem;font-weight:600;letter-spacing:.16em;
-  text-transform:uppercase;line-height:1}
+.kicker{font-family:var(--sans);font-size:.75rem;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;line-height:1;color:var(--muted)}
 .rule{border:0;border-top:1px solid var(--rule);margin:0}
 .caption{font-family:var(--sans);font-size:.8125rem;line-height:1.45;color:var(--muted)}
 .src{font-family:var(--sans);font-size:.8125rem;color:var(--muted)}
@@ -27,9 +27,10 @@ sup{font-family:var(--sans);font-size:.65em;line-height:0;vertical-align:super;c
 .refs{font-family:var(--sans);font-size:.8125rem;color:var(--muted);line-height:1.6;margin:1rem 0 2rem 1.1rem}
 .refs li{padding-left:.25rem}
 
-header{margin-bottom:var(--gap-section)}
-header .rule{margin-bottom:1.25rem}
-header .meta{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+header{margin-bottom:0}
+header .rule{margin-bottom:1.5rem}
+header .meta{font-family:var(--sans);font-size:.8125rem;color:var(--muted);margin-top:1.25rem}
+header .meta span+span::before{content:" \00b7 ";padding:0 .35em}
 
 section{margin-bottom:var(--gap-section)}
 section p{margin-bottom:1.1rem}
@@ -37,10 +38,11 @@ section > .rule{margin-bottom:1rem}
 section > h2{font-family:var(--sans);font-weight:700;font-size:1.5rem;line-height:1.2;
   letter-spacing:-.01em;margin-bottom:var(--gap-block)}
 
-/* slot 1: the one sentence. It is the page's h1 and its first claim */
-.one-sentence{font-family:var(--sans);font-weight:700;font-size:clamp(2.5rem,5.5vw,4.5rem);
-  line-height:1.05;letter-spacing:-.02em;text-align:center;margin:6rem 0;width:min(48rem,92vw);
-  margin-left:calc(50% - min(24rem,46vw));margin-right:0}
+/* slot 1: the one sentence. It is the page's h1 and its first claim, set directly
+   under the label like an article headline */
+.one-sentence{font-family:var(--sans);font-weight:700;font-size:clamp(2.1rem,4.5vw,3.4rem);
+  line-height:1.08;letter-spacing:-.02em;margin:.9rem 0 0}
+#one > p:not(.meta){margin-top:2.5rem}
 
 /* slot 2: the three must-solves */
 .must{position:relative;padding-left:0;margin-bottom:var(--gap-block)}
@@ -71,7 +73,7 @@ footer .meta{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
   .page{max-width:none;padding:0}
   section{break-inside:avoid}
   h2,.must .stmt{break-after:avoid}
-  .one-sentence{break-after:page;margin:3rem 0;width:100%;margin-left:0}
+  .one-sentence{break-after:avoid}
   .src,.caption,.unanswered,.refs,sup{color:#000}
 }
 </style>
@@ -81,17 +83,14 @@ footer .meta{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
 
 <header>
   <hr class="rule">
-  <div class="meta">
-    <span class="kicker">Simple strategy artifact</span>
-    <span class="caption">{{RUN_DATE}} · {{SOURCE_FOLDER}}</span>
-  </div>
+  <span class="kicker">Simple strategy artifact</span>
 </header>
 
 <!-- 1 · the one sentence. The headings are the claims from 03-plan.md, one per
      section, in order. A reader who scans only the headings gets the argument. -->
 <section id="one">
-  <hr class="rule">
   <h1 class="one-sentence">{{ONE_SENTENCE}}</h1>
+  <p class="meta caption">{{RUN_DATE}} · {{SOURCE_FOLDER}} · {{WHAT_WAS_READ_IN_FIVE_WORDS}}</p>
   <p>{{ONE_SENTENCE_SUPPORT}}<sup>{{REF}}</sup></p>
 </section>
 
