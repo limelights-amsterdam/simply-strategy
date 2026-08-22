@@ -81,7 +81,12 @@ the ranking was never made and the run has produced a longer document rather tha
 
 Load `skills/simplify/SKILL.md`. Produce the six sections at flatten level L1.
 
-Read `skills/simplify/references/before-after.md` first.
+Read `skills/simplify/references/before-after.md` and `references/output.md` first. The second one
+carries the rule that makes the budget reachable: **write the finding, not the chain that supports
+it.** One figure and one line per must-solve; the quotes, the arithmetic and the demoted findings
+stay where they already are, in `02-*.md` and `03-plan.md`, and step 7 surfaces them in the log.
+
+You are not cutting evidence. You are declining to copy it forward.
 
 **Fails when** it drops a claim to make a sentence shorter. Losing content is the failure mode of
 this whole step.
@@ -142,13 +147,23 @@ must-fix list.
 
 ## 7 · artifact — Artifact Agent
 
-**Gets:** `04-plain.md`, `05-verdict.md`, `01-spec.md`, `<material>/compass.md`, `design/DESIGN.md`
+**Gets:** `04-plain.md` for the page. `01-spec.md`, the four `02-*.md`, `03-plan.md` and
+`05-verdict.md` for the log. Plus `<material>/compass.md` and `design/DESIGN.md`
 **Writes:** `simple-strategy-artifact.html`, `reasoning.html`
 
 Read `output-structure.md` first. It says what to fill and what to check.
 
-Fill `templates/artifact.html` from the six sections and `templates/reasoning.html` from the spec,
-the verdict and the Compass.
+Fill `templates/artifact.html` from the six sections.
+
+Fill `templates/reasoning.html` from the files that already hold the evidence: `01-spec.md` for what
+was read and what is missing, the four `02-*.md` for who found what, `03-plan.md` for what was
+demoted and why, `05-verdict.md` for what was fixed and what shipped flagged.
+
+Nothing gets written twice. The page and the log are two views of the same run, and the log is the
+one that answers a hostile question, so it carries the chain in full.
+
+**Every claim on the page needs a matching entry in the log.** A line with no entry behind it was
+cut rather than moved, and that is the one failure this split exists to prevent.
 
 Then verify your own work, because nothing downstream does:
 

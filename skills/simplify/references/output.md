@@ -25,6 +25,33 @@ Write it as a full sentence, never a dash or a blank:
 A missing section reads as a complete answer. That is the one thing this output must never do,
 because the reader has no way to tell the difference between "nothing to report" and "not checked".
 
+## What goes on the page, and what goes behind it
+
+This is the rule that makes the budget reachable. Without it the budget is a
+number the writer has to hit by cutting, which means cutting evidence, which is
+the one thing that must not go.
+
+**The page carries the finding. The reasoning log carries the chain that
+supports it.** Nothing is deleted; it moves.
+
+| Section | On the page | In `reasoning.html` |
+|---|---|---|
+| 1 · The one sentence | The sentence, and the figure under it | The inventory it was drawn from |
+| 2 · The three must-solves | The statement, one figure, one source pointer, one line on what it costs to leave it | The quotes, the arithmetic, which angle found it, and what was demoted around it |
+| 3 · What we stop doing | Four stops and four starts, the ones that block a decision | All of them, with a pointer each |
+| 4 · What has to be true | One figure, and the single heaviest bet in prose | Every bet, with what would test it and when |
+| 5 · What the documents disagree about | The costliest two or three, as figures | All of them, with both sides quoted |
+| 6 · What we do not know | The count, and the ones that block a decision on their own | Every gap, and every document named in the material but absent from the folder |
+
+A reader who accepts the page stops there. A reader who does not goes to the
+reasoning log, which is where a hostile question is answered anyway. Putting the
+evidence on the page serves neither of them: it slows the first reader down and
+it is not where the second one looks.
+
+The test is not "did it fit". It is: **can a claim on the page be traced?** If a
+line on the page has no matching entry in the log, it was cut rather than moved,
+and that is the failure this rule exists to prevent.
+
 ## The length budget
 
 Correct is not the same as short enough. The first real run produced a page that passed every
@@ -45,6 +72,12 @@ So the budget is part of the output, not a matter of taste:
 
 `check_artifact.py` fails the run above 1200 words. Change the budget with `--max-words` when a
 board genuinely wants more, but change it deliberately rather than drifting into it.
+
+The per-section numbers are not enforced by anything. They are there so that a section carrying a
+lot of findings, usually 5 and 6, is a deliberate overrun paid for by an underrun elsewhere rather
+than an accident. The first run that had this budget came in at 1168 of 1200, with sections 4, 5 and
+6 over and 1, 2 and 3 under. That is the pattern to expect, and it is fine as long as somebody chose
+it.
 
 **The evidence under a must-solve is 40 words.** It is set in caption type, and an essay in caption
 type puts the thing a CFO will attack in the smallest text on the page. If a finding needs more than
