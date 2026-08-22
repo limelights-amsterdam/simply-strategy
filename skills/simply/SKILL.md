@@ -1,16 +1,21 @@
 ---
 name: simply
-description: Turn a folder of strategy documents into one plain-language HTML page a board reads in under six minutes. Runs seven steps - inventory, a panel of four independent angles, a forced ranking to exactly three must-solve items, a flatten pass to child-level language, three reviewers, one repair round, and a black-and-white artifact. Use when the user types /simply, points at a folder of strategy material and asks for something readable out of it, or says flatten this folder, run the strategy through it, make one page out of these documents, or what do all these documents actually say together.
+description: Turn a folder of strategy documents into one plain-language HTML page a board reads in under six minutes. Runs six steps - inventory, a panel of four independent angles, a forced ranking to exactly three must-solve items, a flatten pass to child-level language, a verify pass that traces every figure back to the source, and a black-and-white artifact. Use when the user types /simply, points at a folder of strategy material and asks for something readable out of it, or says flatten this folder, run the strategy through it, make one page out of these documents, or what do all these documents actually say together.
 allowed-tools: Bash(date *) Bash(python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check_artifact.py *) Bash(python3 ${CLAUDE_PLUGIN_ROOT}/skills/plain/scripts/plainlint.py *) Bash(python3 ${CLAUDE_PLUGIN_ROOT}/skills/plain-strategy/scripts/stratlint.py *)
 ---
 
 # Simply
 
+Distilling, not shortening. A folder holds a decision inside a great deal of context, and the job
+is to boil it down until what is being decided is visible to anyone, not only to the people who
+wrote it. The context comes down with it: every figure traces to a source, and nothing is added on
+the way.
+
 One folder in, one page out. The page says what the documents actually decided, in language a
 ten-year-old follows, with every number traceable to a source. It is written for the board, and the
 bar is that anyone in the company could follow it. The whole design rests on one problem:
 **flattening a vague document produces a beautifully simple lie.** Most strategy documents are vague
-on purpose, so four angles test the material before anything is simplified and three reviewers check
+on purpose, so four angles test the material before anything is flattened, and a verify pass checks
 that the simplification stayed true.
 
 ## How to run it
@@ -20,7 +25,7 @@ that the simplification stayed true.
 /simply-strategy:simply  ./material/<client>/   the run, in the background
 ```
 
-The run is a dynamic workflow. Start it with the Workflow tool. Do not work the seven steps by hand
+The run is a dynamic workflow. Start it with the Workflow tool. Do not work the six steps by hand
 while the runtime is available. Run `date +%Y-%m-%d-%H%M` first, then make this call, unparaphrased:
 
 ```
@@ -51,7 +56,7 @@ that starts the run. A background run outlives that turn, and a workflow cannot 
 sit and wait on a permission prompt. To settle it for good, add the three `Bash(python3 ...)` rules
 to your own permission settings before a long run.
 
-If the workflow runtime is unavailable, run the seven steps in
+If the workflow runtime is unavailable, run the six steps in
 [references/pipeline.md](references/pipeline.md) yourself with subagents, same order, same names.
 
 ## If a run dies
@@ -65,14 +70,14 @@ It is recoverable by hand, and that is the reason every step writes a numbered f
 [references/pipeline.md](references/pipeline.md) as subagents. Nothing in the pipeline is held in
 memory between steps, so a run that died after `03-plan.md` costs you steps 4 to 7, not the panel.
 
-## The seven steps
+## The six steps
 
-Spec, a panel of four, plan, flatten, three reviewers, one repair round, artifact. Twelve agents,
+Spec, a panel of four, plan, flatten, verify, artifact. Nine agents,
 two fan-outs, no loops. Output goes to `runs/<slug>/<stamp>/`. The first full run took 43.7 minutes
 on 100KB of material, and a smaller folder is quicker.
 
 What each step gets, must produce, and how it fails: [references/pipeline.md](references/pipeline.md).
-That file owns the seven steps. Do not restate them here.
+That file owns the six steps. Do not restate them here.
 
 ## What makes it more than four prompts
 
@@ -89,7 +94,7 @@ calling one thing fatal is decisive because one critic is only an opinion.
 `reasoning.html`, whose cut list and unsure list may never be empty. Both structures, and what fills
 them: [references/output-structure.md](references/output-structure.md).
 
-Step 7 verifies itself with `check_artifact.py` under the plugin root, because rendering is the only
+Step 6 verifies itself with `check_artifact.py` under the plugin root, because rendering is the only
 step nothing downstream would catch. Exit code 0 or it does not ship.
 
 ## What it is not for

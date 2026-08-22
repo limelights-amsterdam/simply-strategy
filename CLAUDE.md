@@ -22,13 +22,17 @@ skills/simply/              what the run's agents read
   references/output-structure.md  the six sections of the artifact
 skills/compass/              the intake. Two modes: read a deck, or ask five questions
                             writes material/<client>/compass.md, never the project root
-skills/simplify/            the flattener. eli5 for strategy
+skills/flatten/            the flattener. eli5 for strategy
 skills/plain/               language filter + plainlint.py
 skills/plain-strategy/      substance filter + stratlint.py
 skills/stop-slop/           de-slop filter
 skills/red-team/            the attack angle
 design/DESIGN.md            two colours, one column, print-clean
 scripts/check_artifact.py   deterministic verification of the rendered output
+scripts/check_facts.py      every figure traced back to the material
+scripts/check_headings.py   the headings have to read as a story
+scripts/check_skills.py     description and body budgets per skill
+scripts/render_artifact.py  a mechanical render, for comparing two runs
 templates/                  artifact.html, reasoning.html
 examples/                   a worked, anonymised run. `check_artifact.py examples/` verifies it
 runs/<slug>/<stamp>/       output, one directory per run. Durable, not /tmp
@@ -102,7 +106,7 @@ When you add a rule, put it where it belongs and link to it:
 
 | Rule | Owner |
 |---|---|
-| The six sections, and what may be unanswered | `skills/simplify/references/output.md` |
+| The six sections, and what may be unanswered | `skills/flatten/references/output.md` |
 | The four visual slots, and what fills them | `skills/simply/references/output-structure.md` |
 | How anything looks, colour, type, print | `design/DESIGN.md` |
 | The filter and the rules no agent may break | `skills/simply/references/house-rules.md` |
@@ -110,7 +114,7 @@ When you add a rule, put it where it belongs and link to it:
 | The seven substance tests, in full | `skills/plain-strategy/references/tests.md` |
 | The language rules and replacement lists | `skills/plain/references/` |
 | How the run is started, and where the plugin root comes from | `skills/simply/SKILL.md` |
-| The length budget: page, caption, sentence | `skills/simplify/references/output.md` |
+| The length budget: page, caption, sentence | `skills/flatten/references/output.md` |
 
 `house-rules.md` keeps a compact copy of the seven tests on purpose. Every agent reads it first, and
 sending each one to open another file to find the core checklist costs a read per agent.

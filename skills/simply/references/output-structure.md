@@ -2,7 +2,7 @@
 
 This file owns how the artifact is built. It does not define what goes in it.
 
-- **What the six sections are:** `skills/simplify/references/output.md`
+- **What the six sections are:** `skills/flatten/references/output.md`
 - **How everything looks:** `design/DESIGN.md`
 
 ## The four visual slots

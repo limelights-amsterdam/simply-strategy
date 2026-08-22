@@ -49,7 +49,7 @@ That means the two things step 3 normally owes you do not exist. You owe them in
 thought, and the through-line as one claim per section which becomes the headings. Both are defined
 in the "Then write the argument" part of step 3 in ${R}/pipeline.md. Read it.
 
-Load ${root}/skills/simplify/SKILL.md and read ${root}/skills/simplify/references/output.md and
+Load ${root}/skills/flatten/SKILL.md and read ${root}/skills/flatten/references/output.md and
 before-after.md first. Write ${out}/04-plain.md.`),
   { label: 'flatten', phase: 'Flatten' })
 

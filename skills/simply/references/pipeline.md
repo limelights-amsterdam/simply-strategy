@@ -66,7 +66,7 @@ Then bundle. Forced ranking:
   not deleted.
 - For each of the three: what it is, which angle found it, what it costs to leave it, and the pointer.
 
-Then the four supporting sections, defined in `skills/simplify/references/output.md`: what we stop
+Then the four supporting sections, defined in `skills/flatten/references/output.md`: what we stop
 doing, what has to be true, what the documents disagree about, what we do not know.
 
 ### Then write the argument, which is the part that was missing
@@ -106,13 +106,13 @@ the ranking was never made and the run has produced a longer document rather tha
 **Gets:** `03-plan.md`
 **Writes:** `04-plain.md`
 
-Load `skills/simplify/SKILL.md`. Produce the six sections at flatten level L1.
+Load `skills/flatten/SKILL.md`. Produce the six sections at flatten level L1.
 
 **The headings come from `## The argument` in `03-plan.md`, not from the section names.** One claim
 per section, in that order. A reader who scans the headings and nothing else should get the case.
 Verify with `python3 {root}/scripts/check_headings.py` on the rendered page in step 7.
 
-Read `skills/simplify/references/before-after.md` and `references/output.md` first. The second one
+Read `skills/flatten/references/before-after.md` and `references/output.md` first. The second one
 carries the rule that makes the budget reachable: **write the finding, not the chain that supports
 it.** One figure and one line per must-solve; the quotes, the arithmetic and the demoted findings
 stay where they already are, in `02-*.md` and `03-plan.md`, and step 7 surfaces them in the log.
@@ -124,74 +124,53 @@ this whole step.
 
 ---
 
-## 5 · review: three reviewers, in parallel
+## 5 · verify: one agent and three scripts
 
-**Gets:** the four `02-*.md` files, `03-plan.md` and `04-plain.md`
-**Writes:** `05-true.md`, `05-simple.md`, `05-invented.md`
+**Gets:** the four `02-*.md`, `03-plan.md`, `04-plain.md`
+**Writes:** `04-plain.md` revised, `05-verdict.md`
 
-Each reviewer returns findings marked **fatal** or **minor**, with the line it applies to.
+This step used to be three reviewers and a coordinator. Two of those reviewers were doing work a
+script does better, and the measurement is not close.
 
-| Reviewer | Question | Fatal means |
-|---|---|---|
-| `true` | Did anything get lost between what the panel found and what is on the page? Check both hops: `02-*` to `03-plan`, and `03-plan` to `04-plain` | A finding disappeared, changed meaning, or reversed at either hop |
-| `simple` | Is it actually L1? | A sentence over 15 words, an abstraction with no actor, a number with no comparison |
-| `invented` | Does every number trace to a document? | A figure, date or owner that appears in `04-plain.md` but not in the material |
+On the run that produced `runs/client-plan/`, the reviewer whose whole job was to catch invented
+figures reported "two fatal, nine minor, no invented owner anywhere in the file". Running
+`check_facts.py` over the same file found **nine figures that appear nowhere in the material**. An
+agent asked to be thorough about numbers was beaten by eighty lines of Python, which is what should
+happen: tracing a figure to a source is a lookup, not a judgement.
 
-The `true` reviewer covers two hops on purpose. Nothing else checks the plan itself, so a
-mis-ranked plan would flatten faithfully into a confident, wrong page. Fidelity to the panel and
-fidelity to the plan are the same question asked one step apart.
+So the mechanical half is mechanical now, and one agent does the half that is not.
 
-The `simple` reviewer does not count by eye. That count is the claim the whole product rests on, so
-it is measured:
+### First, run the three checks
 
 ```bash
-python3 {root}/skills/plain/scripts/plainlint.py runs/<slug>/<stamp>/04-plain.md \
-  --lang en --max-sentence 15
+python3 {root}/scripts/check_facts.py runs/<slug>/<stamp>/04-plain.md --material <material folder>
+python3 {root}/skills/plain/scripts/plainlint.py runs/<slug>/<stamp>/04-plain.md --lang en --max-sentence 15
 python3 {root}/skills/plain-strategy/scripts/stratlint.py runs/<slug>/<stamp>/04-plain.md --lang en
 ```
 
-Clean is under 1.5 for plainlint and under 1.0 for stratlint, and the two are not comparable:
-plainlint scores per 100 words of prose it scanned, stratlint per 100 words of the whole document.
-Read each verdict against its own band rather than against one number.
+Every figure traces, or says whose arithmetic it is, or is `[TO FILL: …]`. Every sentence is under
+fifteen words. Both linters clean. Fix what they report before you read anything.
 
-For the hard sentence-length and pointer checks,
-`scripts/check_artifact.py` runs on the rendered artifact in step 7. Your job here is the judgement
-the script cannot make: is an abstraction still an abstraction, does a number have a real comparison,
-did a sentence get shorter by losing meaning.
+### Then do the one thing no script can
 
----
+**Did anything get lost between what the panel found and what is on the page?** Check both hops,
+`02-*` to `03-plan`, and `03-plan` to `04-plain`. Nothing else checks the plan itself, so a
+mis-ranked plan would flatten faithfully into a confident, wrong page.
 
-## 6 · coordinate: the Review Coordinator
+This is judgement, which is why it stays with an agent: a finding can survive word for word and
+still lose the thing that made it matter. On the first real run the flattener kept shift-left's test
+and dropped its consequence, which was the whole point of the finding, and no script would have
+noticed because both versions mention shift-left.
 
-**Gets:** the three `05-*.md` files, `04-plain.md`
-**Writes:** `04-plain.md` (revised), `05-verdict.md`
+Mark each finding **fatal** or **minor**, apply the fatal ones, and write `05-verdict.md`: what the
+scripts reported, what you fixed, and anything shipping with a flag. **Nothing is fixed silently.**
 
-Tally. **A finding that two or more reviewers call fatal is decisive.** One critic is an opinion, two
-is a signal.
-
-Consolidate into must-fix and should-fix. Apply the must-fix list to `04-plain.md`. One round only, an endless polish loop eats the coffee.
-
-**Then read it back as a person would.** Load `skills/humanizer/SKILL.md` and pass over
-`04-plain.md` once. This is the last point where anyone reads the whole thing as prose rather than
-as findings, and by now it has been through a panel, a ranking, a flattening and three reviewers.
-Text handled that many times acquires a particular sound.
-
-Two rules for this pass, because it is the one most likely to do harm:
-
-- **Change no claim, no number, no pointer.** If a sentence needs a fact to read better, it stays
-  as it is and the gap goes in the log.
-- **Cut rather than smooth.** The failure mode here is polishing a sentence that should have been
-  deleted.
-
-Write `05-verdict.md`: what was fixed, what was left, and anything that survived with a flag on it.
-Anything shipped with a flag appears in `reasoning.html`. Nothing gets fixed silently.
-
-**Fails when** it treats a single reviewer's opinion as decisive, or when it rewrites beyond the
-must-fix list.
+**Fails when** it rewrites beyond what the scripts and the fidelity check reported. This is the last
+agent to touch the text, and a free hand here undoes the ranking.
 
 ---
 
-## 7 · artifact: the Artifact Agent
+## 6 · artifact: the Artifact Agent
 
 **Gets:** `04-plain.md` for the page. `01-spec.md`, the four `02-*.md`, `03-plan.md` and
 `05-verdict.md` for the log. Plus `<material>/compass.md` and `design/DESIGN.md`

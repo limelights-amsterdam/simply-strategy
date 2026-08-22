@@ -7,8 +7,8 @@ export const meta = {
     { title: 'Panel',    detail: 'four independent angles read the material' },
     { title: 'Plan',     detail: 'forced ranking to exactly three must-solve' },
     { title: 'Flatten',  detail: 'rewrite at flatten level L1' },
-    { title: 'Review',   detail: 'still true, actually simple, anything invented' },
-    { title: 'Artifact', detail: 'consolidate, then render two HTML pages' },
+    { title: 'Verify',   detail: 'three scripts, then the one check that is judgement' },
+    { title: 'Artifact', detail: 'render two HTML pages, then check them' },
   ],
 }
 
@@ -37,7 +37,7 @@ const out = stamp ? `runs/${slug}/${stamp}` : `runs/${slug}`
 const R = `${root}/skills/simply/references`
 
 // Only the steps whose job is to read the source get the material folder. The rest work from the
-// numbered files their step names. Measured on the first run, every one of the twelve agents read
+// numbered files their step names. Measured on the first run, every agent read
 // the folder and each took a comparable bite, so the flat token profile is this line, not the
 // fan-out.
 const brief = (task, reads = 'files') => `You are one agent in a Simply Strategy run.
@@ -77,27 +77,22 @@ ${out}/02-*.md files. Run the tension check first, then the forced ranking.
 Write ${out}/03-plan.md.`, 'compass'), { label: 'plan', phase: 'Plan' })
 
 phase('Flatten')
-await agent(brief(`Your step is "4 · flatten" in ${R}/pipeline.md. Load ${root}/skills/simplify/SKILL.md
-and read ${root}/skills/simplify/references/before-after.md before you start.
+await agent(brief(`Your step is "4 · flatten" in ${R}/pipeline.md. Load ${root}/skills/flatten/SKILL.md
+and read ${root}/skills/flatten/references/before-after.md before you start.
 Read ${out}/03-plan.md. Write ${out}/04-plain.md.`), { label: 'flatten', phase: 'Flatten' })
 
-phase('Review')
-const REVIEWERS = ['true', 'simple', 'invented']
-await parallel(REVIEWERS.map(r => () =>
-  agent(brief(`You are the "${r}" reviewer. Read the review table in ${R}/pipeline.md step 5.
-Read ${out}/03-plan.md and ${out}/04-plain.md, and the four ${out}/02-*.md files if your brief
-needs them. Mark every finding fatal or minor, with its line.
-Write ${out}/05-${r}.md.`, r === 'invented' ? 'material' : 'files'),
-  { label: r, phase: 'Review' })))
+phase('Verify')
+// Was three reviewers and a coordinator. Two of those reviewers were doing a
+// lookup, and scripts do lookups better: on the first full run the invented
+// reviewer passed a file that check_facts.py found nine untraced figures in.
+// One agent now runs the checks and does the one job that is judgement.
+await agent(brief(`Your step is "5 · verify" in ${R}/pipeline.md. Run the three checks it names,
+fix what they report, then check both fidelity hops. Read ${out}/03-plain.md if it exists, the four
+${out}/02-*.md and ${out}/04-plain.md.
+This step owns two files. Revise ${out}/04-plain.md and write ${out}/05-verdict.md.`, 'material'),
+  { label: 'verify', phase: 'Verify' })
 
-phase('Artifact')
-await agent(brief(`Your step is "6 · coordinate" in ${R}/pipeline.md. Read the three ${out}/05-*.md
-files. Two or more reviewers calling something fatal is decisive.
-This step owns two files, which is the exception in this run. Apply the must-fix list to
-${out}/04-plain.md in one round, and write ${out}/05-verdict.md.`),
-  { label: 'coordinate', phase: 'Artifact' })
-
-const artifact = await agent(brief(`Your step is "7 · artifact" in ${R}/pipeline.md.
+const artifact = await agent(brief(`Your step is "6 · artifact" in ${R}/pipeline.md.
 Read ${R}/output-structure.md and ${root}/design/DESIGN.md first.
 
 You build two files from two sets of inputs, and the split is the point of this step. The page

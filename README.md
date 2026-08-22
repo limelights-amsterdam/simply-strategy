@@ -13,6 +13,23 @@ where it is unsure.
 
 ---
 
+## What it is for
+
+Distilling, not shortening. A folder of strategy documents holds a decision somewhere inside a great
+deal of context, and the job is to boil that down until what is actually being decided is visible to
+anyone who reads it. Not the leadership team. Anyone.
+
+Two things follow from putting it that way.
+
+**The context comes with it.** A distillation that drops what a claim rests on is just a shorter
+document. So every figure on the page traces to a source, every section can show its own working,
+and the reasoning log carries the chain in full.
+
+**Nothing is added on the way down.** The one thing that must never happen is a page that reads
+clearly and says something the material does not. That is why four angles test the material before
+anything is flattened, and why a script traces every number back to the source rather than an agent
+being asked to be careful.
+
 ## Why this exists
 
 There is a plugin called `eli5` whose entire instruction is one sentence: explain this to someone who
@@ -154,7 +171,7 @@ the log is built from the files the earlier steps already wrote.
 Every file in that folder is one agent's output, and nothing else writes it. If a run dies, the
 last file tells you which step to restart from.
 
-Twelve agents. Two fan-outs, five single minds, one repair round, no loops.
+Nine agents. One fan-out, no loops.
 
 The first full run took 43.7 minutes and 1.2M subagent tokens on 100KB of material, with no errors.
 A smaller folder is quicker. Most of that time is the four angles each reading everything separately,
@@ -229,7 +246,7 @@ runs/<slug>/<stamp>/        output, one folder per run. Git-ignored. Its files a
 
 Everything else is the plugin. `workflows/simply.js` is the run, about 90 lines of wiring with no
 strategy content. `skills/` holds what the agents read, one folder per job: `simply/` the run's own
-references, `compass/` the intake, `simplify/` the flattener, `plain/` and `plain-strategy/` the two
+references, `compass/` the intake, `flatten/` the flattener, `plain/` and `plain-strategy/` the two
 filters with their linters, `stop-slop/` and `red-team/`. `templates/` and `design/DESIGN.md` decide
 how the page looks, `scripts/` verifies it, and `examples/` is a worked run the checker validates.
 

@@ -1,5 +1,5 @@
 ---
-name: simplify
+name: flatten
 description: Flatten a strategy into language a child follows. Takes a strategic plan, memo, annual plan, board deck or recommendation and rewrites it at flatten level L1 - every sentence under 15 words, every abstraction turned into a person doing something, every number given a comparison. Use when someone says flatten this, simplify this strategy, explain this like I am five, make this understandable for the whole company, what does this actually say, translate this out of consultant language, or asks for the flatten level of a document. Not a summary - a summary makes a document shorter, this makes it understandable.
 ---
 
