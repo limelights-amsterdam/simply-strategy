@@ -18,7 +18,7 @@ anything is simplified, and three reviewers check that the simplification stayed
 
 ```
 /simply-strategy:compass ./material/<client>/   fills that folder's compass.md. Once per client
-/simply-strategy:simply  ./material/<client>/   the run, about 25 minutes
+/simply-strategy:simply  ./material/<client>/   the run, about 45 minutes
 ```
 
 The run is a dynamic workflow. Start it with the Workflow tool. Do not work the seven steps by hand
@@ -61,7 +61,8 @@ progress screen is not.
 | 6 | Review Coordinator | linear | `04-plain.md` revised, `05-verdict.md` |
 | 7 | Artifact Agent | linear | the two HTML pages |
 
-Output goes to `runs/<slug>/`. Ten agents, two fan-outs, one repair round, no loops.
+Output goes to `runs/<slug>/`. Twelve agents, two fan-outs, one repair round, no loops. The first
+full run took 43.7 minutes on 100KB of material. A smaller folder is quicker.
 
 Details per step, including how each one fails: [references/pipeline.md](references/pipeline.md).
 

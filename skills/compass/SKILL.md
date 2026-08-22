@@ -1,6 +1,6 @@
 ---
 name: compass
-description: Fill the Compass - the five-field intake that steers a Simply Strategy run. Asks what you refuse before it asks what you want, because an anti-vision and a boundary let an advisor notice something you never wrote a goal for. Two modes - read the fields out of an existing deck or set of documents, or ask five questions. Use when the user types /compass, starts a Simply Strategy run, or says fill the compass, set up the intake, what do you need from me before the run, or hands over a deck and asks what we can get out of it.
+description: Fill the Compass - the five-field intake that steers a Simply Strategy run. Asks what you refuse before it asks what you want, because an anti-vision and a boundary let an advisor notice something you never wrote a goal for. Two modes - read the fields out of an existing deck or set of documents, or ask five questions. Use when the user types /compass or /simply-strategy:compass, starts a Simply Strategy run, or says fill the compass, set up the intake, what do you need from me before the run, or hands over a deck and asks what we can get out of it.
 ---
 
 # Compass
@@ -30,7 +30,7 @@ So the order matters. Ask what they refuse before you ask what they want.
 
 ## Two modes
 
-**Read it from material.** `/compass ./deck/` — the better mode, and the one to offer first. Read
+**Read it from material.** `/simply-strategy:compass ./deck/` — the better mode, and the one to offer first. Read
 everything in the folder, draft all five fields, and mark each one `drafted` or `missing`. Then show
 the draft and ask for corrections.
 
@@ -46,7 +46,7 @@ Formats:
 | PDF | Works, but 20 pages per read and slow. Fine for a document, not for a 60-slide deck |
 | PowerPoint, Keynote | No. Export to PDF or images first |
 
-**Ask five questions.** `/compass` with no argument. Use `AskUserQuestion`, and put anti-vision and
+**Ask five questions.** `/simply-strategy:compass` with no argument. Use `AskUserQuestion`, and put anti-vision and
 boundaries first.
 
 ## The five fields

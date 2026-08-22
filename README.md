@@ -3,8 +3,8 @@
 Point it at a folder of strategy documents. Get back one page a board reads in four minutes.
 
 ```
-/compass ./material/acme/    once per client, drafts five fields from their own material
-/simply ./material/acme/    no questions, about 25 minutes. Watch it with /workflows
+/simply-strategy:compass ./material/acme/   once per client, drafts five fields from their material
+/simply-strategy:simply  ./material/acme/   no questions, about 45 minutes. Watch it with /workflows
 ```
 
 Out comes `simple-strategy-artifact.html`. Black and white, big type, very few words, prints on any
@@ -111,12 +111,17 @@ Linear where a step needs everything before it, parallel where it does not.
 | 6 | Review Coordinator | linear | `05-verdict.md` | Consolidates must-fix and applies it. One round |
 | 7 | Artifact Agent | linear | two HTML pages | Renders, then verifies its own output |
 
-Ten agents. Two fan-outs, five single minds, one repair round, no loops.
+Twelve agents. Two fan-outs, five single minds, one repair round, no loops.
+
+The first full run took 43.7 minutes and 1.2M subagent tokens on 100KB of material, with no errors.
+A smaller folder is quicker. Most of that time is the four angles each reading everything separately,
+which is the part that makes the tension check worth having, so it is not the first thing to trade
+away for speed.
 
 The angles are blind to each other on purpose. That is what makes step 3's **tension check** mean
-something: if the four come back agreeing, an angle did not bite, and the Plan Agent sends that one
-back to write from its own blind spot rather than from consensus. Four agents nodding politely is
-worse than one agent, because it reads like confirmation.
+something: if the four come back agreeing, an angle did not bite, and the Plan Agent records its
+findings as weak rather than treating agreement as confirmation. Four agents nodding politely is
+worse than one agent, because it reads like a second opinion when it is an echo.
 
 ## The rules it will not break
 
@@ -161,10 +166,15 @@ python3 skills/plain-strategy/scripts/stratlint.py runs/<slug>/04-plain.md
 
 Under 1.5 weighted findings per 100 words is clean.
 
+The three commands above are written from a clone of this repo. Installed as a plugin, the scripts
+sit under the plugin directory rather than the one you are working in, and the run prefixes them
+itself from the root the skill hands it.
+
 ## What is in here
 
 ```
-workflows/simply.js         the run. ~70 lines of wiring, no strategy content
+.claude-plugin/             plugin.json and the marketplace entry that serves it
+workflows/simply.js         the run. ~90 lines of wiring, no strategy content
 skills/simply/              what the run's agents read
   references/house-rules.md   prepended to every agent. The filter and the unbreakable rules
   references/pipeline.md      what each step gets, must produce, and how it fails
@@ -192,11 +202,20 @@ Every normative rule has exactly one owner file. The table in `CLAUDE.md` says w
 
 ```
 /plugin marketplace add limelights-amsterdam/simply-strategy
-/plugin install simply-strategy
+/plugin install simply-strategy@limelights
 ```
 
 Needs Claude Code 2.1.154 or later for the workflow runtime. Python 3 for the three scripts. Nothing
 else, and nothing is fetched at run time.
+
+Steps 5 and 7 shell out to Python. A workflow runs in the background and cannot ask you anything, so
+a run that meets a permission prompt sits and waits. Before a long run, allow the three commands:
+
+```
+Bash(python3 */scripts/check_artifact.py *)
+Bash(python3 */skills/plain/scripts/plainlint.py *)
+Bash(python3 */skills/plain-strategy/scripts/stratlint.py *)
+```
 
 ## What it is not for
 
