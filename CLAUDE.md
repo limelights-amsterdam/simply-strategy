@@ -30,6 +30,7 @@ skills/red-team/            the attack angle
 design/DESIGN.md            two colours, one column, print-clean
 scripts/check_artifact.py   deterministic verification of the rendered output
 templates/                  artifact.html, reasoning.html
+examples/                   a worked, anonymised run. Validates in CI
 runs/<slug>/                output. Durable, not /tmp
 ```
 
