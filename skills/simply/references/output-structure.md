@@ -38,7 +38,9 @@ that are easy to break while filling:
   anything: without colour those are guessing.
 - No `<img>`, no icon library, no emoji, no CDN, no JavaScript. One file, opens with no network.
 - Sentence case in every heading. No em dashes in the copy.
-- Every claim carries a source pointer, or it does not go on the page.
+- Every claim carries a source pointer, or it does not go on the page. On the page a pointer is a
+  superscript numeral that resolves to the source list in the footer, one entry per file and page,
+  numbered in order of first use. Never a bracket mid-sentence.
 - It prints. The templates carry the `@media print` rules; test by printing, not by print preview.
 
 ## The two files

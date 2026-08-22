@@ -48,9 +48,10 @@ A board can act on a flagged gap. It cannot act on a fabricated one. This includ
 as periods. "Over the plan period" is not a date, it is `[TO FILL: by which date]`.
 
 **Every claim carries a pointer.** Document name and page, in brackets, at the end of the claim:
-`[plan-2026.md p. 6]`, or `[slide 6]` when the folder holds one deck. No pointer, no claim. The
-renderer writes the same pointer in parentheses, `(plan-2026.md p. 6)`, which is the form
-`check_artifact.py` checks against the material folder.
+`[plan-2026.md p. 6]`, or `[slide 6]` when the folder holds one deck. No pointer, no claim. On the
+page the renderer turns each one into a superscript numeral and lists the sources once at the foot,
+`(plan-2026.md p. 6)`, one entry per file and page, because a bracket mid-sentence three times a
+paragraph is clutter. That list is what `check_artifact.py` checks against the material folder.
 
 Your own reasoning is allowed and often the most useful thing you produce. It just has to be labelled
 as reasoning rather than dressed as a finding: *the plan never says this, but nothing in it works
