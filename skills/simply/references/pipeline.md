@@ -141,6 +141,18 @@ is a signal.
 Consolidate into must-fix and should-fix. Apply the must-fix list to `04-plain.md`. One round only —
 an endless polish loop eats the coffee.
 
+**Then read it back as a person would.** Load `skills/humanizer/SKILL.md` and pass over
+`04-plain.md` once. This is the last point where anyone reads the whole thing as prose rather than
+as findings, and by now it has been through a panel, a ranking, a flattening and three reviewers.
+Text handled that many times acquires a particular sound.
+
+Two rules for this pass, because it is the one most likely to do harm:
+
+- **Change no claim, no number, no pointer.** If a sentence needs a fact to read better, it stays
+  as it is and the gap goes in the log.
+- **Cut rather than smooth.** The failure mode here is polishing a sentence that should have been
+  deleted.
+
 Write `05-verdict.md`: what was fixed, what was left, and anything that survived with a flag on it.
 Anything shipped with a flag appears in `reasoning.html`. Nothing gets fixed silently.
 

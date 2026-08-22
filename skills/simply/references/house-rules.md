@@ -33,6 +33,14 @@ no closing paragraph of generic optimism, no sentence that announces what the ne
 
 Full list in `skills/stop-slop/references/`.
 
+**4. Sound like a person.** Load `skills/humanizer/SKILL.md` and read your own output back against
+it. It catches what the three layers above do not: a claim of importance where a fact belongs, a
+source that is nobody in particular, an -ing clause bolted on to make an ordinary finding sound
+deep, and the closing paragraph of general optimism.
+
+This layer runs last, and only last. Applied before the substance test it polishes something that
+may not deserve to exist.
+
 ## Rules you may not break
 
 **Never invent a number.** An unknown figure, owner or date becomes `[TO FILL: what is needed]`.
