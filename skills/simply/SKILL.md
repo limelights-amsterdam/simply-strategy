@@ -15,19 +15,13 @@ it: every figure traces to a source, and nothing is added on the way.
 Six steps, one after another, each writing a numbered file. **No subagents.** Nothing is held in
 memory between steps, so the files are the state and you can stop and resume at any of them.
 
-That is not a limitation. It was measured against a nine-agent parallel version on the same deck:
-
-| | Words | Pointers | Untraced figures | Headings that make a claim |
-|---|---|---|---|---|
-| Nine agents, panel in parallel | 3848 | 97 | **9** | 0 of 6 |
-| **You, in order** | **714** | 11 | **0** | **6 of 6** |
-
-The parallel version bought one thing you cannot have: four angles blind to each other, which is what
-makes agreement between them evidence. You lose that, and you gain that every step sees the last,
-which is why the argument holds together and the figures trace. It is in the git history.
+Each step sees everything the last one wrote. That is what makes the argument hold together and the
+figures trace, and it is also why agreement between the four angles in step 2 is not evidence: they
+are not independent. Weight a finding by what it rests on, not by how many passes repeat it.
 
 **The one number to watch is the pointers.** Working alone, it is easy to write a good sentence and
 forget where it came from. A distillation that drops what a claim rests on is a shorter document.
+`check_facts.py` counts them in step 5.
 
 ## The steps
 
@@ -43,8 +37,18 @@ forget where it came from. A distillation that drops what a claim rests on is a 
 What each one gets, must produce, and how it fails: [references/pipeline.md](references/pipeline.md).
 That file owns the six steps. Do not restate them here.
 
-Output goes to `runs/<slug>/<stamp>/`. Get the stamp from `date +%Y-%m-%d-%H%M` before you start, so
-a second run does not overwrite the first.
+Output goes to `runs/<slug>/<stamp>/`. Get the stamp before you start, so a second run does not
+overwrite the first:
+
+```bash
+python3 -c "import datetime; print(datetime.datetime.now().strftime('%Y-%m-%d-%H%M'))"
+```
+
+## Where the plugin root is
+
+Commands in the references spell `{root}/`. `{root}` is `${CLAUDE_PLUGIN_ROOT}` when this runs as an
+installed plugin, and the repository root in a clone. It is never the folder the user is working in,
+so a bare `scripts/...` resolves to nothing. Resolve it once at the start and use it in every command.
 
 ## What makes it more than six prompts
 
@@ -56,8 +60,8 @@ through-line as one claim per section. The flattener turns that into the heading
 page is a well-ranked list, which is what it was before this step existed.
 
 **Step 5 is three scripts and one judgement.** Tracing a figure to a source is a lookup, so
-`check_facts.py` does it. On the parallel run, the agent whose whole job was catching invented
-figures passed a file the script found nine untraced figures in.
+`check_facts.py` does it. What is left for you is whether anything was lost between the plan and
+the page, which no script can see.
 
 **Three seats.** Exactly three must-solve items. A model that may choose, doesn't.
 

@@ -1,6 +1,7 @@
 # Simply Strategy
 
-Point it at a folder of strategy documents. Get back one page a board reads in under six minutes.
+A Claude Code plugin. Point it at a folder of strategy documents. Get back one page a board reads in
+under six minutes.
 
 ```
 /simply-strategy:compass ./material/acme/    once per client, five questions or a deck
@@ -94,7 +95,8 @@ It lives at `material/<client>/compass.md`, beside the documents it describes.
 ## The six steps
 
 One reader walks them in order. No subagents. Nothing is held in memory between steps, so the
-numbered files are the state and a stopped run resumes at the next one.
+numbered files are the state and a stopped run resumes at the next one. Each step sees what the last
+one wrote, which is what keeps the argument whole and the figures traceable.
 
 | # | Step | Writes |
 |---|---|---|
@@ -109,63 +111,36 @@ numbered files are the state and a stopped run resumes at the next one.
 through-line as one claim per section, which becomes the headings. Without it the page is a
 well-ranked list, which is what it was before that step existed.
 
-### Why one reader and not nine
-
-An earlier version ran the same six steps as nine agents, with the four angles blind to each other.
-Measured on the same 76-slide deck:
-
-| | Words | Pointers | Untraced figures | Headings that make a claim |
-|---|---|---|---|---|
-| Nine agents, panel in parallel | 3848 | 97 | **9** | 0 of 6 |
-| One reader, in order | 714 | 20 | **0** | **6 of 6** |
-
-The parallel version bought one real thing: agreement between four blind readers is evidence, where
-agreement between four sequential passes is not. It cost a JavaScript runtime, a plugin-root
-substitution that does not work in workflow scripts, and, on the run that was measured, nine figures
-that appear nowhere in the source.
-
-It is in the git history if a folder ever needs four independent readers. The plugin is markdown and
-Python.
-
 ## The rules it will not break
 
-- **Exactly three must-solve items.** A model that may choose, doesn't. A model with three seats has
-  to weigh.
-- **It never invents a number.** An unknown figure, owner or date comes out as `[TO FILL: …]`,
-  including a date dressed up as a period. A board can act on a flagged gap.
-- **Its own arithmetic says so, on the same line.** Deriving a figure from the source is allowed.
-  Presenting it as the source's is not.
-- **Every claim carries a pointer**, at least two per hundred words. Working through the steps alone
-  loses citations quietly, and a page that reads well and cannot be checked is the failure mode.
-- **Nothing is softened.** If two documents disagree, the page says so and names both.
-- **Unanswered is not absent.** A section the material cannot answer says so in a full sentence.
-- **The "where I'm unsure" section is never empty.** A run that discarded nothing is a pass-through.
+Exactly three must-solve items. No invented numbers: an unknown figure, owner or date comes out as
+`[TO FILL: …]`. Its own arithmetic says so on the line. Every claim carries a pointer, at least two
+per hundred words. Nothing is softened. A section the material cannot answer says so in a full
+sentence. The "where I'm unsure" section is never empty.
+
+The full versions, with the why, are in `skills/simply/references/house-rules.md`, which every step
+reads first.
 
 ## It checks its own work
 
-Four checks and a fixture pass, because a check a script can make should not be a
-judgement call.
+Three checks and a fixture pass, because a check a script can make should not be a judgement call.
 
 ```bash
 python3 scripts/check_facts.py     runs/<slug>/<stamp>/04-plain.md --material material/<slug>/
 python3 scripts/check_artifact.py  runs/<slug>/<stamp>/ --material material/<slug>/
 python3 scripts/check_headings.py  runs/<slug>/<stamp>/simple-strategy-artifact.html
-python3 scripts/check_skills.py    skills/
 python3 tests/run_fixtures.py
 ```
 
 | Script | What it will not let through |
 |---|---|
-| `check_facts` | A figure that appears nowhere in the material and does not say whose arithmetic it is |
+| `check_facts` | A figure that appears nowhere in the material and does not say whose arithmetic it is, or a page with too few pointers |
 | `check_artifact` | A missing section, an unfilled slot, a sentence over fifteen words, a page that loads something |
 | `check_headings` | A heading that counts the page or names its own section instead of claiming anything |
-| `check_skills` | A skill whose description or body is over its context budget |
 | `run_fixtures` | A regression in `check_artifact` or `check_headings`, across eighteen recorded cases |
 
-The point of writing them down is what they caught. On a full parallel run, the agent whose whole job
-was catching invented figures reported "no invented owner anywhere in the file"; `check_facts` found
-nine figures in that same file that appear nowhere in the material. Tracing a figure to a source is a
-lookup, not a judgement.
+Tracing a figure to a source is a lookup, not a judgement, which is why a script does it and not a
+reader who is also trying to be thorough about six other things.
 
 A check that cannot run is not a check that passed. `check_artifact` reports **not run** as its own
 outcome and stops the artifact the same way a failure does.
@@ -181,7 +156,7 @@ skills/plain-strategy/    substance filter, stratlint.py
 skills/stop-slop/         de-slop filter
 skills/humanizer/         the last pass, so it reads like a person
 skills/red-team/          the attack angle
-scripts/                  the four checks
+scripts/                  the three checks
 design/DESIGN.md          two colours, one column, print-clean, six figures
 templates/                artifact.html, reasoning.html, figures.html
 tests/                    eighteen fixtures and their expected verdicts

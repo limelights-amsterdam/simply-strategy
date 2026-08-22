@@ -86,9 +86,9 @@ reader has to get past before reaching anything they can correct.
 Each field carries its own marker on the heading line:
 
 ```markdown
-## 1. Anti-vision — `drafted from vision-2030.md, slide 2`
-## 2. Boundaries — `given`
-## 4. The room — `[MISSING]`
+## 1. Anti-vision: `drafted from vision-2030.md, slide 2`
+## 2. Boundaries: `given`
+## 4. The room: `[MISSING]`
 ```
 
 Close with one line: how many fields are filled, and what the run will be blind to without the rest.

@@ -81,13 +81,13 @@ These sentences look like a choice but name nothing concrete. They fail the sacr
 
 Not every technical term is empty. These may stay once they are defined, because they then point at something you can measure or name:
 
-- **Segment** — if you say which segment, with a boundary.
-- **Market share** — with a denominator and a reference date.
-- **Margin, lead time, retention, acquisition cost** — these are numbers.
-- **Moat, right to win** — if you name the reason the competitor does not copy it.
-- **Value proposition** — if it states what the customer buys and why from you.
-- **Hypothesis** — if a test and a date come with it.
-- **Assumption** — in fact you want these stated explicitly in the document.
+- **Segment**: if you say which segment, with a boundary.
+- **Market share**: with a denominator and a reference date.
+- **Margin, lead time, retention, acquisition cost**: these are numbers.
+- **Moat, right to win**: if you name the reason the competitor does not copy it.
+- **Value proposition**: if it states what the customer buys and why from you.
+- **Hypothesis**: if a test and a date come with it.
+- **Assumption**: in fact you want these stated explicitly in the document.
 
 The underlying rule: a technical term is fine when it is shorter than its definition and the reader knows that definition. If in doubt, write it out once and use the term after that.
 

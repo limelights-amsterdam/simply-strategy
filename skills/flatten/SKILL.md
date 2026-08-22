@@ -3,7 +3,7 @@ name: flatten
 description: Flatten a strategy into language a child follows. Takes a strategic plan, memo, annual plan, board deck or recommendation and rewrites it at flatten level L1 - every sentence under 15 words, every abstraction turned into a person doing something, every number given a comparison. Use when someone says flatten this, simplify this strategy, explain this like I am five, make this understandable for the whole company, what does this actually say, translate this out of consultant language, or asks for the flatten level of a document. Not a summary - a summary makes a document shorter, this makes it understandable.
 ---
 
-# Simplify
+# Flatten
 
 Flatten a strategy until a ten-year-old can repeat it back. That is a different job from summarising.
 A summary makes a document shorter. This makes it understandable, and it usually gets longer in the
@@ -43,43 +43,37 @@ Most documents ship at L5 while the room believes they are at L2. You deliver L1
 6. **Group sentences into paragraphs.** The 15-word limit is on the sentence, not the paragraph. A
    page of one-line paragraphs reads like a telegram, and it is the failure mode this skill falls
    into when it is trying hardest. Sentences that serve one thought sit together.
-7. **Stay inside the budget.** The whole page is 1200 words, and the evidence under each must-solve
-   is 40. See [references/output.md](references/output.md). A finding that needs more room belongs
-   in the reasoning log, not in smaller type.
+7. **Stay inside the budget.** [references/output.md](references/output.md) owns it. A finding that
+   needs more room belongs in the reasoning log, not in smaller type.
 
 Worked pairs on real strategy language: [references/before-after.md](references/before-after.md).
 Read that file before you flatten anything, the move is easier to copy than to describe.
 
 ## What you may not do
 
-- **Never invent a number.** An unknown figure, owner or date becomes `[TO FILL: what is needed]`.
-  A board can act on a flagged gap. It cannot act on a fabricated one.
-- **Never drop a claim to make a sentence shorter.** If a claim will not fit, it gets its own
-  sentence. Losing content is the failure mode of this whole skill.
-- **Never soften a conflict.** If two documents disagree, the flattened version says they disagree.
-- **Never add confidence the source did not have.** "We think" stays "we think".
+**Never drop a claim to make a sentence shorter.** If a claim will not fit, it gets its own
+sentence. Losing content is the failure mode of this whole skill.
+
+The rules every step shares, never invent a number, never soften a conflict, never add confidence
+the source did not have, are owned by `skills/simply/references/house-rules.md` and apply here
+unchanged.
 
 ## Output
 
-Six sections: the one sentence, the three things that must be solved, what we stop doing, what has to
-be true, what the documents disagree about, what we do not know.
-
-Sections 3 to 5 may say the plan does not answer them. They may never be dropped, because a missing
-section reads as a complete answer. The definition, with the rule for each:
-[references/output.md](references/output.md).
-
-Close with the flatten level the input came in at, and what it went out at.
+Six sections, defined in [references/output.md](references/output.md), with what each may leave
+unanswered and the closing line that names the level in and the level out.
 
 ## Check yourself
 
 ```bash
-python3 ../plain/scripts/plainlint.py output.md --mode strict --lang en
-python3 ../plain-strategy/scripts/stratlint.py output.md --lang en
+python3 {root}/skills/plain/scripts/plainlint.py 04-plain.md --max-sentence 15
+python3 {root}/skills/plain-strategy/scripts/stratlint.py 04-plain.md
 ```
 
-Clean is under 1.5 for plainlint and under 1.0 for stratlint. The bands differ because the
-denominators do: plainlint counts the prose it scanned, stratlint counts the whole document. The sentence count is measured, not estimated:
-`--max-sentence 15` is the claim the whole skill rests on, so it is the flag that checks it.
+`{root}` is the plugin root, see `skills/simply/SKILL.md`. Clean is under 1.5 for plainlint and
+under 1.0 for stratlint. The bands differ because the denominators do: plainlint counts the prose
+it scanned, stratlint counts the whole document. `--max-sentence 15` is the claim the whole skill
+rests on, so it is the flag that checks it.
 
 ## Rules and further reading
 

@@ -28,15 +28,15 @@ empty graphic is worse than no graphic.
 
 **`simple-strategy-artifact.html`** from `templates/artifact.html`. The six sections, four slots.
 
-**`reasoning.html`** from `templates/reasoning.html`. Five parts, and the first three may not be empty:
+**`reasoning.html`** from `templates/reasoning.html`. Four parts, and the first three may not be empty:
 
 1. **What it read.** The inventory from `01-spec.md`, including files it could not read.
 2. **What it threw away.** Everything demoted to important or nice-to-know, with why. A run that
    discarded nothing is a pass-through, not a process.
 3. **Where it is unsure.** Every flag from `05-verdict.md`, every `[TO FILL]`, every `[MISSING]`
    intake field, and the flatten level the input came in at.
-4. **The tension check.** Whether the angles agreed too much, and which one was sent back.
-5. **Shipped with a flag.** What survived review with a note on it. Nothing is fixed silently.
+4. **Shipped with a flag.** What survived step 5 with a note on it, and which pass in step 2 did
+   not bite. Nothing is fixed silently.
 
 This is the page that survives a hostile question.
 
@@ -46,16 +46,12 @@ Rendering is the only step nothing downstream checks, so it checks itself:
 
 ```bash
 python3 {root}/scripts/check_artifact.py runs/<slug>/<stamp>/ --material <material folder>
+python3 {root}/scripts/check_headings.py runs/<slug>/<stamp>/simple-strategy-artifact.html
 ```
 
-`{root}` is the plugin root from your prompt. Exit code 0 or it does not ship.
+Exit code 0 on both, or it does not ship. The first prints what it checks; `--material` is what lets
+it confirm that every pointer names a file that exists, which a confident citation of a document
+nobody has would otherwise get past. The second reads the headings on their own as an argument.
 
-The checker verifies the six sections, unfilled slots, sentence length, the three-item count, em
-dashes, and that the reasoning log's cut list and unsure list are not empty. With `--material` it
-also checks that every source pointer names a file that actually exists in that folder, which is the
-one thing a confident citation of a document nobody has would otherwise get past.
-
-It also enforces the length budget. Fix what it reports and run it again.
-
-If a check cannot pass because the material genuinely does not support it, that belongs in section 6
-and in the reasoning log. It does not belong in a silent workaround.
+Fix what they report and run them again. If a check cannot pass because the material genuinely does
+not support it, that belongs in section 6 and in the reasoning log, not in a silent workaround.

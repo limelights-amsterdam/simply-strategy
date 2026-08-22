@@ -2,9 +2,9 @@
 """check_artifact - verify a rendered Simply Strategy artifact.
 
 Every claim this product makes is checkable, so it gets checked by a script
-rather than by an agent's opinion. Three of the reviewer's questions become
-deterministic here: is every sentence under 15 words, does every claim carry a
-source pointer, and did the renderer drop a section.
+rather than by a judgement: is every sentence under the limit, does every claim
+carry a source pointer, did the renderer drop a section, does the page fit its
+reading time.
 
     python3 scripts/check_artifact.py runs/<slug>/
     python3 scripts/check_artifact.py runs/<slug>/simple-strategy-artifact.html
@@ -24,19 +24,19 @@ import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 
-# One ruler. The word counter and sentence splitter are the ones plainlint uses on
-# 04-plain.md, so a sentence cannot pass the markdown and fail the page, or the reverse.
-# The module lives next to plainlint; the path is relative to this file, so it holds in
-# a clone and installed under the plugin root alike.
+# One ruler and one set of budgets, shared with plainlint on 04-plain.md, so a
+# sentence cannot pass the markdown and fail the page, or the reverse. The module
+# lives next to plainlint; the path is relative to this file, so it holds in a
+# clone and installed under the plugin root alike.
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "skills" / "plain" / "scripts"))
-from textlib import count_words, split_sentences  # noqa: E402
+from textlib import (  # noqa: E402
+    L1_MAX_SENTENCE as MAX_WORDS, MAX_CAPTION_WORDS, MAX_PAGE_WORDS, TOFILL, WPM,
+    count_words, split_sentences,
+)
 
-MAX_WORDS = 15
-MAX_PAGE_WORDS = 1200          # about six minutes at 200 words a minute
-WPM = 200
-MAX_SUPPORT_WORDS = 40         # the line under a must-solve is a caption, not an essay
-SECTIONS = ["one", "must-solve", "stop", "bet", "conflicts", "gaps"]
-SECTION_NAMES = {
+# The six sections, in order, with the name each is reported under. The
+# definition is skills/flatten/references/output.md; these are its ids.
+SECTIONS = {
     "one": "The one sentence",
     "must-solve": "Three things must be solved",
     "stop": "What we stop doing",
@@ -71,10 +71,11 @@ NETWORK = re.compile(
 UNFILLED = re.compile(r"\{\{[A-Z_]+\}\}")
 UNANSWERED = re.compile(r"does not (?:say|answer|name|state)|is not (?:answered|named|stated)"
                         r"|no .{0,30}(?:is named|was named|were found)", re.I)
-TOFILL = re.compile(r"\[TO FILL:([^\]]*)\]")
 SUPREF = re.compile(r"<sup>\s*[\d,\s]+\s*</sup>", re.I)
 POINTER = re.compile(r"\([^()]*\.(?:md|pdf|txt|docx|pptx|csv|xlsx)[^()]*\bp\.?\s?\d+[^()]*\)", re.I)
-EM_DASH = re.compile(r"[—–]")
+EM_DASH = re.compile(r"[\u2014\u2013]")
+KICKER = re.compile(r'<span class="kicker">.*?</span>', re.S | re.I)
+MUST = re.compile(r'<div class="must">.*?(?=<div class="must">|</section>)', re.S)
 
 
 @dataclass
@@ -84,10 +85,8 @@ class Result:
     def add(self, name, ok, detail="", hard=True):
         """ok=True passed, ok=False failed, ok=None could not run.
 
-        The third state exists because a check that scanned nothing used to report
-        a tick. Six section-bound checks passed on a page with no section ids,
-        which turned broken markup into a clean bill of health. A false pass is
-        more expensive than a false fail, so "not run" is its own outcome and it
+        A check that scanned nothing has not passed. A false pass is more
+        expensive than a false fail, so "not run" is its own outcome and it
         blocks shipping the same way a failure does.
         """
         self.checks.append({"check": name, "ok": ok, "detail": detail, "hard": hard})
@@ -161,12 +160,13 @@ def sentences(t: str):
     return [s for block in t.split("\u2028") for s in split_sentences(block)]
 
 
-def check_artifact(path: str, r: Result) -> None:
+def check_artifact(path: str, r: Result, max_page_words: int = MAX_PAGE_WORDS) -> None:
     doc = open(path, encoding="utf-8").read()
+    secs = {sid: section(doc, sid) for sid in SECTIONS}
 
-    missing = [s for s in SECTIONS if not section(doc, s)]
+    missing = [s for s in SECTIONS if not secs[s]]
     r.add("All six sections present", not missing,
-          "missing: " + ", ".join(SECTION_NAMES[s] for s in missing) if missing else "6 of 6")
+          "missing: " + ", ".join(SECTIONS[s] for s in missing) if missing else "6 of 6")
 
     unfilled = sorted(set(UNFILLED.findall(doc)))
     r.add("No unfilled template slots", not unfilled,
@@ -176,12 +176,11 @@ def check_artifact(path: str, r: Result) -> None:
     r.add("Self-contained, nothing loads", not net,
           ", ".join(net[:5]) if net else "no img, script, CDN or remote font")
 
-    scanned = [s for s in SECTIONS if section(doc, s)]
-    musts = re.findall(r'<div class="(?:must|item)">.*?</div>\s*</div>|<div class="must">.*?(?=<div class="must">|</section>)',
-                       section(doc, "must-solve"), re.S)
+    scanned = [s for s in SECTIONS if secs[s]]
+    musts = MUST.findall(secs["must-solve"])
     r.add("Exactly three must-solve items",
-          None if not section(doc, "must-solve") else len(musts) == 3,
-          "the must-solve section was not found" if not section(doc, "must-solve")
+          None if not secs["must-solve"] else len(musts) == 3,
+          "the must-solve section was not found" if not secs["must-solve"]
           else f"found {len(musts)}")
 
     # Either form counts: an inline (file.md p. 6) or a superscript numeral that
@@ -196,37 +195,34 @@ def check_artifact(path: str, r: Result) -> None:
           else "; ".join(unsourced) if unsourced else f"{len(musts)} of {len(musts)}")
 
     long_sentences = []
-    for sid in SECTIONS:
-        body = section(doc, sid)
+    for sid, body in secs.items():
         if not body:
             continue
         # the kicker is a label, not a sentence
-        body = drop_provenance(body)
-        body = re.sub(r'<span class="kicker">.*?</span>', " ", body, flags=re.S | re.I)
+        body = KICKER.sub(" ", drop_provenance(body))
         for s in sentences(text_of(body)):
             n = count_words(s)
             if n > MAX_WORDS:
-                long_sentences.append((SECTION_NAMES[sid], n, re.sub(r"^\d+\s*", "", s)[:70]))
+                long_sentences.append((SECTIONS[sid], n, re.sub(r"^\d+\s*", "", s)[:70]))
     r.add(f"Every sentence under {MAX_WORDS} words",
           None if not scanned else not long_sentences,
           "no sections to scan" if not scanned
-          else "; ".join(f"{sec}: {n}w — {s}" for sec, n, s in long_sentences[:4])
+          else "; ".join(f"{sec}: {n}w: {s}" for sec, n, s in long_sentences[:4])
           if long_sentences else f"longest is within the limit, {len(scanned)} section(s) scanned")
 
     # A section the material cannot answer says so in a sentence. It is never left
     # thin and never dropped, because a short section reads as a complete answer
     # and the reader cannot tell "nothing to report" from "not checked".
     thin, unsaid = [], []
-    for sid in SECTIONS:
-        body = section(doc, sid)
+    for sid, body in secs.items():
         if not body:
             continue
-        content = text_of(re.sub(r'<span class="kicker">.*?</span>', " ", body, flags=re.S))
-        if len(content) >= MIN_CONTENT.get(sid, 120):
+        content = text_of(KICKER.sub(" ", body))
+        if len(content) >= MIN_CONTENT[sid]:
             continue
         if sid in MAY_BE_UNANSWERED and UNANSWERED.search(content):
             continue                      # short on purpose, and it says so
-        (unsaid if sid in MAY_BE_UNANSWERED else thin).append(SECTION_NAMES[sid])
+        (unsaid if sid in MAY_BE_UNANSWERED else thin).append(SECTIONS[sid])
     r.add("No section is silently empty", None if not scanned else not thin,
           "no sections to scan" if not scanned else ", ".join(thin) if thin else "none")
     r.add("A short optional section says it is unanswered", None if not scanned else not unsaid,
@@ -242,14 +238,12 @@ def check_artifact(path: str, r: Result) -> None:
     dashes = EM_DASH.findall(text_of(body_only))
     r.add("No em dashes in the copy", not dashes, f"{len(dashes)} found" if dashes else "none")
 
-    # The page promises a reading time. Nothing enforced it, and the first real run
-    # came out at 2547 words against a promise of a few minutes. Correct is not the same
-    # as short enough.
+    # The page promises a reading time. Correct is not the same as short enough.
     total = count_words(text_of(drop_provenance(body_only)).replace("\u2028", " "))
     minutes = total / WPM
-    r.add(f"Fits its reading time, {MAX_PAGE_WORDS} words", total <= MAX_PAGE_WORDS,
+    r.add(f"Fits its reading time, {max_page_words} words", total <= max_page_words,
           f"{total} words, about {minutes:.1f} minutes at {WPM} a minute"
-          f"{'' if total <= MAX_PAGE_WORDS else f'. Over by {total - MAX_PAGE_WORDS}'}")
+          f"{'' if total <= max_page_words else f'. Over by {total - max_page_words}'}")
 
     # The line under a must-solve is set in caption type. An essay in caption type
     # puts the evidence a CFO wants in the smallest text on the page.
@@ -257,9 +251,9 @@ def check_artifact(path: str, r: Result) -> None:
     for i, m in enumerate(musts, 1):
         for cap in re.findall(r'class="caption"[^>]*>(.*?)</p>', m, re.S):
             n = count_words(text_of(cap).replace("\u2028", " "))
-            if n > MAX_SUPPORT_WORDS:
+            if n > MAX_CAPTION_WORDS:
                 long_support.append(f"{i}: {n}w")
-    r.add(f"Supporting line stays a caption, {MAX_SUPPORT_WORDS} words",
+    r.add(f"Supporting line stays a caption, {MAX_CAPTION_WORDS} words",
           None if not musts else not long_support,
           "no must-solve items to check" if not musts
           else ", ".join(long_support) if long_support else "all within")
@@ -300,8 +294,7 @@ def check_reasoning(path: str, r: Result) -> None:
     doc = UNFILLED.sub(" ", doc)
     for sid, label in [("cut", "What it threw away"), ("unsure", "Where it is unsure")]:
         body = section(doc, sid)
-        content = text_of(re.sub(r'<span class="kicker">.*?</span>|<th\b.*?</th>', " ",
-                                 body, flags=re.S | re.I))
+        content = text_of(re.sub(r"<th\b.*?</th>", " ", KICKER.sub(" ", body), flags=re.S | re.I))
         r.add(f'reasoning.html: "{label}" is not empty', len(content) > 25,
               f"{len(content)} characters of content")
     net = sorted(set(m.group(0) for m in NETWORK.finditer(doc)))
@@ -328,20 +321,15 @@ def render(r: Result, files) -> str:
         out.append("")
     if hard:
         out.append(f"**{hard} hard check(s) failed.** The artifact does not ship until these pass.")
-    elif skipped:
-        pass
-    elif warn:
-        out.append(f"All hard checks pass. {warn} thing(s) to look at.")
-    else:
-        out.append("All checks pass.")
+    elif not skipped:
+        out.append(f"All hard checks pass. {warn} thing(s) to look at." if warn
+                   else "All checks pass.")
     out.append("")
     out.append("Checked: " + ", ".join(files))
     return "\n".join(out)
 
 
 def main() -> int:
-    global MAX_PAGE_WORDS
-
     ap = argparse.ArgumentParser(description="Verify a rendered Simply Strategy artifact.")
     ap.add_argument("target", help="a run directory, or the artifact html itself")
     ap.add_argument("--json", action="store_true", help="machine-readable output")
@@ -349,7 +337,6 @@ def main() -> int:
     ap.add_argument("--max-words", type=int, default=MAX_PAGE_WORDS,
                     help=f"word budget for the page (default {MAX_PAGE_WORDS})")
     a = ap.parse_args()
-    MAX_PAGE_WORDS = a.max_words
 
     if os.path.isdir(a.target):
         artifact = os.path.join(a.target, "simple-strategy-artifact.html")
@@ -363,7 +350,7 @@ def main() -> int:
         return 2
 
     r, files = Result(), [artifact]
-    check_artifact(artifact, r)
+    check_artifact(artifact, r, a.max_words)
     if a.material:
         check_pointers(artifact, a.material, r)
     else:

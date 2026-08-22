@@ -34,26 +34,26 @@ section{margin-bottom:var(--gap-section)}
 section > .rule{margin-bottom:1rem}
 section > .kicker{display:block;margin-bottom:var(--gap-block)}
 
-/* slot 1 — the one sentence */
+/* slot 1: the one sentence */
 .one-sentence{font-size:clamp(2.5rem,5.5vw,4.5rem);line-height:1.05;letter-spacing:-.02em;
   text-align:center;margin:6rem 0;width:min(48rem,92vw);
   margin-left:calc(50% - min(24rem,46vw));margin-right:0}
 
-/* slot 2 — the three must-solves */
+/* slot 2: the three must-solves */
 .must{position:relative;padding-left:0;margin-bottom:var(--gap-block)}
 .must .n{font-family:var(--sans);font-weight:300;font-size:clamp(4rem,9vw,8rem);line-height:.8;
   letter-spacing:-.04em;position:absolute;left:calc(-1 * var(--margin));top:-.1em;width:var(--margin)}
 .must .stmt{font-size:clamp(1.6rem,3vw,2.4rem);line-height:1.15;letter-spacing:-.01em}
 .must .rule{margin:1rem 0 .6rem}
 
-/* slot 3 — stop / start */
+/* slot 3: stop / start */
 .split{display:grid;grid-template-columns:1fr 1px 1fr;gap:0 2rem}
 .split .bar{background:var(--rule)}
 .split ul{list-style:none}
 .split li{margin-bottom:.9rem}
 .split .kicker{display:block;margin-bottom:1rem}
 
-/* slot 4 — the bet */
+/* slot 4: the bet */
 .bet{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:0 .9rem;align-items:start;
   margin-bottom:var(--gap-block)}
 .bet .arrow{color:var(--rule);font-family:var(--sans);align-self:center}

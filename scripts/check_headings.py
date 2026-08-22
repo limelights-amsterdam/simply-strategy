@@ -9,11 +9,11 @@ of an argument.
 Two things are checkable and one is not.
 
 Checkable: a heading makes a claim about the material rather than about the page,
-and every content word in it appears in the section beneath it. The second is the
+and a number or a name in it appears in the section beneath it. The second is the
 guarantee against a heading that reads well and is not supported.
 
 Not checkable: whether the sequence is any good. That is judgement, and it belongs
-to the reviewers.
+to step 5 of the run.
 
     python3 scripts/check_headings.py runs/<slug>/<stamp>/simple-strategy-artifact.html
 """
@@ -27,6 +27,14 @@ import pathlib
 import re
 import sys
 
+# The word counter, the sentence limit and the figure shape are the ones the rest
+# of the run measures with. The section names come from the artifact checker.
+HERE = pathlib.Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE.parents[0] / "skills" / "plain" / "scripts"))
+sys.path.insert(0, str(HERE))
+from textlib import FIGURE, L1_MAX_SENTENCE as MAX_WORDS, count_words  # noqa: E402
+from check_artifact import SECTIONS, drop_provenance  # noqa: E402
+
 # A heading whose subject is a count of what the page holds.
 COUNTING = re.compile(
     r"^\s*(?:all\s+)?(?:one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|"
@@ -34,32 +42,30 @@ COUNTING = re.compile(
     r"(?:things?|pairs?|unknowns?|bets?|gaps?|items?|findings?|reasons?|points?)\b",
     re.I,
 )
-# The six section names. A heading that merely repeats one is a label, and a page
-# of labels is a table of contents. The counting pattern above caught
-# "Nine pairs cannot both be true" and sailed straight past "What we stop doing".
-LABELS = {
-    "the one sentence", "the three things that must be solved", "what we stop doing",
-    "what has to be true", "what the documents disagree about", "what we do not know",
-    "three things must be solved", "what we do not know yet",
-}
-
 STOP = set("""a an the and or but of to in on at for with from by as is are was were be been
 being it its this that these those has have had not no nor so than then there here which who
 whom whose what when where why how all any both each few more most other some such only own
 same too very can will just do does did done into out up down over under again further once
 you your they their we our us them he she his her""".split())
 
-MAX_WORDS = 15
 
 
 def text_of(fragment: str) -> str:
-    f = re.sub(r"<[^>]+>", " ", fragment)
+    """Visible text. Provenance blocks are the log on the page, not the section,
+    so a name that only appears there does not ground a heading."""
+    f = re.sub(r"<[^>]+>", " ", drop_provenance(fragment))
     return re.sub(r"\s+", " ", html.unescape(f)).strip()
 
 
 def content_words(s: str) -> list[str]:
     words = re.findall(r"[A-Za-z][A-Za-z'-]+", s.lower())
     return [w for w in words if w not in STOP and len(w) > 2]
+
+
+# A heading that merely repeats a section name is a label, and a page of labels
+# is a table of contents. Compared on content words, so "The three things that
+# must be solved" and "Three things must be solved" are the same label.
+LABELS = {frozenset(content_words(name)) for name in SECTIONS.values()}
 
 
 def sections(doc: str):
@@ -88,22 +94,19 @@ def main() -> int:
 
     for i, (head, body) in enumerate(sections(doc), 1):
         problems = []
-        bare = head.lower().strip().rstrip(".")
-        if bare in LABELS:
+        if frozenset(content_words(head)) in LABELS:
             problems.append("names the section instead of claiming anything")
         elif COUNTING.match(head):
             problems.append("counts the page, does not claim anything about the material")
-        n = len(head.split())
+        n = count_words(head)
         if n > a.max_words:
             problems.append(f"{n} words")
-        # Only numbers and proper names. An earlier version demanded that every
-        # content word in a heading appear below it, and failed all nine headings
-        # in the file it was written against. A heading is a compression and is
-        # entitled to different words. What actually gets invented is a figure or
-        # a name, so that is what this checks.
-        # A capital after a full stop is a sentence opening, not a name.
+        # Only numbers and proper names. A heading is a compression and is
+        # entitled to different words from its section; what gets invented is a
+        # figure or a name, so that is what this checks. A capital after a full
+        # stop is a sentence opening, not a name.
         scan = re.sub(r"(^|[.!?]\s+)([A-Z])", lambda m: m.group(1) + m.group(2).lower(), head)
-        facts = re.findall(r"\b\d[\d.,]*\s?(?:percent|m|k|bn)?\b|\b[A-Z][A-Za-z0-9]{2,}\b", scan)
+        facts = FIGURE.findall(scan) + re.findall(r"\b[A-Z][A-Za-z0-9]{2,}\b", scan)
         below = body.lower()
         ungrounded = [f for f in facts
                       if f.lower().strip() not in below and f.split()[0].lower() not in below]
@@ -138,7 +141,7 @@ def main() -> int:
               "headings should get the argument, not the table of contents.")
     else:
         print("Every heading makes a grounded claim. Whether the sequence is any good is a "
-              "judgement no script makes: that is what the reviewers are for.")
+              "judgement no script makes: that is step 5's.")
     return 1 if failed else 0
 
 

@@ -1,16 +1,14 @@
 # simply-strategy
 
-A Claude Code plugin. One job: distil a folder of strategy documents into one plain-language HTML
-page that anyone can read.
+A Claude Code plugin: seven skills and three scripts. One job: distil a folder of strategy documents
+into one plain-language HTML page that anyone can read. `/simply` is the lead skill that walks the
+other steps in order.
 
 ## What this is made of
 
 **Markdown and Python, nothing else.** `/simply` is six steps that one reader walks in order, writing
-numbered files. No subagents, no runtime, nothing fetched.
-
-There was a nine-agent version in a JavaScript workflow, with the four angles blind to each other. On
-the same 76-slide deck it produced 3848 words with nine untraced figures, where the sequential run
-produced 714 with none. It is in the git history rather than in the repo.
+numbered files. No subagents, no runtime, nothing fetched. Each step sees what the last one wrote,
+which is what makes the argument hold together and the figures trace.
 
 **Every prompt, rule, angle brief and filter is a `.md` file under `skills/`.** Change how a step
 thinks by editing markdown. The Python does the things a script does better than a judgement: tracing
@@ -33,9 +31,8 @@ skills/stop-slop/           de-slop filter
 skills/humanizer/           the last pass, so it reads like a person
 skills/red-team/            the attack angle
 scripts/check_facts.py      every figure traced back to the material
-scripts/check_artifact.py   the rendered page, thirteen checks
+scripts/check_artifact.py   the rendered page
 scripts/check_headings.py   the headings have to read as a story
-scripts/check_skills.py     description and body budgets per skill
 design/DESIGN.md            two colours, one column, print-clean, six figures
 templates/                  artifact.html, reasoning.html, figures.html
 tests/                      eighteen fixtures and their expected verdicts
@@ -57,9 +54,6 @@ runs/<slug>/<stamp>/        output. Git-ignored
   `plain-strategy` both run long because they spell out the everyday phrases that should fire them,
   and a skill that never fires costs more than a description that runs long. Anything else over the
   ceiling is weight that belongs in `references/`.
-
-  Do not quote the counts here. `python3 scripts/check_skills.py` measures them, names the two
-  exceptions and exits 1 on anything else.
 - **The filter order is substance, then language, then de-slop.** Rewriting an empty sentence gives
   you a tidy empty sentence.
 - **Never invent a number.** `[TO FILL: what is needed]`, always.
@@ -74,6 +68,7 @@ runs/<slug>/<stamp>/        output. Git-ignored
   clone and wrong once installed is the failure mode this repo keeps hitting.
 
   One convention, everywhere a step reads: **a command spells `{root}/`, prose may write the bare
+  path.** `skills/simply/SKILL.md` says where `{root}` comes from.
 - **Publish the measured number, not the hoped-for one.** Run times, step counts and word counts in
   the docs come from a real run. If you change the shape of the run, measure it again.
 
@@ -88,12 +83,12 @@ There is no progress screen, because there is nothing running in the background.
 files appear in `runs/<slug>/<stamp>/`. They are also the recovery path: if a run stops, look at the
 highest number that finished and start at the next step.
 
-All five checks, after a run:
+The four checks, after a run:
 
 ```
 python3 scripts/check_facts.py    runs/<slug>/<stamp>/04-plain.md --material material/<slug>/
-python3 skills/plain/scripts/plainlint.py runs/<slug>/<stamp>/04-plain.md --lang en --max-sentence 15
-python3 skills/plain-strategy/scripts/stratlint.py runs/<slug>/<stamp>/04-plain.md --lang en
+python3 skills/plain/scripts/plainlint.py runs/<slug>/<stamp>/04-plain.md --max-sentence 15
+python3 skills/plain-strategy/scripts/stratlint.py runs/<slug>/<stamp>/04-plain.md
 python3 scripts/check_artifact.py runs/<slug>/<stamp>/ --material material/<slug>/
 python3 scripts/check_headings.py runs/<slug>/<stamp>/simple-strategy-artifact.html
 ```
@@ -102,10 +97,9 @@ Each linter prints its own verdict band and they are not the same number: plainl
 hundred words of prose it scanned, stratlint per hundred words of the whole document. Read each
 against its own band, or gate on it with `--fail-over`.
 
-And on the repo itself:
+And on the repo itself, the fixture pass for the two page checkers:
 
 ```
-python3 scripts/check_skills.py skills/
 python3 tests/run_fixtures.py
 ```
 
@@ -125,6 +119,10 @@ When you add a rule, put it where it belongs and link to it:
 | The language rules and replacement lists | `skills/plain/references/` |
 | How the run is started, and where the plugin root comes from | `skills/simply/SKILL.md` |
 | The length budget: page, caption, sentence | `skills/flatten/references/output.md` |
+| The headings carry the argument | `skills/flatten/references/output.md` |
+| The shape of a source pointer | `skills/simply/references/house-rules.md` |
 
-`house-rules.md` keeps a compact copy of the seven tests on purpose. Every agent reads it first, and
-sending each one to open another file to find the core checklist costs a read per agent.
+`house-rules.md` keeps a compact copy of the seven tests on purpose. Every step reads it first, and
+opening another file to find the core checklist would cost a read per step. The scripts read their
+budgets from one place too: `skills/plain/scripts/textlib.py`, which copies the numbers from
+`output.md`.

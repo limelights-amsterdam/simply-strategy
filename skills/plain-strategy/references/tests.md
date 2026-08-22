@@ -27,11 +27,11 @@ They run hardest first. If a document dies on test 1, you can skip 4 through 7: 
 
 | Claim | Reversed | Could a competitor say this? |
 | --- | --- | --- |
-| We deliver high quality | We deliver low quality | No — empty |
-| We listen to our customers | We ignore our customers | No — empty |
-| We are innovative | We are conservative | Only if you say in what — vague |
-| We deliver within 24 hours, at a higher price | We deliver in a week, cheaper | Yes — real choice |
-| We build everything in-house | We buy everything in | Yes — real choice |
+| We deliver high quality | We deliver low quality | No, empty |
+| We listen to our customers | We ignore our customers | No, empty |
+| We are innovative | We are conservative | Only if you say in what, vague |
+| We deliver within 24 hours, at a higher price | We deliver in a week, cheaper | Yes, real choice |
+| We build everything in-house | We buy everything in | Yes, real choice |
 
 **Repair.** Add who, what, how much or where until the reversal becomes defensible. Usually that means naming the segment, the number, or the alternative you are rejecting.
 
@@ -44,7 +44,7 @@ They run hardest first. If a document dies on test 1, you can skip 4 through 7: 
 
 ## 2. The sacrifice test
 
-**Origin.** Richard Rumelt, *Good Strategy Bad Strategy*: bad strategy is recognisable by the absence of a choice. Michael Porter put it shorter — strategy is choosing what not to do.
+**Origin.** Richard Rumelt, *Good Strategy Bad Strategy*: bad strategy is recognisable by the absence of a choice. Michael Porter put it shorter: strategy is choosing what not to do.
 
 **The question.** What falls away because of this?
 
@@ -79,9 +79,9 @@ Watch for false sacrifices. "We say no to what does not fit our strategy" sacrif
 
 | Objective | Quantity | Number | Date | Testable |
 | --- | --- | --- | --- | --- |
-| We strengthen our position | — | — | — | No |
-| We grow substantially | revenue | — | — | No |
-| We grow 20 percent | revenue | 20% | — | Almost |
+| We strengthen our position | none | none | none | No |
+| We grow substantially | revenue | none | none | No |
+| We grow 20 percent | revenue | 20% | none | Almost |
 | Revenue is 4.2m on 1 Jan 2027 | revenue | 4.2m | 1 Jan 2027 | Yes |
 
 **The stop threshold.** Stronger than a target is a stop threshold: the number below which you quit. It forces the conversation that otherwise arrives a year late. Ask for it, even when the document did not.
@@ -131,7 +131,7 @@ That last one is the most commonly skipped. A mechanism anyone can replicate tom
 | The market grew 12 percent | We grew 3 percent, so we are losing share |
 | We are losing share | It traces back to how long our quotes take |
 | Our quote takes 4 hours | So below 25k order value we lose money |
-| — | So we stop accepting those deals |
+| (no so-what) | So we stop accepting those deals |
 
 Four observations stacked on each other produce one decision. That is an argument. Four loose observations produce a "market analysis" chapter nobody reads.
 
@@ -149,7 +149,7 @@ Four observations stacked on each other produce one decision. That is an argumen
 
 | Action | Owner | Done by | Done means | Complete |
 | --- | --- | --- | --- | --- |
-| Pick up market research | The team | Q3 | — | No |
+| Pick up market research | The team | Q3 | none | No |
 | Search term analysis | Sanne | 15 Sep | Report with volume per term | Yes |
 
 "The team", "the organisation", "we", and a quarter instead of a date are the four most common ways to let an action evaporate.

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """plainlint - count the mechanical markers of vague text.
 
-Works on English and Dutch input. Returns a score in weighted findings per 100
-words. Lower is better. Under 1.5 is clean, over 8 is a lot of noise.
+English text. Returns a score in weighted findings per 100 words. Lower is
+better. Under 1.5 is clean, over 8 is a lot of noise.
 
 The linter is deliberately dumb. It counts patterns you can point at and replace.
 That is where the gain is: something the text can pass through, rather than a
@@ -12,7 +12,7 @@ Usage:
     python3 plainlint.py text.md
     python3 plainlint.py text.md --mode strict
     python3 plainlint.py text.md --max-sentence 15     # the L1 limit
-    python3 plainlint.py README.md docs/*.md --lang en
+    python3 plainlint.py README.md docs/*.md
     echo "your text" | python3 plainlint.py -
     python3 plainlint.py text.md --fail-over 2.0       # exit 1 above that score
 
@@ -25,24 +25,21 @@ from __future__ import annotations
 import argparse
 import re
 import sys
-
-import sys as _sys
-from pathlib import Path as _Path
+from collections import Counter
+from dataclasses import dataclass
+from pathlib import Path
 
 # The primitives live next to this file so that skills/plain/ still works when it
 # is copied out on its own.
-_sys.path.insert(0, str(_Path(__file__).resolve().parent))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from textlib import (  # noqa: E402
-    ABBREV, CODE_BLOCK, FRONTMATTER, IGNORE_BLOCK, INLINE_CODE, SENTENCE_SPLIT, URL,
-    blank_out, count_words, excerpt, split_sentences, strip_noise,
+    Finding, Report as BaseReport, count_words, excerpt, scan_phrases, scan_regexes,
+    split_sentences, strip_noise,
 )
-from collections import Counter
-from dataclasses import dataclass, field
 
 # ------------------------------------------------------------------- word lists
 
-MARKETING = {
-    "en": [
+MARKETING = [
         "seamless", "seamlessly", "frictionless", "powerful", "cutting-edge",
         "cutting edge", "next-generation", "next generation", "state-of-the-art",
         "game-changing", "game changer", "revolutionary", "disruptive",
@@ -52,11 +49,9 @@ MARKETING = {
         "delightful", "elegant solution", "unlock", "supercharge", "empower",
         "leverage", "harness the power", "holistic", "turnkey", "end-to-end",
         "comprehensive suite", "unparalleled", "unmatched", "seamless integration",
-    ],
-}
+]
 
-OFFICE_VERBS = {
-    "en": [
+OFFICE_VERBS = [
         "reach out", "reached out", "dive into", "deep dive", "diving into",
         "spin up", "spun up", "kick off", "kicked off", "circle back",
         "touch base", "drill down", "unpack", "tee up", "roll out",
@@ -64,54 +59,42 @@ OFFICE_VERBS = {
         "operationalize", "socialize the", "align on", "double down",
         "move the needle", "low-hanging fruit", "at the end of the day",
         "when it comes to",
-    ],
-}
+]
 
-HEDGES = {
-    "en": [
+HEDGES = [
         "it is important to note", "it's important to note", "it should be noted",
         "it is worth noting", "it's worth mentioning", "may potentially",
         "could potentially", "might possibly", "generally speaking",
         "in many cases", "tends to", "to some extent", "in a sense",
         "arguably", "more or less", "one could argue", "it is often the case",
-    ],
-}
+]
 
-FILLER = {
-    "en": [
+FILLER = [
         "in this section", "as mentioned earlier", "in today's fast-paced",
         "let's dive into", "there are a number of factors", "in conclusion",
         "as we all know", "in the world of", "when it comes down to it",
-    ],
-}
+]
 
-NOMINALIZATION = {
-    "en": [
+NOMINALIZATION = [
         r"\b(?:perform|conduct|carry\s+out|undertake|provide|make|do|give)\s+(?:a|an|the)?\s*\w+(?:tion|sion|ment|ance|ence|sis|ing)\b",
         r"\bhas\s+the\s+ability\s+to\b",
         r"\bis\s+responsible\s+for\s+the\s+\w+ing\b",
         r"\bgive\s+consideration\s+to\b",
         r"\bin\s+the\s+event\s+that\b",
-    ],
-}
+]
 
-PASSIVE = {
-    "en": [
+PASSIVE = [
         r"\b(?:is|are|was|were|be|been|being)\s+(?:\w+ly\s+)?(?:\w+ed|written|done|made|taken|given|shown|known|found|built|held|kept|sent|set|put|chosen|driven)\b(?!\s+(?:to|by\s+you))",
         r"\bit\s+(?:was|is|has\s+been)\s+(?:decided|determined|found|observed|noted)\b",
-    ],
-}
+]
 
-PARALLELISM = {
-    "en": [
+PARALLELISM = [
         r"\bit'?s\s+not\s+(?:just\s+)?\w+[,;]\s*it'?s\b",
         r"\bnot\s+only\b[^.!?]{0,60}\bbut\s+also\b",
         r"\bthis\s+isn'?t\s+(?:just\s+)?\w+[,;]\s*(?:it'?s|this\s+is)\b",
-    ],
-}
+]
 
-SYNONYM_CLUSTERS = {
-    "en": [
+SYNONYM_CLUSTERS = [
         ["user", "customer", "client", "visitor"],
         ["application", "tool", "platform", "solution", "system"],
         ["issue", "problem", "bug", "defect", "fault"],
@@ -122,19 +105,13 @@ SYNONYM_CLUSTERS = {
         ["show", "display", "present", "render"],
         ["create", "build", "generate", "produce"],
         ["check", "verify", "validate", "confirm"],
-    ],
-}
+]
 
-FORMAL = {
-    "en": ["utilize", "commence", "terminate", "prior to", "subsequent to",
+FORMAL = ["utilize", "commence", "terminate", "prior to", "subsequent to",
            "pursuant to", "ascertain", "endeavor", "in order to",
-           "at this point in time", "aforementioned"],
-}
+           "at this point in time", "aforementioned"]
 
-EN_STOPWORDS = {"the", "and", "of", "to", "is", "in", "that", "for", "with",
-                "not", "you", "are", "it", "on", "as", "this", "be", "at", "or"}
-
-# ---------------------------------------------------------------- datastructuren
+# ------------------------------------------------------------------- report
 
 
 # Not every finding weighs the same. A semicolon or a marketing word is
@@ -158,55 +135,16 @@ WEIGHTS = {
 
 
 @dataclass
-class Finding:
-    rule: str
-    detail: str
-    line: int
-    excerpt: str
-
-    @property
-    def weight(self) -> float:
-        return WEIGHTS.get(self.rule, 1.0)
-
-
-@dataclass
-class Report:
-    name: str
-    words: int = 0
+class Report(BaseReport):
+    """Adds the sentence count, because this linter reports an average length."""
     sentences: int = 0
-    findings: list[Finding] = field(default_factory=list)
-    lang: str = "nl"
-
-    def add(self, finding: Finding) -> None:
-        """Add a finding, but never the same one twice in the same place.
-
-        Several patterns can match the same piece of text. Counting it twice
-        makes the score unreliable.
-        """
-        key = (finding.rule, finding.line, finding.excerpt.strip().lower())
-        if key in self._seen:
-            return
-        self._seen.add(key)
-        self.findings.append(finding)
-
-    _seen: set = field(default_factory=set, repr=False)
-
-    @property
-    def weighted(self) -> float:
-        return sum(f.weight for f in self.findings)
-
-    @property
-    def score(self) -> float:
-        if not self.words:
-            return 0.0
-        return self.weighted * 100 / self.words
 
     @property
     def avg_sentence(self) -> float:
         return self.words / self.sentences if self.sentences else 0.0
 
 
-# ---------------------------------------------------------------- hulpfuncties
+# ------------------------------------------------------------------ helpers
 
 MD_TABLE_ROW = re.compile(r"^\s*\|.*\|\s*$")
 MD_HEADING = re.compile(r"^\s{0,3}#{1,6}\s")
@@ -220,38 +158,7 @@ def prose_lines(text: str) -> list[tuple[int, str]]:
     return out
 
 
-def detect_lang(text: str) -> str:
-    """English only. The pipeline writes English, so there is nothing to detect."""
-    return "en"
-
-
-def scan_phrases(report: Report, lines, table, rule: str, label: str) -> None:
-    terms = table.get(report.lang, [])
-    if not terms:
-        return
-    pattern = re.compile(
-        r"(?<!\w)(" + "|".join(re.escape(t) for t in sorted(terms, key=len, reverse=True)) + r")(?!\w)",
-        re.I,
-    )
-    for lineno, line in lines:
-        for m in pattern.finditer(line):
-            report.add(
-                Finding(rule, f"{label}: “{m.group(1)}”", lineno, excerpt(line, m.span()))
-            )
-
-
-def scan_regexes(report: Report, lines, table, rule: str, label: str) -> None:
-    pats = [re.compile(p, re.I) for p in table.get(report.lang, [])]
-    for lineno, line in lines:
-        for pat in pats:
-            for m in pat.finditer(line):
-                report.add(
-                    Finding(rule, f"{label}: “{' '.join(m.group(0).split())}”",
-                            lineno, excerpt(line, m.span()))
-                )
-
-
-def scan_punctuation(report: Report, lines, mode: str) -> None:
+def scan_punctuation(report: Report, lines) -> None:
     for lineno, line in lines:
         for m in re.finditer(r";", line):
             report.add(
@@ -259,7 +166,7 @@ def scan_punctuation(report: Report, lines, mode: str) -> None:
                         lineno, excerpt(line, m.span()))
             )
         for m in re.finditer(r"—|(?<=\w) - (?=\w)", line):
-            # A dash after a short label ("**Status — ...**") is formatting,
+            # A dash after a short label ("**Status**" then a dash) is formatting,
             # not a run-on thought. Only from five words before does it
             # really become two sentences fused into one.
             if len(re.findall(r"\w+", line[:m.start()])) < 5:
@@ -275,7 +182,7 @@ def scan_sentences(report: Report, lines, mode: str, max_sentence: int = 0) -> N
     para: list[str] = []
     para_start = 1
 
-    def flush(end_line: int) -> None:
+    def flush() -> None:
         if not para:
             return
         block = " ".join(para)
@@ -297,7 +204,7 @@ def scan_sentences(report: Report, lines, mode: str, max_sentence: int = 0) -> N
 
     for lineno, line in lines:
         if not line.strip() or line.lstrip().startswith(("- ", "* ", ">")) or re.match(r"^\s*\d+\.\s", line):
-            flush(lineno)
+            flush()
             # list items count toward words, not toward paragraph length
             if line.strip():
                 text = re.sub(r"^\s*(?:[-*>]|\d+\.)\s*", "", line)
@@ -314,14 +221,14 @@ def scan_sentences(report: Report, lines, mode: str, max_sentence: int = 0) -> N
         if not para:
             para_start = lineno
         para.append(line.strip())
-    flush(0)
+    flush()
 
 
 def _inflections(word: str) -> set[str]:
     """Inflected forms that are still the same word.
 
-    Ruim genoeg om meervoud en vervoeging te vangen, krap genoeg om
-    'clear' niet op 'clearly' te laten aanslaan.
+    Wide enough to catch plurals and conjugations, narrow enough that 'clear'
+    does not fire on 'clearly'.
     """
     base = word[:-2] if word.endswith("en") and len(word) > 4 else word
     return {word, base, base + "s", base + "en", base + "t", base + "e",
@@ -343,7 +250,7 @@ def scan_synonyms(report: Report, text: str) -> None:
         words = set(re.findall(r"[a-zà-ÿ]+", para.lower()))
         if len(re.findall(r"[a-zà-ÿ0-9]+", para)) < 25:
             continue  # too short to say anything meaningful about rotation
-        for idx, cluster in enumerate(SYNONYM_CLUSTERS.get(report.lang, [])):
+        for idx, cluster in enumerate(SYNONYM_CLUSTERS):
             if idx in reported:
                 continue
             used = [w for w in cluster if _inflections(w) & words]
@@ -356,13 +263,13 @@ def scan_synonyms(report: Report, text: str) -> None:
                 )
 
 
-def analyze(name: str, text: str, lang: str, mode: str, max_sentence: int = 0) -> Report:
+def analyze(name: str, text: str, mode: str, max_sentence: int = 0) -> Report:
     clean = strip_noise(text)
-    report = Report(name=name, lang=lang if lang != "auto" else detect_lang(clean))
+    report = Report(name=name, weights=WEIGHTS)
     lines = prose_lines(clean)
 
     scan_sentences(report, lines, mode, max_sentence)
-    scan_punctuation(report, lines, mode)
+    scan_punctuation(report, lines)
     scan_phrases(report, lines, MARKETING, "marketing word", "claims quality without evidence")
     scan_phrases(report, lines, OFFICE_VERBS, "office speak", "points at no action")
     scan_phrases(report, lines, HEDGES, "hedge", "vague uncertainty")
@@ -375,7 +282,7 @@ def analyze(name: str, text: str, lang: str, mode: str, max_sentence: int = 0) -
     return report
 
 
-# ---------------------------------------------------------------- uitvoer
+# ------------------------------------------------------------------- output
 
 
 BANDS = [
@@ -396,11 +303,11 @@ def verdict(score: float) -> str:
 def render(reports: list[Report], show: int) -> str:
     out: list[str] = []
     out.append("## Plainlint\n")
-    out.append("| File | Lang | Prose words | Avg sentence | Findings | Score /100pw | Verdict |")
-    out.append("| --- | --- | --- | --- | --- | --- | --- |")
+    out.append("| File | Prose words | Avg sentence | Findings | Score /100pw | Verdict |")
+    out.append("| --- | --- | --- | --- | --- | --- |")
     for r in reports:
         out.append(
-            f"| {r.name} | {r.lang} | {r.words} | {r.avg_sentence:.1f} | "
+            f"| {r.name} | {r.words} | {r.avg_sentence:.1f} | "
             f"{len(r.findings)} | {r.score:.2f} | {verdict(r.score)} |"
         )
     out.append("")
@@ -428,7 +335,7 @@ def render(reports: list[Report], show: int) -> str:
         for f in r.findings[:show]:
             detail = f.detail.replace("|", "\\|")
             ex = (f.excerpt or "").replace("|", "\\|")
-            out.append(f"| {f.line} | {f.rule} — {detail} | {ex} |")
+            out.append(f"| {f.line} | {f.rule}: {detail} | {ex} |")
         if len(r.findings) > show:
             out.append(f"| … | {len(r.findings) - show} more | use `--show 0` for all |")
         out.append("")
@@ -439,7 +346,6 @@ def main() -> int:
     ap = argparse.ArgumentParser(
         description="Count the mechanical markers of vague text.")
     ap.add_argument("files", nargs="+", help="files, or - for stdin")
-    ap.add_argument("--lang", choices=["auto", "en"], default="auto")
     ap.add_argument("--mode", choices=["normal", "strict"], default="normal",
                     help="strict uses 20 words per sentence instead of 25")
     ap.add_argument("--max-sentence", type=int, default=0, metavar="N",
@@ -454,11 +360,11 @@ def main() -> int:
     reports: list[Report] = []
     for path in args.files:
         if path == "-":
-            reports.append(analyze("stdin", sys.stdin.read(), args.lang, args.mode, args.max_sentence))
+            reports.append(analyze("stdin", sys.stdin.read(), args.mode, args.max_sentence))
             continue
         try:
             with open(path, encoding="utf-8") as fh:
-                reports.append(analyze(path, fh.read(), args.lang, args.mode, args.max_sentence))
+                reports.append(analyze(path, fh.read(), args.mode, args.max_sentence))
         except OSError as exc:
             print(f"cannot read {path}: {exc}", file=sys.stderr)
             return 2

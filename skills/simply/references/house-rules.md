@@ -1,7 +1,7 @@
 # House rules
 
-Every agent in a Simply Strategy run reads this file first, before its own brief. These rules apply
-to your output whatever your role is.
+Read this file first, before any step's brief. These rules apply to everything you write, at every
+step.
 
 ## The filter, in order
 
@@ -22,8 +22,9 @@ tidy empty sentence.
 
 Full versions in `skills/plain-strategy/references/tests.md`.
 
-**2. Language.** One name per thing throughout. Sentences under 25 words, averaging under 15. Active
-voice. Actions in verbs, not nouns. No semicolons. Condition before instruction.
+**2. Language.** One name per thing throughout. Active voice. Actions in verbs, not nouns. No
+semicolons. Condition before instruction. The sentence limit is the flatten level's, owned by
+`skills/flatten/references/output.md`: under 15 words on the page.
 
 Replacement lists in `skills/plain/references/slop-patterns.md`.
 
@@ -33,13 +34,12 @@ no closing paragraph of generic optimism, no sentence that announces what the ne
 
 Full list in `skills/stop-slop/references/`.
 
-**4. Sound like a person.** Load `skills/humanizer/SKILL.md` and read your own output back against
-it. It catches what the three layers above do not: a claim of importance where a fact belongs, a
-source that is nobody in particular, an -ing clause bolted on to make an ordinary finding sound
-deep, and the closing paragraph of general optimism.
-
-This layer runs last, and only last. Applied before the substance test it polishes something that
-may not deserve to exist.
+**4. Sound like a person.** Last, and only in step 4, where the page's prose is written: load
+`skills/humanizer/SKILL.md` and read `04-plain.md` back against it. It catches what the three layers
+above do not: a claim of importance where a fact belongs, a source that is nobody in particular, an
+-ing clause bolted on to make an ordinary finding sound deep, and the closing paragraph of general
+optimism. Applied before the substance test it polishes something that may not deserve to exist.
+The other steps write working files that nobody reads as prose, so they do not load it.
 
 ## Rules you may not break
 
@@ -47,8 +47,10 @@ may not deserve to exist.
 A board can act on a flagged gap. It cannot act on a fabricated one. This includes dates dressed up
 as periods. "Over the plan period" is not a date, it is `[TO FILL: by which date]`.
 
-**Every claim carries a pointer.** Document name and page, in brackets, at the end of the claim.
-No pointer, no claim.
+**Every claim carries a pointer.** Document name and page, in brackets, at the end of the claim:
+`[plan-2026.md p. 6]`, or `[slide 6]` when the folder holds one deck. No pointer, no claim. The
+renderer writes the same pointer in parentheses, `(plan-2026.md p. 6)`, which is the form
+`check_artifact.py` checks against the material folder.
 
 Your own reasoning is allowed and often the most useful thing you produce. It just has to be labelled
 as reasoning rather than dressed as a finding: *the plan never says this, but nothing in it works
@@ -61,14 +63,14 @@ some tension between the plans" is a way of not saying anything.
 **Never add confidence the source did not have.** "We think" stays "we think". "Market signals
 suggest" is a vague source, not evidence.
 
-**Write from your own brief, not from consensus.** You cannot see the other agents' output and that
-is deliberate. If your findings look like what a generic reviewer would say, you have not used your
-angle.
+**Write each angle from its own brief, not from consensus.** The passes in step 2 see each other,
+so agreement between them proves nothing. If a pass's findings look like what a generic reviewer
+would say, the angle was not used.
 
 ## Output shape
 
-- Write to the file you are told to write to. You own that file. Nothing else.
-- Start with your findings. No preamble, no restating your task, no "I have analysed the material".
+- Each step writes the file the pipeline names for it. Nothing else.
+- Start with the findings. No preamble, no restating the task, no "I have analysed the material".
 - No closing summary that repeats what you just said.
 - English, whatever language the source documents are in.
 - Markdown. Tables where the reader has to compare or scan, prose where you have one thing to say.

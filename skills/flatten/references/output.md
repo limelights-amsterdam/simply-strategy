@@ -68,17 +68,14 @@ A heading that names the section is a label, and a page of labels is a table of 
 The left column counts the page. The right column says something about the material, which is the
 only kind of sentence a reader can disagree with.
 
-`scripts/check_headings.py` enforces two of the three properties: a heading may not count the page,
-and a number or a name in a heading must appear in the section beneath it. Whether the sequence is
-any good is judgement, and it belongs to the reviewers rather than to a script.
+`check_headings.py` enforces two of the three properties: a heading may not count the page, and a
+number or a name in a heading must appear in the section beneath it. Whether the sequence is any
+good is judgement, and step 5 owns it rather than a script.
 
 ## The length budget
 
-Correct is not the same as short enough. The first real run produced a page that passed every
-accuracy check and took **eleven minutes to read** against a promise of four. Nothing anywhere
-constrained how much went on it.
-
-So the budget is part of the output, not a matter of taste:
+Correct is not the same as short enough. A page can pass every accuracy check and still take
+twice as long to read as it promised, so the budget is part of the output, not a matter of taste:
 
 | Section | Words | Why |
 |---|---|---|
@@ -95,9 +92,7 @@ board genuinely wants more, but change it deliberately rather than drifting into
 
 The per-section numbers are not enforced by anything. They are there so that a section carrying a
 lot of findings, usually 5 and 6, is a deliberate overrun paid for by an underrun elsewhere rather
-than an accident. The first run that had this budget came in at 1168 of 1200, with sections 4, 5 and
-6 over and 1, 2 and 3 under. That is the pattern to expect, and it is fine as long as somebody chose
-it.
+than an accident. That is fine as long as somebody chose it.
 
 **The evidence under a must-solve is 40 words.** It is set in caption type, and an essay in caption
 type puts the thing a CFO will attack in the smallest text on the page. If a finding needs more than
@@ -105,8 +100,8 @@ type puts the thing a CFO will attack in the smallest text on the page. If a fin
 reader goes next.
 
 **Short is not the same as loose.** Sentences under 15 words do not each need their own paragraph.
-The first run turned section 1 into twelve stacked one-line paragraphs, which reads like a telegram.
-Group sentences that belong to one thought. The limit is on the sentence, not on the paragraph.
+A section of stacked one-line paragraphs reads like a telegram. Group sentences that belong to one
+thought. The limit is on the sentence, not on the paragraph.
 
 ## Closing line
 

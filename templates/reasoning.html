@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{{TITLE}} — reasoning</title>
+<title>{{TITLE}}: reasoning</title>
 <style>
 :root{
   --ink:#0A0A0A; --paper:#FFFFFF; --muted:#6B6B6B; --rule:#C9C9C9;
@@ -46,7 +46,6 @@ li .why{display:block;font-size:.9375rem;color:var(--muted);font-family:var(--sa
 .level{display:flex;gap:.5rem;align-items:baseline;margin-bottom:1.5rem}
 .level b{font-family:var(--sans);font-size:2rem;font-weight:300;letter-spacing:-.03em}
 
-.tension{border-left:1px solid var(--rule);padding-left:1.25rem}
 
 footer{margin-top:var(--gap-section)}
 footer .rule{margin-bottom:.75rem}
@@ -88,7 +87,7 @@ footer .meta{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
   <p class="caption" style="margin-top:1rem">{{NOT_INCLUDED}}</p>
 </section>
 
-<!-- 2 · what it threw away — may never be empty -->
+<!-- 2 · what it threw away, may never be empty -->
 <section id="cut">
   <hr class="rule"><span class="kicker">What it threw away</span>
   <ul>
@@ -96,7 +95,7 @@ footer .meta{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
   </ul>
 </section>
 
-<!-- 3 · where it is unsure — may never be empty -->
+<!-- 3 · where it is unsure, may never be empty -->
 <section id="unsure">
   <hr class="rule"><span class="kicker">Where it is unsure</span>
   <div class="level">
@@ -116,22 +115,13 @@ footer .meta{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
   <p class="caption" style="margin-top:1rem">Empty Compass fields: {{MISSING_COMPASS}}</p>
 </section>
 
-<!-- 4 · the tension check -->
-<section id="tension">
-  <hr class="rule"><span class="kicker">The tension check</span>
-  <div class="tension">
-    <p>{{TENSION_RESULT}}</p>
-    <p class="caption" style="margin-top:.75rem">{{TENSION_DETAIL}}</p>
-  </div>
-</section>
-
-<!-- 5 · what shipped with a flag -->
+<!-- 4 · what shipped with a flag -->
 <section id="flags">
   <hr class="rule"><span class="kicker">Shipped with a flag</span>
   <table>
-    <thead><tr><th>Finding</th><th>Reviewers</th><th>What happened</th></tr></thead>
+    <thead><tr><th>Finding</th><th>What happened</th></tr></thead>
     <tbody>
-      <tr><td>{{FINDING}}</td><td>{{REVIEWER_COUNT}}</td><td>{{OUTCOME}}</td></tr>
+      <tr><td>{{FINDING}}</td><td>{{OUTCOME}}</td></tr>
     </tbody>
   </table>
 </section>
@@ -140,7 +130,7 @@ footer .meta{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
   <hr class="rule">
   <div class="meta">
     <span class="caption">AI-supported draft</span>
-    <span class="caption">{{AGENT_COUNT}} agents · {{ELAPSED}}</span>
+    <span class="caption">Six steps · {{ELAPSED}}</span>
   </div>
 </footer>
 

@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """check_facts - every figure on the page has to exist in the material.
 
-The run has a reviewer whose job is to ask whether a number was invented. This is
-the deterministic half of that job: it does not judge whether a claim is fair, it
-asks whether each number, date and name can be found in the source at all.
+The deterministic half of "was a number invented": it does not judge whether a
+claim is fair, it asks whether each figure can be found in the source at all. It
+also counts the source pointers, because a page that reads well and cannot be
+checked is the failure mode of writing alone.
 
-    python3 scripts/check_facts.py runs/<slug>/04-plain.md --material material/<slug>/
+    python3 scripts/check_facts.py runs/<slug>/<stamp>/04-plain.md --material material/<slug>/
 
 What it does not flag, deliberately:
 
@@ -13,8 +14,8 @@ What it does not flag, deliberately:
   - a figure on a line that labels itself as the run's own arithmetic
   - section numbers, slide numbers and reference markers
 
-Exit 1 when a figure cannot be found, because a number nobody can trace is the one
-failure this whole tool exists to prevent.
+Exit 1 when a figure cannot be found, or when the page carries fewer pointers
+than --min-pointers per hundred words.
 """
 
 from __future__ import annotations
@@ -24,12 +25,14 @@ import pathlib
 import re
 import sys
 
-TOFILL = re.compile(r"\[TO FILL:[^\]]*\]")
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "skills" / "plain" / "scripts"))
+from textlib import FIGURE, POINTER, TOFILL, count_words, strip_noise  # noqa: E402
+
+MIN_POINTERS = 2.0     # per hundred words, the gate step 5 sends the page back on
+
 OWN_WORK = re.compile(
     r"\b(our|the panel's|the run's|my) (?:arithmetic|sums?|reading|calculation)|"
     r"\bnot a figure (?:they|the \w+) states?\b|\bour reading\b", re.I)
-# A figure worth tracing: a quantity, a percentage, a money amount, a year.
-FIGURE = re.compile(r"\b\d[\d.,]*\s?(?:percent|%|m|k|bn|million|billion)?\b", re.I)
 SKIP_CONTEXT = re.compile(r"(slide|section|item|p\.|page|step|figure|note|block)\s*$", re.I)
 # A reference to one of the run's own files, not a claim about the world.
 RUNFILE = re.compile(r"\b0\d-[a-z]+(?:\.md)?\b|^#{1,6}\s*0\d\b|\[0\d-", re.I)
@@ -65,6 +68,8 @@ def main() -> int:
     ap.add_argument("page")
     ap.add_argument("--material", required=True)
     ap.add_argument("--show", type=int, default=12)
+    ap.add_argument("--min-pointers", type=float, default=MIN_POINTERS, metavar="N",
+                    help=f"pointers per hundred words the page must carry (default {MIN_POINTERS}, 0 to skip)")
     a = ap.parse_args()
 
     src = source_text(a.material)
@@ -76,12 +81,10 @@ def main() -> int:
     if not page.is_file():
         print(f"No such file: {a.page}", file=sys.stderr)
         return 2
-    doc = page.read_text()
+    doc = strip_noise(page.read_text())
     missing, checked, excused = [], 0, 0
 
     for lineno, line in enumerate(doc.split("\n"), 1):
-        if line.strip().startswith(("|---", "```")):
-            continue
         line = RUNFILE.sub(" ", line)
         stripped = TOFILL.sub(" ", line)
         own = bool(OWN_WORK.search(line))
@@ -104,12 +107,19 @@ def main() -> int:
             if not any(f in src for f in normalise(tok)):
                 missing.append((lineno, tok, line.strip()[:78]))
 
+    words = sum(count_words(line) for line in doc.split("\n"))
+    pointers = len(POINTER.findall(doc))
+    density = pointers * 100 / words if words else 0.0
+    thin = a.min_pointers > 0 and density < a.min_pointers
+
     print("## Fact check\n")
     print(f"| Figures traced | {checked} |")
     print("| --- | --- |")
     print(f"| Found in the material | {checked - len(missing) - excused} |")
     print(f"| Derived in the open, or labelled as ours | {excused} |")
     print(f"| **Not found** | **{len(missing)}** |")
+    print(f"| Pointers per hundred words | {density:.1f} ({pointers} in {words} words)"
+          f"{', **under ' + str(a.min_pointers) + '**' if thin else ''} |")
     print()
     if missing:
         print("| Line | Figure | Where |")
@@ -122,6 +132,10 @@ def main() -> int:
         print("**A figure that cannot be traced is the failure this tool exists to prevent.** "
               "Either it is in the material under another form, or it should be `[TO FILL: …]`, "
               "or it is the run's own arithmetic and must say so on the line.")
+        return 1
+    if thin:
+        print(f"**Too few pointers.** Under {a.min_pointers} per hundred words the page reads well "
+              "and cannot be checked. Go back to the flatten step rather than forward.")
         return 1
     print("Every figure on the page appears in the material, or says whose arithmetic it is.")
     return 0

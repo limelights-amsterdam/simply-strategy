@@ -1,4 +1,4 @@
-# Strict mode — the ASD-STE100 rules that matter
+# Strict mode: the ASD-STE100 rules that matter
 
 Use strict mode when misreading costs money, time or safety: instructions, procedures, error
 messages, warnings, API reference, migration steps, installation guides.
@@ -81,7 +81,7 @@ Build every safety instruction in two parts:
 The reason is not decoration. A reader who knows *why* still complies when the situation differs
 slightly from the book.
 
-A note carries information only. Never put an instruction in one — readers skip notes.
+A note carries information only. Never put an instruction in one, because readers skip notes.
 
 ## Checklist
 
@@ -101,4 +101,4 @@ A note carries information only. Never put an instruction in one — readers ski
 
 The rules remove ambiguity from the form. They say nothing about the content. A paragraph with no
 message becomes a tidy paragraph with no message. If you notice you are polishing form while the
-content is missing, that is the real problem — say so.
+content is missing, that is the real problem. Say so.

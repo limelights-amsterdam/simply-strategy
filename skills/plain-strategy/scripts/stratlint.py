@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """stratlint - check whether a strategy document contains a decision.
 
-Analyses English and Dutch, detected automatically. It does two things:
+English text. It does two things:
 
 1. Per line: jargon that imitates a decision, claims that fail the opposite
    test, false sacrifices, vague owners and vague deadlines.
@@ -11,7 +11,6 @@ Analyses English and Dutch, detected automatically. It does two things:
 
 Usage:
     python3 stratlint.py strategy.md
-    python3 stratlint.py strategy.md --lang nl
     python3 stratlint.py docs/*.md --fail-over 3.0
     cat memo.md | python3 stratlint.py -
 
@@ -32,12 +31,13 @@ from pathlib import Path
 # check_artifact, so the three tools measure with one ruler. The module lives next to
 # plainlint; reach it relative to this file so the path holds in a clone and installed.
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "plain" / "scripts"))
-from textlib import count_words, excerpt, strip_noise  # noqa: E402
+from textlib import (  # noqa: E402
+    Finding, Report as BaseReport, count_words, scan_phrases, scan_regexes, strip_noise,
+)
 
 # ------------------------------------------------------------------ patterns
 
-JARGON = {
-    "en": [
+JARGON = [
         "synergies", "synergy", "core competencies", "strategic alignment",
         "value creation", "holistic approach", "north star", "double down",
         "unlock value", "operating model", "transformation journey",
@@ -48,12 +48,10 @@ JARGON = {
         "customer-centric", "data-driven", "enable the business",
         "drive growth", "build capabilities", "flywheel", "step change",
         "best practice", "leverage our", "strategic imperative",
-    ],
-}
+]
 
 # Claims whose opposite nobody would defend.
-EMPTY_CLAIM = {
-    "en": [
+EMPTY_CLAIM = [
         r"\bwe\s+(?:are|remain|will\s+be)\s+(?:innovative|customer-centric|transparent|agile|reliable|ambitious|data-driven|sustainable|people-first)\b",
         r"\bwe\s+put\s+(?:the\s+)?(?:customer|client|people)s?\s+(?:first|at\s+the\s+cent)\b",
         r"\bwe\s+(?:invest|believe)\s+in\s+(?:quality|our\s+people|people|innovation|the\s+future)\b",
@@ -64,48 +62,39 @@ EMPTY_CLAIM = {
         r"\bwe\s+(?:continue|will\s+continue)\s+to\s+invest\s+in\b",
         r"\bwe\s+(?:want|aim)\s+to\s+(?:grow|be\s+the\s+best|lead)\b",
         r"\bcommitted\s+to\s+(?:excellence|quality|our\s+customers)\b",
-    ],
-}
+]
 
-FALSE_SACRIFICE = {
-    "en": [
+FALSE_SACRIFICE = [
         r"\bwe\s+say\s+no\s+to\s+what\s+(?:doesn'?t|does\s+not)\s+fit\b",
         r"\bwe\s+focus\s+(?:more\s+)?(?:sharply|harder|better)\b",
         r"\bwe\s+prioriti[sz]e\s+(?:ruthlessly|better|harder)\b",
         r"\bwe\s+make\s+(?:hard|tough)\s+choices\b",
         r"\bwe\s+do\s+less,?\s+but\s+better\b",
         r"\bwe\s+rationali[sz]e\s+(?:the\s+)?portfolio\b",
-    ],
-}
+]
 
-VAGUE_OWNER = {
-    "en": [
+VAGUE_OWNER = [
         r"\b(?:the\s+team|the\s+organi[sz]ation|everyone|all\s+of\s+us|stakeholders)\s+(?:will|should|must|needs?\s+to)\b",
         r"\bto\s+be\s+(?:determined|confirmed|assigned)\b",
         r"\bwe\s+will\s+(?:look\s+into|explore|investigate)\b",
-    ],
-}
+]
 
-VAGUE_DEADLINE = {
-    "en": [
+VAGUE_DEADLINE = [
         "in due course", "in the near future", "as soon as possible", "asap",
         "over time", "on an ongoing basis", "continuously", "in the long run",
         "at a later stage",
-    ],
-}
+]
 
 # --------------------------------------------------- structure recognition
 
-REAL_SACRIFICE = {
-    "en": [
+REAL_SACRIFICE = [
         r"\bwe\s+(?:will\s+)?stop\s+\w+",
         r"\bwe\s+(?:will\s+)?(?:close|shut\s+down|discontinue|sunset|wind\s+down)\b",
         r"\bwe\s+(?:do|will)\s+not\s+(?:build|sell|serve|support|take)\b",
         r"\bwe\s+decline\b",
         r"\bno\s+longer\s+(?:sell|support|serve|maintain)\b",
         r"\breceives?\s+no\s+(?:further\s+)?(?:investment|budget|funding)\b",
-    ],
-}
+]
 
 TARGET_NUMBER = re.compile(
     r"(?:€\s?\d|[$£]\s?\d|\d[\d.,]*\s*(?:%|procent|percent|mln|miljoen|k\b|"
@@ -128,14 +117,9 @@ OWNER_INLINE = re.compile(
     r"\b[A-Z][a-zà-ÿ]{2,}\s+(?:levert|doet|maakt|belt|schrijft|bouwt|test|"
     r"analyseert|owns|delivers|ships|runs|leads)\b")
 
-STOP_CRITERION = {
-    "en": [r"\bif\s+.{0,40}?\bwe\s+(?:stop|exit|pull)\b", r"\bkill\s+criteri",
-           r"\bstop\s+threshold\b", r"\bbelow\s+.{0,30}?\bwe\s+(?:stop|exit)\b",
-           r"\bwe\s+(?:stop|exit)\s+(?:if|when|below)\b"],
-}
-
-EN_STOPWORDS = {"the", "and", "of", "to", "is", "in", "that", "for", "with",
-                "not", "we", "are", "it", "on", "as", "this", "be", "at"}
+STOP_CRITERION = [r"\bif\s+.{0,40}?\bwe\s+(?:stop|exit|pull)\b", r"\bkill\s+criteri",
+                  r"\bstop\s+threshold\b", r"\bbelow\s+.{0,30}?\bwe\s+(?:stop|exit)\b",
+                  r"\bwe\s+(?:stop|exit)\s+(?:if|when|below)\b"]
 
 WEIGHTS = {
     "empty claim": 2.0,
@@ -149,38 +133,9 @@ WEIGHTS = {
 
 
 @dataclass
-class Finding:
-    rule: str
-    detail: str
-    line: int
-    excerpt: str
-
-    @property
-    def weight(self) -> float:
-        return WEIGHTS.get(self.rule, 1.0)
-
-
-@dataclass
-class Report:
-    name: str
-    lang: str = "nl"
-    words: int = 0
-    findings: list[Finding] = field(default_factory=list)
+class Report(BaseReport):
+    """Adds the five structure answers, which decide the verdict."""
     structure: dict = field(default_factory=dict)
-    _seen: set = field(default_factory=set, repr=False)
-
-    def add(self, finding: Finding) -> None:
-        key = (finding.rule, finding.line, finding.excerpt.strip().lower())
-        if key in self._seen:
-            return
-        self._seen.add(key)
-        self.findings.append(finding)
-
-    @property
-    def score(self) -> float:
-        if not self.words:
-            return 0.0
-        return sum(f.weight for f in self.findings) * 100 / self.words
 
     @property
     def verdict(self) -> str:
@@ -189,43 +144,17 @@ class Report:
         decided = s.get("sacrifice") and (s.get("number") or s.get("stop"))
         executable = s.get("owner") and s.get("date")
         if decided and executable:
-            return "**Strategy** — a choice, with a sacrifice and a point of reckoning"
+            return "**Strategy**: a choice, with a sacrifice and a point of reckoning"
         if decided:
-            return "**Strategy without execution** — the choice is there, the actions are not"
+            return "**Strategy without execution**: the choice is there, the actions are not"
         if executable:
-            return "**Plan** — actions with owners, but no choice underneath"
+            return "**Plan**: actions with owners, but no choice underneath"
         if s.get("sacrifice") or s.get("number"):
-            return "**Direction** — an ambition, not yet a decision"
-        return "**Wish** — no sacrifice, no number, no owner"
+            return "**Direction**: an ambition, not yet a decision"
+        return "**Wish**: no sacrifice, no number, no owner"
 
 
 # ------------------------------------------------------------------- helpers
-
-def detect_lang(text: str) -> str:
-    """English only. The pipeline writes English, so there is nothing to detect."""
-    return "en"
-
-
-def scan_phrases(report, lines, table, rule, label) -> None:
-    terms = table.get(report.lang, [])
-    if not terms:
-        return
-    pattern = re.compile(
-        r"(?<!\w)(" + "|".join(re.escape(t) for t in sorted(terms, key=len, reverse=True))
-        + r")(?!\w)", re.I)
-    for lineno, line in lines:
-        for m in pattern.finditer(line):
-            report.add(Finding(rule, f"{label}: “{m.group(1)}”", lineno,
-                               excerpt(line, m.span())))
-
-
-def scan_regexes(report, lines, table, rule, label) -> None:
-    for pat in (re.compile(p, re.I) for p in table.get(report.lang, [])):
-        for lineno, line in lines:
-            for m in pat.finditer(line):
-                report.add(Finding(rule, f"{label}: “{' '.join(m.group(0).split())}”",
-                                   lineno, excerpt(line, m.span())))
-
 
 def check_structure(report: Report, text: str) -> None:
     """Five yes/no questions that decide what kind of document this is."""
@@ -233,11 +162,11 @@ def check_structure(report: Report, text: str) -> None:
         return any(re.search(p, text, re.I) for p in patterns)
 
     report.structure = {
-        "sacrifice": any_match(REAL_SACRIFICE.get(report.lang, [])),
+        "sacrifice": any_match(REAL_SACRIFICE),
         "number": bool(TARGET_NUMBER.search(text)),
         "date": bool(DATE_PATTERN.search(text)),
         "owner": bool(OWNER_COLUMN.search(text) or OWNER_INLINE.search(text)),
-        "stop": any_match(STOP_CRITERION.get(report.lang, [])),
+        "stop": any_match(STOP_CRITERION),
     }
 
 
@@ -251,9 +180,9 @@ STRUCTURE_HELP = {
 }
 
 
-def analyze(name: str, raw: str, lang: str) -> Report:
+def analyze(name: str, raw: str) -> Report:
     text = strip_noise(raw)
-    report = Report(name=name, lang=lang if lang != "auto" else detect_lang(text))
+    report = Report(name=name, weights=WEIGHTS)
     report.words = sum(count_words(line) for line in text.splitlines())
     lines = [(i, l) for i, l in enumerate(text.splitlines(), 1)
              if not re.match(r"^\s{0,3}#{1,6}\s", l)]
@@ -281,10 +210,10 @@ def band(score: float) -> str:
 
 def render(reports: list[Report], show: int) -> str:
     out = ["## Stratlint\n"]
-    out.append("| File | Lang | Words | Findings | Score /100w | Language |")
-    out.append("| --- | --- | --- | --- | --- | --- |")
+    out.append("| File | Words | Findings | Score /100w | Band |")
+    out.append("| --- | --- | --- | --- | --- |")
     for r in reports:
-        out.append(f"| {r.name} | {r.lang} | {r.words} | {len(r.findings)} | "
+        out.append(f"| {r.name} | {r.words} | {len(r.findings)} | "
                    f"{r.score:.2f} | {band(r.score)} |")
     out.append("")
     out.append("Words is the whole document: headings, tables and pointers included, because jargon "
@@ -316,7 +245,7 @@ def render(reports: list[Report], show: int) -> str:
         order = {"empty claim": 0, "false sacrifice": 1, "vague owner": 2,
                  "vague deadline": 3, "jargon": 4}
         for f in sorted(r.findings, key=lambda f: (order.get(f.rule, 9), f.line))[:show]:
-            out.append(f"| {f.line} | {f.rule} — {f.detail.replace('|', chr(92) + '|')} "
+            out.append(f"| {f.line} | {f.rule}: {f.detail.replace('|', chr(92) + '|')} "
                        f"| {f.excerpt.replace('|', chr(92) + '|')} |")
         if len(r.findings) > show:
             out.append(f"| … | {len(r.findings) - show} more | `--show 0` shows all |")
@@ -326,9 +255,8 @@ def render(reports: list[Report], show: int) -> str:
 
 def main() -> int:
     ap = argparse.ArgumentParser(
-        description="Check whether a strategy document contains a decision (EN/NL).")
+        description="Check whether a strategy document contains a decision.")
     ap.add_argument("files", nargs="+", help="files, or - for stdin")
-    ap.add_argument("--lang", choices=["auto", "en"], default="auto")
     ap.add_argument("--show", type=int, default=25, help="findings per file (0 = all)")
     ap.add_argument("--fail-over", type=float, default=None,
                     help="exit code 1 when the score exceeds this")
@@ -337,11 +265,11 @@ def main() -> int:
     reports = []
     for path in args.files:
         if path == "-":
-            reports.append(analyze("stdin", sys.stdin.read(), args.lang))
+            reports.append(analyze("stdin", sys.stdin.read()))
             continue
         try:
             with open(path, encoding="utf-8") as fh:
-                reports.append(analyze(path, fh.read(), args.lang))
+                reports.append(analyze(path, fh.read()))
         except OSError as exc:
             print(f"cannot read {path}: {exc}", file=sys.stderr)
             return 2
