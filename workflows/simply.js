@@ -15,18 +15,34 @@ export const meta = {
 // This file holds wiring only. Every prompt, rule and brief lives in markdown
 // under skills/. Change how an agent thinks by editing markdown, never this file.
 
-const folder = typeof args === 'string' ? args : (args && args.folder) || './material/'
+// One trailing slash, always, so `${folder}compass.md` cannot become `acmecompass.md`.
+const given = typeof args === 'string' ? args : (args && args.folder) || './material/'
+const folder = given.replace(/\/+$/, '') + '/'
 const slug = (folder.replace(/\/+$/, '').split('/').pop() || 'run').toLowerCase().replace(/[^a-z0-9]+/g, '-')
+
+// Where the plugin's own files live. The skill passes this in, because
+// ${CLAUDE_PLUGIN_ROOT} is substituted in skill markdown and not in this script.
+// Running from a clone rather than an install, the skill has nothing to pass and '.' is right.
+const passed = (args && args.root) || '.'
+const root = (!passed || passed.includes('CLAUDE_PLUGIN_ROOT') ? '.' : passed).replace(/\/+$/, '')
+
 const out = `runs/${slug}`
-const R = 'skills/simply/references'
+const R = `${root}/skills/simply/references`
 
 const brief = (task) => `You are one agent in a Simply Strategy run.
 Read ${R}/house-rules.md first. It applies to everything you write.
-The material is in ${folder}. The intake is ${folder}compass.md. Output goes to ${out}/.
-${task}
-Write only your own file. Return one line: the path you wrote.`
 
-log(`material: ${folder} · output: ${out}`)
+The plugin root is \`${root}\`
+Every path this run names that starts with skills/, scripts/, templates/ or design/ sits under that
+root, including such paths written inside the reference files you are told to read. Prefix them
+yourself. Do not go looking for them relative to the working directory.
+
+The material is in ${folder}. The intake is ${folder}compass.md. Output goes to ${out}/, which is
+relative to the working directory and not to the plugin root.
+${task}
+You own the files this step names. Write nothing else. Return one line: the path you wrote.`
+
+log(`material: ${folder} · output: ${out} · plugin: ${root}`)
 
 phase('Spec')
 await agent(brief(`Your step is "1 · spec" in ${R}/pipeline.md. Follow it and write ${out}/01-spec.md.`),
@@ -45,8 +61,8 @@ ${out}/02-*.md files. Run the tension check first, then the forced ranking.
 Write ${out}/03-plan.md.`), { label: 'plan', phase: 'Plan' })
 
 phase('Flatten')
-await agent(brief(`Your step is "4 · flatten" in ${R}/pipeline.md. Load skills/simplify/SKILL.md and
-read skills/simplify/references/before-after.md before you start.
+await agent(brief(`Your step is "4 · flatten" in ${R}/pipeline.md. Load ${root}/skills/simplify/SKILL.md
+and read ${root}/skills/simplify/references/before-after.md before you start.
 Read ${out}/03-plan.md. Write ${out}/04-plain.md.`), { label: 'flatten', phase: 'Flatten' })
 
 phase('Review')
@@ -59,14 +75,17 @@ Write ${out}/05-${r}.md.`), { label: r, phase: 'Review' })))
 
 phase('Artifact')
 await agent(brief(`Your step is "6 · coordinate" in ${R}/pipeline.md. Read the three ${out}/05-*.md
-files. Two or more reviewers calling something fatal is decisive. Apply the must-fix list to
-${out}/04-plain.md in one round. Write ${out}/05-verdict.md.`), { label: 'coordinate', phase: 'Artifact' })
+files. Two or more reviewers calling something fatal is decisive.
+This step owns two files, which is the exception in this run. Apply the must-fix list to
+${out}/04-plain.md in one round, and write ${out}/05-verdict.md.`),
+  { label: 'coordinate', phase: 'Artifact' })
 
 const artifact = await agent(brief(`Your step is "7 · artifact" in ${R}/pipeline.md.
-Read ${R}/output-structure.md, design/DESIGN.md, ${out}/04-plain.md, ${out}/05-verdict.md and
-${out}/01-spec.md. Fill templates/artifact.html and templates/reasoning.html.
-Write ${out}/simple-strategy-artifact.html and ${out}/reasoning.html. Self-contained, black and white.
-Then run: python3 scripts/check_artifact.py ${out}/
+Read ${R}/output-structure.md, ${root}/design/DESIGN.md, ${out}/04-plain.md, ${out}/05-verdict.md
+and ${out}/01-spec.md. Fill ${root}/templates/artifact.html and ${root}/templates/reasoning.html.
+This step owns two files. Write ${out}/simple-strategy-artifact.html and ${out}/reasoning.html.
+Self-contained, black and white.
+Then run: python3 ${root}/scripts/check_artifact.py ${out}/
 It must exit 0. Fix what it reports and run it again. Return the final check table.`),
   { label: 'artifact', phase: 'Artifact' })
 

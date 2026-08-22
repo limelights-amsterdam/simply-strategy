@@ -1,0 +1,18 @@
+{
+  "name": "limelights",
+  "owner": {
+    "name": "Tim van den Bosch",
+    "email": "tim@sitelane.nl",
+    "url": "https://github.com/limelights-amsterdam"
+  },
+  "description": "Plugins from Limelights Amsterdam",
+  "plugins": [
+    {
+      "name": "simply-strategy",
+      "source": "./",
+      "description": "Point it at a folder of strategy documents. Get back one page a board reads in four minutes.",
+      "version": "0.1.0",
+      "author": { "name": "Tim van den Bosch", "email": "tim@sitelane.nl" }
+    }
+  ]
+}
