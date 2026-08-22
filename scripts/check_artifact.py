@@ -22,6 +22,14 @@ import os
 import re
 import sys
 from dataclasses import dataclass, field
+from pathlib import Path
+
+# One ruler. The word counter and sentence splitter are the ones plainlint uses on
+# 04-plain.md, so a sentence cannot pass the markdown and fail the page, or the reverse.
+# The module lives next to plainlint; the path is relative to this file, so it holds in
+# a clone and installed under the plugin root alike.
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "skills" / "plain" / "scripts"))
+from textlib import count_words, split_sentences  # noqa: E402
 
 MAX_WORDS = 15
 MAX_PAGE_WORDS = 1200          # about six minutes at 200 words a minute
@@ -122,16 +130,11 @@ def section(doc: str, sid: str) -> str:
 
 
 def sentences(t: str):
-    """Split on sentence enders. A source pointer in brackets is not a sentence."""
+    """Split on sentence enders, the way plainlint does. A source pointer in brackets
+    is not a sentence, and a closing block tag (U+2028 from text_of) always ends one."""
     t = POINTER.sub(" ", t)
     t = TOFILL.sub(" TOFILL ", t)
-    return [s.strip() for s in re.split(r"(?<=[.!?])\s+|\u2028", t) if s.strip()]
-
-
-def count_words(s: str) -> int:
-    """Count the way ASD-STE100 does: a bracketed aside or a hyphenated word is one word."""
-    s = re.sub(r"\([^)]*\)", " X ", s)
-    return len([w for w in re.split(r"[\s ]+", s.strip()) if re.search(r"[A-Za-z0-9]", w)])
+    return [s for block in t.split("\u2028") for s in split_sentences(block)]
 
 
 def check_artifact(path: str, r: Result) -> None:

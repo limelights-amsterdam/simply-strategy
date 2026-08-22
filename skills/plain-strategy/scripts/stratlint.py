@@ -26,6 +26,13 @@ import re
 import sys
 from collections import Counter
 from dataclasses import dataclass, field
+from pathlib import Path
+
+# Word counting, sentence splitting and noise stripping are shared with plainlint and
+# check_artifact, so the three tools measure with one ruler. The module lives next to
+# plainlint; reach it relative to this file so the path holds in a clone and installed.
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "plain" / "scripts"))
+from textlib import count_words, excerpt, strip_noise  # noqa: E402
 
 # ------------------------------------------------------------------ patterns
 
@@ -194,41 +201,9 @@ class Report:
 
 # ------------------------------------------------------------------- helpers
 
-FRONTMATTER = re.compile(r"\A---\r?\n.*?\r?\n---[ \t]*\r?\n", re.S)
-IGNORE_BLOCK = re.compile(
-    r"<!--\s*(?:plainlint|stratlint)-ignore-start\s*-->.*?"
-    r"<!--\s*(?:plainlint|stratlint)-ignore-end\s*-->", re.S)
-CODE_BLOCK = re.compile(r"```.*?```", re.S)
-URL = re.compile(r"https?://\S+")
-
-
-def blank_out(match: re.Match) -> str:
-    return "\n" * match.group(0).count("\n")
-
-
-def strip_noise(text: str) -> str:
-    """Strip frontmatter, code, links and ignored blocks.
-
-    Line numbers stay correct because removed blocks are replaced by the same
-    number of blank lines. If a text discusses these very words, wrap that part
-    in `<!-- stratlint-ignore-start -->` and `<!-- stratlint-ignore-end -->`.
-    """
-    text = FRONTMATTER.sub(blank_out, text)
-    text = IGNORE_BLOCK.sub(blank_out, text)
-    text = CODE_BLOCK.sub(blank_out, text)
-    text = URL.sub(" URL ", text)
-    return text
-
-
 def detect_lang(text: str) -> str:
     """English only. The pipeline writes English, so there is nothing to detect."""
     return "en"
-
-
-def excerpt(line: str, span: tuple[int, int], width: int = 62) -> str:
-    start, end = max(0, span[0] - 12), min(len(line), span[1] + 22)
-    frag = " ".join(line[start:end].split())
-    return (("…" if start else "") + frag + ("…" if end < len(line) else ""))[:width]
 
 
 def scan_phrases(report, lines, table, rule, label) -> None:
@@ -279,7 +254,7 @@ STRUCTURE_HELP = {
 def analyze(name: str, raw: str, lang: str) -> Report:
     text = strip_noise(raw)
     report = Report(name=name, lang=lang if lang != "auto" else detect_lang(text))
-    report.words = len(re.findall(r"[A-Za-zÀ-ÿ0-9][\wÀ-ÿ'’\-]*", text))
+    report.words = sum(count_words(line) for line in text.splitlines())
     lines = [(i, l) for i, l in enumerate(text.splitlines(), 1)
              if not re.match(r"^\s{0,3}#{1,6}\s", l)]
 
@@ -312,6 +287,9 @@ def render(reports: list[Report], show: int) -> str:
         out.append(f"| {r.name} | {r.lang} | {r.words} | {len(r.findings)} | "
                    f"{r.score:.2f} | {band(r.score)} |")
     out.append("")
+    out.append("Words is the whole document: headings, tables and pointers included, because jargon "
+               "and false sacrifices live in tables. Plainlint counts prose only, so the two scores "
+               "are not comparable. Clean here is under 1.0.\n")
 
     for r in reports:
         out.append(f"### {r.name}\n")
