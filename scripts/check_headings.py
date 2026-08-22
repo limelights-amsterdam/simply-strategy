@@ -32,6 +32,15 @@ COUNTING = re.compile(
     r"(?:things?|pairs?|unknowns?|bets?|gaps?|items?|findings?|reasons?|points?)\b",
     re.I,
 )
+# The six section names. A heading that merely repeats one is a label, and a page
+# of labels is a table of contents. The counting pattern above caught
+# "Nine pairs cannot both be true" and sailed straight past "What we stop doing".
+LABELS = {
+    "the one sentence", "the three things that must be solved", "what we stop doing",
+    "what has to be true", "what the documents disagree about", "what we do not know",
+    "three things must be solved", "what we do not know yet",
+}
+
 STOP = set("""a an the and or but of to in on at for with from by as is are was were be been
 being it its this that these those has have had not no nor so than then there here which who
 whom whose what when where why how all any both each few more most other some such only own
@@ -86,7 +95,10 @@ def main() -> int:
 
     for i, (head, body) in enumerate(sections(doc), 1):
         problems = []
-        if COUNTING.match(head):
+        bare = head.lower().strip().rstrip(".")
+        if bare in LABELS:
+            problems.append("names the section instead of claiming anything")
+        elif COUNTING.match(head):
             problems.append("counts the page, does not claim anything about the material")
         n = len(head.split())
         if n > a.max_words:
