@@ -161,7 +161,7 @@ Every normative rule has exactly one owner file. The table in `CLAUDE.md` says w
 ## Install
 
 ```
-/plugin marketplace add mondayrunner/limelights-simply-strategy
+/plugin marketplace add limelights-amsterdam/simply-strategy
 /plugin install simply-strategy
 ```
 
