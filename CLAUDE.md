@@ -1,48 +1,48 @@
 # simply-strategy
 
-A Claude Code plugin. One job: turn a folder of strategy documents into one plain-language HTML page.
+A Claude Code plugin. One job: distil a folder of strategy documents into one plain-language HTML
+page that anyone can read.
 
-## The split that matters
+## What this is made of
 
-**The skill is the product, not the workflow.** `/simply` is six steps one reader walks in order,
-writing numbered files. `workflows/simply.js` runs the same six as nine agents with the panel in
-parallel, and it is the variant rather than the default. Measured on the same 76-slide deck: the
-sequential run produced 714 words with no untraced figures and six headings that each make a claim;
-the parallel run produced 3848 words, nine untraced figures and six headings that named their own
-sections.
+**Markdown and Python, nothing else.** `/simply` is six steps that one reader walks in order, writing
+numbered files. No subagents, no runtime, nothing fetched.
 
-**Markdown holds everything a human edits.** Every prompt, rule, angle brief and filter is a `.md`
-file under `skills/`. `workflows/simply.js` holds only wiring, which agent runs when, and which file
-it reads. It contains no strategy content and never should.
+There was a nine-agent version in a JavaScript workflow, with the four angles blind to each other. On
+the same 76-slide deck it produced 3848 words with nine untraced figures, where the sequential run
+produced 714 with none. It is in the git history rather than in the repo.
 
-Change how an agent thinks: edit markdown. Change the shape of the run: edit the script.
+**Every prompt, rule, angle brief and filter is a `.md` file under `skills/`.** Change how a step
+thinks by editing markdown. The Python does the things a script does better than a judgement: tracing
+a figure to its source, counting words, checking a rendered page.
 
 ## Layout
 
 ```
 .claude-plugin/             plugin.json, and the marketplace entry that serves it
-workflows/simply.js         the run. ~90 lines. Names files and agents, nothing else
-skills/simply/              what the run's agents read
-  references/house-rules.md   prepended to every agent. The filter
-  references/pipeline.md      what each step gets and must produce
-  references/angles.md        the four panel briefs
-  references/output-structure.md  the six sections of the artifact
-skills/compass/              the intake. Two modes: read a deck, or ask five questions
-                            writes material/<client>/compass.md, never the project root
-skills/flatten/            the flattener. eli5 for strategy
-skills/plain/               language filter + plainlint.py
-skills/plain-strategy/      substance filter + stratlint.py
+skills/simply/              the run
+  references/house-rules.md   read first, at every step. The filter and the unbreakable rules
+  references/pipeline.md      what each step gets, must produce, and how it fails
+  references/angles.md        the four passes
+  references/output-structure.md  the figures and the two files
+skills/compass/             the intake. Reads a deck, or asks five questions
+skills/flatten/             the flattener. references/output.md owns the six sections
+skills/plain/               language filter, plainlint.py, textlib.py
+skills/plain-strategy/      substance filter, stratlint.py
 skills/stop-slop/           de-slop filter
+skills/humanizer/           the last pass, so it reads like a person
 skills/red-team/            the attack angle
-design/DESIGN.md            two colours, one column, print-clean
-scripts/check_artifact.py   deterministic verification of the rendered output
 scripts/check_facts.py      every figure traced back to the material
+scripts/check_artifact.py   the rendered page, thirteen checks
 scripts/check_headings.py   the headings have to read as a story
 scripts/check_skills.py     description and body budgets per skill
 scripts/render_artifact.py  a mechanical render, for comparing two runs
-templates/                  artifact.html, reasoning.html
-examples/                   a worked, anonymised run. `check_artifact.py examples/` verifies it
-runs/<slug>/<stamp>/       output, one directory per run. Durable, not /tmp
+design/DESIGN.md            two colours, one column, print-clean, six figures
+templates/                  artifact.html, reasoning.html, figures.html
+examples/                   a worked, anonymised run that validates in CI
+tests/                      twelve fixtures and their expected verdicts
+material/<client>/          input, plus that client's compass.md. Git-ignored
+runs/<slug>/<stamp>/        output. Git-ignored
 ```
 
 ## House rules for working in this repo
@@ -75,35 +75,41 @@ runs/<slug>/<stamp>/       output, one directory per run. Durable, not /tmp
   live under the plugin, which is not the folder the user is working in. A path that is correct in a
   clone and wrong once installed is the failure mode this repo keeps hitting.
 
-  One convention, everywhere an agent reads: **a command spells `{root}/`, prose may write the bare
-  path.** In `simply.js` build the path from `root`. Never write a path relative to the file it sits
-  in, such as `../plain/scripts/`: an agent resolves it against the working directory, not against
-  your file.
-- **Publish the measured number, not the hoped-for one.** Runtimes, agent counts and word counts in
+  One convention, everywhere a step reads: **a command spells `{root}/`, prose may write the bare
+- **Publish the measured number, not the hoped-for one.** Run times, step counts and word counts in
   the docs come from a real run. If you change the shape of the run, measure it again.
 
 ## Running it
 
 ```
-/simply-strategy:compass ./material/<client>/   fills that folder's compass.md
-/simply-strategy:simply  ./material/<client>/   the run
-/workflows                                      live progress
+/simply-strategy:compass ./material/<client>/   fills that folder's compass.md, once per client
+/simply-strategy:simply  ./material/<client>/   the run, six steps in order
 ```
 
-Linters, on `runs/<slug>/<stamp>/04-plain.md`:
+There is no progress screen, because there is nothing running in the background. Watch the numbered
+files appear in `runs/<slug>/<stamp>/`. They are also the recovery path: if a run stops, look at the
+highest number that finished and start at the next step.
+
+All five checks, after a run:
 
 ```
-python3 skills/plain/scripts/plainlint.py runs/<slug>/<stamp>/04-plain.md
-python3 skills/plain-strategy/scripts/stratlint.py runs/<slug>/<stamp>/04-plain.md
+python3 scripts/check_facts.py    runs/<slug>/<stamp>/04-plain.md --material material/<slug>/
+python3 skills/plain/scripts/plainlint.py runs/<slug>/<stamp>/04-plain.md --lang en --max-sentence 15
+python3 skills/plain-strategy/scripts/stratlint.py runs/<slug>/<stamp>/04-plain.md --lang en
+python3 scripts/check_artifact.py runs/<slug>/<stamp>/ --material material/<slug>/
+python3 scripts/check_headings.py runs/<slug>/<stamp>/simple-strategy-artifact.html
 ```
 
-Each linter prints its own verdict band and they are not the same number. Read the band, or gate
-on it with `--fail-over`.
+Each linter prints its own verdict band and they are not the same number: plainlint scores per
+hundred words of prose it scanned, stratlint per hundred words of the whole document. Read each
+against its own band, or gate on it with `--fail-over`.
 
-The artifact checker, after a run:
+And on the repo itself:
 
 ```
-python3 scripts/check_artifact.py runs/<slug>/<stamp>/
+python3 scripts/check_skills.py skills/
+python3 tests/run_fixtures.py
+python3 scripts/check_artifact.py examples/ --material examples/material/
 ```
 
 ## One owner per rule

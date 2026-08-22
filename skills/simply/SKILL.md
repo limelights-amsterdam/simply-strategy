@@ -19,12 +19,12 @@ That is not a limitation. It was measured against a nine-agent parallel version 
 
 | | Words | Pointers | Untraced figures | Headings that make a claim |
 |---|---|---|---|---|
-| Parallel, nine agents | 3848 | 97 | **9** | 0 of 6 |
+| Nine agents, panel in parallel | 3848 | 97 | **9** | 0 of 6 |
 | **You, in order** | **714** | 11 | **0** | **6 of 6** |
 
-The parallel version buys one thing you cannot have: four angles blind to each other, which is what
-makes agreement between them evidence. You lose that. What you gain is that every step sees the last,
-which is why the argument holds together and the figures trace.
+The parallel version bought one thing you cannot have: four angles blind to each other, which is what
+makes agreement between them evidence. You lose that, and you gain that every step sees the last,
+which is why the argument holds together and the figures trace. It is in the git history.
 
 **The one number to watch is the pointers.** Working alone, it is easy to write a good sentence and
 forget where it came from. A distillation that drops what a claim rests on is a shorter document.
@@ -70,12 +70,6 @@ arithmetic on their figures is allowed and must say so on the same line.
 `reasoning.html`, what you read, what you set aside, where you are unsure.
 
 Both structures: [references/output-structure.md](references/output-structure.md).
-
-## The parallel variant
-
-`workflows/simply.js` runs the same six steps as nine agents with the panel in parallel. It is not
-the default, on the evidence above. Reach for it when a folder holds several documents that need
-checking against each other, since that is the one job four blind angles do better than one reader.
 
 ## What it is not for
 

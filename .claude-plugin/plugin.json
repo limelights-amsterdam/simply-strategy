@@ -3,8 +3,17 @@
   "displayName": "Simply Strategy",
   "description": "Point it at a folder of strategy documents. Get back one page a board reads in under six minutes.",
   "version": "0.1.0",
-  "author": { "name": "Tim van den Bosch", "email": "tim@sitelane.nl" },
+  "author": {
+    "name": "Tim van den Bosch",
+    "email": "tim@sitelane.nl"
+  },
   "homepage": "https://github.com/limelights-amsterdam/simply-strategy",
   "repository": "https://github.com/limelights-amsterdam/simply-strategy",
-  "keywords": ["strategy", "plain-language", "board", "eli5", "workflow"]
+  "keywords": [
+    "strategy",
+    "plain-language",
+    "board",
+    "eli5",
+    "distillation"
+  ]
 }
