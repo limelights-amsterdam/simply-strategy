@@ -97,16 +97,13 @@ If the Compass is empty or absent, say so in one line and stop. Do not improvise
 
 **Job:** What does the world do to this plan?
 
-Load `skills/red-team/SKILL.md`. Exactly five challenges, each with the pain in one sentence, why it
-hurts, and an open question for the room.
+Attack the strategy, never the people. Take the plan at its word, assume it is internally consistent,
+and ask what happens to it outside the paper. Quote what the plan says, then say what happens to it;
+a generic warning is worthless here.
 
 **Look outward, not inward.** The `contradict` angle already audits the documents against each other,
-so a challenge that amounts to "these two slides disagree" is a finding it will make with better
-evidence, and yours becomes an echo. Four angles where two find the same thing is three angles and a
-repeat.
-
-Your ground is everything outside the paper. Take the plan at its word, assume it is internally
-consistent, and then ask what happens to it:
+so a challenge that amounts to "these two slides disagree" is an echo of a finding it makes with
+better evidence. Your ground is everything outside the document:
 
 | Lens | The question |
 |---|---|
@@ -120,9 +117,15 @@ consistent, and then ask what happens to it:
 Logical is not the same as true. A plan that is perfect on paper can fail on all six of those without
 a single internal inconsistency, which is exactly the failure mode no other angle is looking for.
 
-Use the assumption audit and the opposite test from the red-team skill on the load-bearing beliefs,
-but land each challenge in the outside world rather than in the document.
+**Start with the assumption audit.** Which beliefs must hold for this plan to work? Write the
+load-bearing ones down, rank them by how fatal it is if they are wrong, and aim the six lenses at the
+heaviest. *This lives or dies on X, and X is exactly what the plan does not control.*
 
-Quote what the plan says, then say what happens to it. Generic warnings are worthless here.
+Deliver, in this order:
 
-Open with one genuinely strong point so the room knows you read it.
+1. **One genuinely strong point**, one or two sentences, so the room knows you read it. No flattery.
+2. **Exactly five challenges**, numbered. Each one has a title that states the pain in one sentence,
+   one line on why it hurts anchored in the document with a pointer, and an open question for the
+   room that cannot be answered yes or no.
+
+Five, not seven. A list that keeps growing stops being a ranking.

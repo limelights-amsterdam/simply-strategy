@@ -1,6 +1,6 @@
 # simply-strategy
 
-A Claude Code plugin: seven skills and three scripts. One job: distil a folder of strategy documents
+A Claude Code plugin: six skills and three scripts. One job: distil a folder of strategy documents
 into one plain-language HTML page that anyone can read. `/simply` is the lead skill that walks the
 other steps in order.
 
@@ -29,7 +29,6 @@ skills/plain/               language filter, plainlint.py, textlib.py
 skills/plain-strategy/      substance filter, stratlint.py
 skills/stop-slop/           de-slop filter
 skills/humanizer/           the last pass, so it reads like a person
-skills/red-team/            the attack angle
 scripts/check_facts.py      every figure traced back to the material
 scripts/check_artifact.py   the rendered page
 scripts/check_headings.py   the headings have to read as a story

@@ -101,7 +101,7 @@ one wrote, which is what keeps the argument whole and the figures traceable.
 | # | Step | Writes |
 |---|---|---|
 | 1 | Inventory the folder, and what it names but does not contain | `01-spec.md` |
-| 2 | Read it from four angles: substance, contradiction, compass, red team | `02-angles.md` |
+| 2 | Read it from four angles: substance, contradiction, compass, attack | `02-angles.md` |
 | 3 | Rank to exactly three, and write the argument | `03-plan.md` |
 | 4 | Flatten to L1, headings taken from the argument | `04-plain.md` |
 | 5 | Run three scripts, then check both fidelity hops | `05-verdict.md` |
@@ -155,7 +155,6 @@ skills/plain/             language filter, plainlint.py, textlib.py
 skills/plain-strategy/    substance filter, stratlint.py
 skills/stop-slop/         de-slop filter
 skills/humanizer/         the last pass, so it reads like a person
-skills/red-team/          the attack angle
 scripts/                  the three checks
 design/DESIGN.md          two colours, one column, print-clean, six figures
 templates/                artifact.html, reasoning.html, figures.html

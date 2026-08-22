@@ -60,7 +60,7 @@ made?
 **Push for:** the hostile one. There is always one. If they say there is nobody, ask who asks the
 hardest question.
 
-**Why it works:** it sets the register of the artifact, and it tells the red-team angle whose
+**Why it works:** it sets the register of the artifact, and it tells the attack angle whose
 objection to pre-empt.
 
 ---
