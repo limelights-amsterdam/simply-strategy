@@ -56,9 +56,8 @@ NO_MATERIAL = {"green-no-material"}
 
 
 # heading fixture -> (exit code, the problem the failing heading must report)
-# check_headings used to be exercised only by examples/, which was a hand-built
-# page rather than pipeline output. These are six small pages instead, and each
-# one names the rule it breaks, so a rule that stops firing is visible.
+# Six small pages, each named for the rule it breaks, so a rule that stops
+# firing is visible.
 HEADING_EXPECT = {
     "story":            (0, None),
     "labels":           (1, "names the section"),
