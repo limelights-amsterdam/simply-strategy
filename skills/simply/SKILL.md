@@ -8,11 +8,10 @@ allowed-tools: Bash(python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check_artifact.py *) B
 
 One folder in, one page out. The page says what the documents actually decided, in language a
 ten-year-old follows, with every number traceable to a source. It is written for the board, and the
-bar is that anyone in the company could follow it.
-
-The whole design rests on one problem: **flattening a vague document produces a beautifully simple
-lie.** Most strategy documents are vague on purpose. So four angles check the material before
-anything is simplified, and three reviewers check that the simplification stayed true.
+bar is that anyone in the company could follow it. The whole design rests on one problem:
+**flattening a vague document produces a beautifully simple lie.** Most strategy documents are vague
+on purpose, so four angles test the material before anything is simplified and three reviewers check
+that the simplification stayed true.
 
 ## How to run it
 
@@ -31,10 +30,9 @@ Workflow({
 })
 ```
 
-`root` is how the run finds this plugin's own files. Claude Code substitutes
-`${CLAUDE_PLUGIN_ROOT}` in this file, and not inside the workflow script, so the value has to be
-handed over here. Working from a clone rather than an install, the placeholder stays literal text,
-the script falls back to `.`, and the same run starts with
+`root` is how the run finds this plugin's own files. Claude Code substitutes `${CLAUDE_PLUGIN_ROOT}`
+in this file and not inside the workflow script, so the value has to be handed over here. From a
+clone the placeholder stays literal, the script falls back to `.`, and the run starts with
 `Workflow({ scriptPath: "workflows/simply.js", args: { folder: "<folder>" } })`.
 
 It runs in the background and asks nothing. Watch it with `/workflows`. When it returns, report the
@@ -45,49 +43,35 @@ that starts the run. A background run outlives that turn, and a workflow cannot 
 sit and wait on a permission prompt. To settle it for good, add the three `Bash(python3 ...)` rules
 to your own permission settings before a long run.
 
-If the workflow runtime is unavailable, run the seven steps in [references/pipeline.md](references/pipeline.md)
-yourself with subagents, in the same order and with the same file names. The result is the same, the
-progress screen is not.
+If the workflow runtime is unavailable, run the seven steps in
+[references/pipeline.md](references/pipeline.md) yourself with subagents, same order, same names.
 
 ## The seven steps
 
-| # | Step | Shape | Writes |
-|---|---|---|---|
-| 1 | Spec Agent | linear | `01-spec.md` |
-| 2 | Panel — substance · contradict · compass · attack | 4 parallel | `02-*.md` |
-| 3 | Plan Agent | linear | `03-plan.md` |
-| 4 | Flattener | linear | `04-plain.md` |
-| 5 | Reviewers — true · simple · invented | 3 parallel | `05-*.md` |
-| 6 | Review Coordinator | linear | `04-plain.md` revised, `05-verdict.md` |
-| 7 | Artifact Agent | linear | the two HTML pages |
+Spec, a panel of four, plan, flatten, three reviewers, one repair round, artifact. Twelve agents,
+two fan-outs, no loops. Output goes to `runs/<slug>/`. The first full run took 43.7 minutes on 100KB
+of material, and a smaller folder is quicker.
 
-Output goes to `runs/<slug>/`. Twelve agents, two fan-outs, one repair round, no loops. The first
-full run took 43.7 minutes on 100KB of material. A smaller folder is quicker.
-
-Details per step, including how each one fails: [references/pipeline.md](references/pipeline.md).
+What each step gets, must produce, and how it fails: [references/pipeline.md](references/pipeline.md).
+That file owns the seven steps. Do not restate them here.
 
 ## What makes it more than four prompts
 
 Every step reads [references/house-rules.md](references/house-rules.md) before its own brief. That
 file owns the filter and the rules no agent may break: three must-solve seats and not four, no
 invented number, a pointer on every claim, nothing softened. The Flattener compresses, it does not
-rescue, so consultant prose in step 2 gives you tidy consultant prose in step 4.
-
-The four angles are blind to each other. That is what makes step 3's tension check mean something.
-Two reviewers calling one thing fatal is decisive, because one critic is only an opinion.
+rescue, so consultant prose in step 2 gives you tidy consultant prose in step 4. The four angles are
+blind to each other, which is what makes step 3's tension check mean something, and two reviewers
+calling one thing fatal is decisive because one critic is only an opinion.
 
 ## What ships
 
-`simple-strategy-artifact.html` — six sections, four fixed visual slots, black and white,
-self-contained, prints clean.
+`simple-strategy-artifact.html`, black and white, self-contained, prints clean. Next to it
+`reasoning.html`, whose cut list and unsure list may never be empty. Both structures, and what fills
+them: [references/output-structure.md](references/output-structure.md).
 
-`reasoning.html` — what it read, what it threw away, where it is unsure, and whether the tension
-check fired. Parts two and three may never be empty.
-
-Both structures: [references/output-structure.md](references/output-structure.md).
-
-Step 7 verifies itself with `scripts/check_artifact.py` under the plugin root, because rendering is
-the only step nothing downstream would catch. Exit code 0 or it does not ship.
+Step 7 verifies itself with `check_artifact.py` under the plugin root, because rendering is the only
+step nothing downstream would catch. Exit code 0 or it does not ship.
 
 ## What it is not for
 

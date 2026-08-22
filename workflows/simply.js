@@ -32,10 +32,8 @@ const R = `${root}/skills/simply/references`
 const brief = (task) => `You are one agent in a Simply Strategy run.
 Read ${R}/house-rules.md first. It applies to everything you write.
 
-The plugin root is \`${root}\`
-Every path this run names that starts with skills/, scripts/, templates/ or design/ sits under that
-root, including such paths written inside the reference files you are told to read. Prefix them
-yourself. Do not go looking for them relative to the working directory.
+The plugin root is \`${root}\`. Where a reference file writes {root}, that is the value. Where it
+writes a bare skills/, scripts/, templates/ or design/ path, prefix it with the same root.
 
 The material is in ${folder}. The intake is ${folder}compass.md. Output goes to ${out}/, which is
 relative to the working directory and not to the plugin root.
