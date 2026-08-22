@@ -5,7 +5,7 @@ description: Explain a strategy like I'm 5. Use when the user types /simply-stra
 
 # simply-strategy
 
-Explain this strategy like I'm someone who knows nothing about it, using a HTML artifact with big
+Explain this strategy like I'm someone who knows nothing about it, using an HTML artifact with big
 pictures and few words.
 
 Material: $ARGUMENTS
@@ -18,7 +18,7 @@ Three things a strategy needs that a topic does not:
 
 Four short files under `references/` say how. Read them before you write:
 
-- [material.md](references/material.md): how to read what you were given, and where the page goes.
+- [material.md](references/material.md): how to read what the user gave you, and where the page goes.
 - [decision.md](references/decision.md): how to tell whether the material contains a decision, and what the page says when it does not.
 - [words.md](references/words.md): how the page sounds.
 - [page.md](references/page.md): what the page looks like, screen by screen.
