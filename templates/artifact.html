@@ -32,11 +32,12 @@ header .meta{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
 
 section{margin-bottom:var(--gap-section)}
 section > .rule{margin-bottom:1rem}
-section > .kicker{display:block;margin-bottom:var(--gap-block)}
+section > h2{font-family:var(--sans);font-weight:700;font-size:1.5rem;line-height:1.2;
+  letter-spacing:-.01em;margin-bottom:var(--gap-block)}
 
-/* slot 1: the one sentence */
-.one-sentence{font-size:clamp(2.5rem,5.5vw,4.5rem);line-height:1.05;letter-spacing:-.02em;
-  text-align:center;margin:6rem 0;width:min(48rem,92vw);
+/* slot 1: the one sentence. It is the page's h1 and its first claim */
+.one-sentence{font-family:var(--sans);font-weight:700;font-size:clamp(2.5rem,5.5vw,4.5rem);
+  line-height:1.05;letter-spacing:-.02em;text-align:center;margin:6rem 0;width:min(48rem,92vw);
   margin-left:calc(50% - min(24rem,46vw));margin-right:0}
 
 /* slot 2: the three must-solves */
@@ -85,7 +86,7 @@ footer .meta{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
   :root{--margin:8rem;--gap-section:3.5rem}
   .page{max-width:none;padding:0}
   section{break-inside:avoid}
-  .kicker,.must .stmt{break-after:avoid}
+  h2,.must .stmt{break-after:avoid}
   .one-sentence{break-after:page;margin:3rem 0;width:100%;margin-left:0}
   .src,.caption,.unanswered{color:#000}
 }
@@ -102,15 +103,17 @@ footer .meta{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
   </div>
 </header>
 
-<!-- 1 · the one sentence -->
+<!-- 1 · the one sentence. The headings are the claims from 03-plan.md, one per
+     section, in order. A reader who scans only the headings gets the argument. -->
 <section id="one">
-  <hr class="rule"><span class="kicker">What this is about</span>
-  <p class="one-sentence">{{ONE_SENTENCE}}</p>
+  <hr class="rule">
+  <h1 class="one-sentence">{{ONE_SENTENCE}}</h1>
+  <p>{{ONE_SENTENCE_SUPPORT}}</p>
 </section>
 
 <!-- 2 · the three things that must be solved -->
 <section id="must-solve">
-  <hr class="rule"><span class="kicker">Three things must be solved</span>
+  <hr class="rule"><h2>{{CLAIM_2}}</h2>
   <!-- repeat exactly three times -->
   <div class="must">
     <div class="n">{{N}}</div>
@@ -122,7 +125,7 @@ footer .meta{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
 
 <!-- 3 · what we stop doing -->
 <section id="stop">
-  <hr class="rule"><span class="kicker">What we stop doing</span>
+  <hr class="rule"><h2>{{CLAIM_3}}</h2>
   <div class="split">
     <div>
       <span class="kicker">Stops</span>
@@ -140,7 +143,7 @@ footer .meta{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
 
 <!-- 4 · what has to be true -->
 <section id="bet">
-  <hr class="rule"><span class="kicker">What has to be true</span>
+  <hr class="rule"><h2>{{CLAIM_4}}</h2>
   <!-- repeat per assumption -->
   <div class="bet">
     <div><span class="kicker">Assumption</span><p>{{ASSUMPTION}}</p></div>
@@ -153,7 +156,7 @@ footer .meta{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
 
 <!-- 5 · what the documents disagree about -->
 <section id="conflicts">
-  <hr class="rule"><span class="kicker">What the documents disagree about</span>
+  <hr class="rule"><h2>{{CLAIM_5}}</h2>
   <!-- repeat per contradiction -->
   <div class="conflict">
     <p class="side">{{SIDE_A}} <span class="src">({{SOURCE_A}})</span></p>
@@ -165,7 +168,7 @@ footer .meta{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
 
 <!-- 6 · what we do not know -->
 <section id="gaps">
-  <hr class="rule"><span class="kicker">What we do not know</span>
+  <hr class="rule"><h2>{{CLAIM_6}}</h2>
   <ul class="gaps">
     <li><span class="tofill">{{TO_FILL}}</span> {{GAP_EXPLANATION}}</li>
   </ul>

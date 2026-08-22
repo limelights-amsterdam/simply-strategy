@@ -67,6 +67,7 @@ HEADING_EXPECT = {
     "ungrounded":       (1, "not found below"),
     "repeated-subject": (1, "repeats the previous"),
     "too-long":         (1, "words"),
+    "no-headings":      (1, None),
 }
 
 

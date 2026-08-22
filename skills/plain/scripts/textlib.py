@@ -68,7 +68,9 @@ def count_words(sentence: str) -> int:
     # quote is penalised for the source's verbosity, and the one thing a flattener
     # must not do to fix that is paraphrase the quote.
     s = re.sub(r"[\"\u201c\u2018][^\"\u201c\u201d\u2018\u2019]{2,}[\"\u201d\u2019]", " Q ", sentence)
-    s = re.sub(r"\([^)]*\)", " X ", s)
+    # Round or square: a source pointer is written [file.md p. 6] in markdown and
+    # (file.md p. 6) on the page, and has to weigh the same in both.
+    s = re.sub(r"\([^)]*\)|\[[^\]]*\]", " X ", s)
     s = re.sub(r"\b(\d[\d.,]*)\s*([A-Za-z°%]{1,4})\b", r"\1\2", s)
     tokens = re.findall(r"[A-Za-zÀ-ÿ0-9][\wÀ-ÿ'’\-/°%]*", s)
     return len(tokens)

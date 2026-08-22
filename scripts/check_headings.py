@@ -70,7 +70,7 @@ LABELS = {frozenset(content_words(name)) for name in SECTIONS.values()}
 
 def sections(doc: str):
     """Each heading with the text that follows it, up to the next heading."""
-    parts = list(re.finditer(r"<(h1|h2|h3)>(.*?)</\1>", doc, re.S))
+    parts = list(re.finditer(r"<(h1|h2|h3)\b[^>]*>(.*?)</\1>", doc, re.S | re.I))
     for i, m in enumerate(parts):
         end = parts[i + 1].start() if i + 1 < len(parts) else len(doc)
         yield text_of(m.group(2)), text_of(doc[m.end():end])
@@ -119,6 +119,16 @@ def main() -> int:
         rows.append((i, head, problems))
         if problems:
             failed += 1
+
+    if not rows:
+        # A page with no h1, h2 or h3 has nothing to read as an argument. That is
+        # not a pass; it is the template's section names doing the headings' job.
+        if a.json:
+            print(json.dumps({"failed": 1, "headings": [], "problem": "no headings"}))
+        else:
+            print("## Headings\n\nNo h1, h2 or h3 on the page. A reader who scans the headings "
+                  "gets nothing, so there is no argument to check.")
+        return 1
 
     if a.json:
         print(json.dumps({"failed": failed,
