@@ -105,5 +105,7 @@ thought. The limit is on the sentence, not on the paragraph.
 
 ## Closing line
 
-End with the flatten level the input came in at and the level it went out at. Usually `L5 → L1`.
-It is the most uncomfortable line in the job and it belongs on the page.
+End `04-plain.md` with the flatten level the input came in at and the level it went out at.
+Usually `L5 → L1`. It is the most uncomfortable line in the job. It goes in the reasoning log,
+where `check_artifact.py` looks for it, not on the page: the reader of the page does not know what
+an L5 is and does not need to.
