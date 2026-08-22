@@ -72,7 +72,11 @@ def main() -> int:
         print(f"no readable material under {a.material}", file=sys.stderr)
         return 2
 
-    doc = pathlib.Path(a.page).read_text()
+    page = pathlib.Path(a.page)
+    if not page.is_file():
+        print(f"No such file: {a.page}", file=sys.stderr)
+        return 2
+    doc = page.read_text()
     missing, checked, excused = [], 0, 0
 
     for lineno, line in enumerate(doc.split("\n"), 1):

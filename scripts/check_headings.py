@@ -15,13 +15,15 @@ guarantee against a heading that reads well and is not supported.
 Not checkable: whether the sequence is any good. That is judgement, and it belongs
 to the reviewers.
 
-    python3 scripts/check_headings.py examples/simple-strategy-artifact.html
+    python3 scripts/check_headings.py runs/<slug>/<stamp>/simple-strategy-artifact.html
 """
 
 from __future__ import annotations
 
 import argparse
 import html
+import json
+import pathlib
 import re
 import sys
 
@@ -55,21 +57,6 @@ def text_of(fragment: str) -> str:
     return re.sub(r"\s+", " ", html.unescape(f)).strip()
 
 
-def stem(w: str) -> str:
-    """Crude, and deliberately so.
-
-    The check asks whether a heading's terms appear below it. Without stemming it
-    failed every heading in the file it was written against, because "needs" is
-    not "need" and "bets" is not "bet". A check that fails everything is worth as
-    little as one that passes everything.
-    """
-    for suf in ("ing", "edly", "ies", "ed", "es", "ly", "s"):
-        if w.endswith(suf) and len(w) - len(suf) >= 3:
-            base = w[: -len(suf)]
-            return base[:-1] if suf == "ies" else base
-    return w
-
-
 def content_words(s: str) -> list[str]:
     words = re.findall(r"[A-Za-z][A-Za-z'-]+", s.lower())
     return [w for w in words if w not in STOP and len(w) > 2]
@@ -87,9 +74,15 @@ def main() -> int:
     ap = argparse.ArgumentParser(description="Check that the headings read as a story.")
     ap.add_argument("artifact")
     ap.add_argument("--max-words", type=int, default=MAX_WORDS)
+    ap.add_argument("--json", action="store_true",
+                    help="machine-readable, for tests/run_fixtures.py")
     a = ap.parse_args()
 
-    doc = open(a.artifact, encoding="utf-8").read()
+    path = pathlib.Path(a.artifact)
+    if not path.is_file():
+        print(f"No such file: {a.artifact}", file=sys.stderr)
+        return 2
+    doc = path.read_text(encoding="utf-8")
     rows, failed = [], 0
     prev_subject = set()
 
@@ -123,6 +116,12 @@ def main() -> int:
         rows.append((i, head, problems))
         if problems:
             failed += 1
+
+    if a.json:
+        print(json.dumps({"failed": failed,
+                          "headings": [{"n": i, "heading": h, "problems": p}
+                                       for i, h, p in rows]}, indent=2))
+        return 1 if failed else 0
 
     print("## Headings\n")
     print("| # | Heading | Verdict |")

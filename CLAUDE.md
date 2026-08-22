@@ -36,11 +36,9 @@ scripts/check_facts.py      every figure traced back to the material
 scripts/check_artifact.py   the rendered page, thirteen checks
 scripts/check_headings.py   the headings have to read as a story
 scripts/check_skills.py     description and body budgets per skill
-scripts/render_artifact.py  a mechanical render, for comparing two runs
 design/DESIGN.md            two colours, one column, print-clean, six figures
 templates/                  artifact.html, reasoning.html, figures.html
-examples/                   a worked, anonymised run that validates in CI
-tests/                      twelve fixtures and their expected verdicts
+tests/                      eighteen fixtures and their expected verdicts
 material/<client>/          input, plus that client's compass.md. Git-ignored
 runs/<slug>/<stamp>/        output. Git-ignored
 ```
@@ -109,7 +107,6 @@ And on the repo itself:
 ```
 python3 scripts/check_skills.py skills/
 python3 tests/run_fixtures.py
-python3 scripts/check_artifact.py examples/ --material examples/material/
 ```
 
 ## One owner per rule

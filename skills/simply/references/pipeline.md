@@ -133,7 +133,7 @@ Load `skills/flatten/SKILL.md`. Produce the six sections at flatten level L1.
 
 **The headings come from `## The argument` in `03-plan.md`, not from the section names.** One claim
 per section, in that order. A reader who scans the headings and nothing else should get the case.
-Verify with `python3 {root}/scripts/check_headings.py` on the rendered page in step 7.
+Verify with `python3 {root}/scripts/check_headings.py` on the rendered page in step 6.
 
 Read `skills/flatten/references/before-after.md` and `references/output.md` first. The second one
 carries the rule that makes the budget reachable: **write the finding, not the chain that supports
@@ -160,7 +160,7 @@ pointer in it. Losing content is the failure mode of this whole step.
 This step used to be three reviewers and a coordinator. Two of those reviewers were doing work a
 script does better, and the measurement is not close.
 
-On one client run, the reviewer whose whole job was to catch invented
+On one run, the reviewer whose whole job was to catch invented
 figures reported "two fatal, nine minor, no invented owner anywhere in the file". Running
 `check_facts.py` over the same file found **nine figures that appear nowhere in the material**. An
 agent asked to be thorough about numbers was beaten by eighty lines of Python, which is what should

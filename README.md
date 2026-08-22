@@ -143,7 +143,8 @@ Python.
 
 ## It checks its own work
 
-Five scripts, because a check a script can make should not be a judgement call.
+Four checks and a fixture pass, because a check a script can make should not be a
+judgement call.
 
 ```bash
 python3 scripts/check_facts.py     runs/<slug>/<stamp>/04-plain.md --material material/<slug>/
@@ -159,7 +160,7 @@ python3 tests/run_fixtures.py
 | `check_artifact` | A missing section, an unfilled slot, a sentence over fifteen words, a page that loads something |
 | `check_headings` | A heading that counts the page or names its own section instead of claiming anything |
 | `check_skills` | A skill whose description or body is over its context budget |
-| `run_fixtures` | A regression in `check_artifact`, across twelve recorded cases |
+| `run_fixtures` | A regression in `check_artifact` or `check_headings`, across eighteen recorded cases |
 
 The point of writing them down is what they caught. On a full parallel run, the agent whose whole job
 was catching invented figures reported "no invented owner anywhere in the file"; `check_facts` found
@@ -180,11 +181,10 @@ skills/plain-strategy/    substance filter, stratlint.py
 skills/stop-slop/         de-slop filter
 skills/humanizer/         the last pass, so it reads like a person
 skills/red-team/          the attack angle
-scripts/                  the five checks and a mechanical renderer
+scripts/                  the four checks
 design/DESIGN.md          two colours, one column, print-clean, six figures
 templates/                artifact.html, reasoning.html, figures.html
-examples/                 a worked, anonymised run that validates in CI
-tests/                    twelve fixtures and their expected verdicts
+tests/                    eighteen fixtures and their expected verdicts
 material/<client>/        input, plus that client's compass.md. Git-ignored
 runs/<slug>/<stamp>/      output. Git-ignored
 ```
