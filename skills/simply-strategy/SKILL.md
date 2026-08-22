@@ -23,7 +23,10 @@ Four short files under `references/` say how. Read them before you write:
 - [words.md](references/words.md): how the page sounds.
 - [page.md](references/page.md): what the page looks like, section by section.
 
-Start from [assets/page.html](assets/page.html). Keep its CSS and its section shape. Replace the
-bracketed content, draw the pictures, add or drop sections. Do not design a new page.
+The page is [assets/page.html](assets/page.html). Copy that file to the output path and fill it
+in. Keep the `<style>` block as it is; only the colour values may change. Keep the header, the
+section shape, the class names and the footer. Replace everything in square brackets, draw the
+pictures as inline SVG, add or drop sections to follow the material. Do not design a new page and
+do not write new CSS.
 
 Write the artifact beside the material as `simply-strategy.html`.

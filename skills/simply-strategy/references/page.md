@@ -2,14 +2,14 @@
 
 The skeleton is `assets/page.html`. Start from it. This file says what goes in it and why.
 
-A picture book, not a poster. One narrow column you read top to bottom. Numbered sections. Each
-section asks one plain question, answers it in one claim, draws it, says two sentences, and names
-the page it came from. Someone who knows nothing reads it in a few minutes and can retell it.
+A picture book, not a poster. One page you read top to bottom, picture over words. Numbered
+sections. Each section asks one plain question, answers it in one claim, draws it, says two
+sentences, and names the page it came from. Someone who knows nothing reads it in a few minutes and can retell it.
 
 ## The shape
 
-- A wide page, about 64rem, on warm paper. A masthead with a rule above and below. In each section the picture runs the full width
-  and the words under it sit on a wide measure in a large size. Dark ink, one sans, two accents at
+- About 64rem wide, on warm paper. A masthead with a rule above and below. In each section the
+  picture runs the full width and the words under it sit on a wide measure in a large size. Dark ink, one sans, two accents at
   most (one warm, one cool) and one green for "decided". No web fonts needed. It prints clean.
 - Header: a small kicker with the document's name, then a headline of one short sentence that says the
   whole story, then two or three short sentences under it: what they do, what they want, what they
