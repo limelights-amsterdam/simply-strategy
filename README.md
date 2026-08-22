@@ -1,6 +1,6 @@
 # Simply Strategy
 
-Point it at a folder of strategy documents. Get back one page a board reads in four minutes.
+Point it at a folder of strategy documents. Get back one page a board reads in six minutes.
 
 ```
 /simply-strategy:compass ./material/acme/   once per client, drafts five fields from their material

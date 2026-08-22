@@ -1,7 +1,7 @@
 {
   "name": "simply-strategy",
   "displayName": "Simply Strategy",
-  "description": "Point it at a folder of strategy documents. Get back one page a CEO reads in four minutes.",
+  "description": "Point it at a folder of strategy documents. Get back one page a CEO reads in six minutes.",
   "version": "0.1.0",
   "author": { "name": "Tim van den Bosch", "email": "tim@sitelane.nl" },
   "homepage": "https://github.com/limelights-amsterdam/simply-strategy",

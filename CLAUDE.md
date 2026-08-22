@@ -35,8 +35,22 @@ runs/<slug>/                output. Durable, not /tmp
 
 ## House rules for working in this repo
 
-- **Every `SKILL.md` stays under 80 lines.** Weight goes in `references/`. If a SKILL.md is growing,
-  something belongs in a reference file.
+- **Keep `SKILL.md` to what a reader needs to act.** Lookup tables, word lists and worked examples go
+  to `references/`, which loads only when needed.
+
+  Two budgets, because they cost differently. The **description** rides in every session whether the
+  skill fires or not, so keep it under about 120 words. The **body** loads when the skill fires:
+  under about 1000 words, and never past the documented 500 lines.
+
+  These are ceilings with a reason, not targets. A file that is 40 words over and coherent beats one
+  cut to fit. The one description worth spending over the ceiling on is trigger coverage: `plain`
+  (152) and `plain-strategy` (149) both run long because they list trigger phrases in two languages,
+  and a skill that never fires costs more than a description that runs long. Anything else over the
+  ceiling is weight that belongs in `references/`.
+
+  This replaces an 80-line rule that was stricter than the documented guidance, counted the wrong
+  thing, and was broken by six of seven skills here. Lines are a bad proxy: a one-line description
+  can carry 150 words and cost more than the body it introduces.
 - **The filter order is substance, then language, then de-slop.** Rewriting an empty sentence gives
   you a tidy empty sentence.
 - **Never invent a number.** `[TO FILL: what is needed]`, always.
