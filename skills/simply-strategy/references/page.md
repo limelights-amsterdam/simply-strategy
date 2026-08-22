@@ -11,8 +11,9 @@ the page it came from. Someone who knows nothing reads it in a few minutes and c
 - A wide page, about 64rem, on warm paper. A masthead with a rule above and below. In each section the picture runs the full width
   and the words under it sit on a wide measure in a large size. Dark ink, one sans, two accents at
   most (one warm, one cool) and one green for "decided". No web fonts needed. It prints clean.
-- Header: a small kicker with the document's name, then a headline that tells the whole story in
-  two or three short sentences. Nothing else; the sources under each section and the footer say
+- Header: a small kicker with the document's name, then a headline of one short sentence that says the
+  whole story, then two or three short sentences under it: what they do, what they want, what they
+  have not said. Nothing else; the sources under each section and the footer say
   where it all comes from.
 - Then the sections, numbered. Each one has the same five parts, in this order:
   1. Kicker: the number and the question, in plain words. "3. The problem they name"

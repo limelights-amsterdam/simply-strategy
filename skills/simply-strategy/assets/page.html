@@ -21,6 +21,8 @@ header{display:grid;grid-template-columns:repeat(12,1fr);column-gap:2.5rem;row-g
   border-top:4px solid var(--ink);border-bottom:1px solid var(--rule);padding:1rem 0 1.75rem}
 header .kicker{grid-column:1/-1}
 header h1{grid-column:1/11}
+p.stand{font-size:1.35rem;line-height:1.4;max-width:44rem;margin:.9rem 0 0;color:var(--ink)}
+header p.stand{grid-column:1/10}
 /* each section: kicker, claim, the picture across the full width, then the words on a wide measure */
 section{padding:3.5rem 0 4rem;border-bottom:1px solid var(--rule)}
 section>.kicker{margin-bottom:.5rem}
@@ -59,7 +61,8 @@ footer{margin-top:3rem;border-top:4px solid var(--ink);padding-top:1rem;font-siz
 
 <header>
   <div class="kicker">[Organisation], [Document], in plain words</div>
-  <h1>[The whole story in two or three short sentences. What they do. What they want. What they have not said.]</h1>
+  <h1>[The whole story in one short sentence.]</h1>
+  <p class="stand">[Two or three short sentences under it. What they do. What they want. What they have not said.]</p>
 </header>
 
 <!-- One section per question the document answers. Same five parts every time, in this order.
