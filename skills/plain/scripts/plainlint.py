@@ -396,7 +396,7 @@ def verdict(score: float) -> str:
 def render(reports: list[Report], show: int) -> str:
     out: list[str] = []
     out.append("## Plainlint\n")
-    out.append("| File | Lang | Words | Avg sentence | Findings | Score /100w | Verdict |")
+    out.append("| File | Lang | Prose words | Avg sentence | Findings | Score /100pw | Verdict |")
     out.append("| --- | --- | --- | --- | --- | --- | --- |")
     for r in reports:
         out.append(
@@ -404,10 +404,13 @@ def render(reports: list[Report], show: int) -> str:
             f"{len(r.findings)} | {r.score:.2f} | {verdict(r.score)} |"
         )
     out.append("")
-    out.append("Score = weighted findings per 100 words. Clean < 1.5 · good < 3.0 · "
+    out.append("Score = weighted findings per 100 words of prose. Clean < 1.5 · good < 3.0 · "
                "could be tighter < 5.0 · woolly < 8.0 · above that a lot of noise.")
     out.append("Soft patterns (passive, formal word, em dash, synonym rotation) "
                "count half, because they are sometimes the right call.\n")
+    out.append("Prose words is what this linter reads: paragraphs and list items. Headings, tables "
+               "and code are not scanned, so they are not in the denominator either. Stratlint "
+               "counts the whole document, so the two scores are not comparable.\n")
 
     for r in reports:
         if not r.findings:

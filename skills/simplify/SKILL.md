@@ -77,7 +77,8 @@ python3 ../plain/scripts/plainlint.py output.md --mode strict --lang en
 python3 ../plain-strategy/scripts/stratlint.py output.md --lang en
 ```
 
-Under 1.5 weighted findings per 100 words is clean. The sentence count is measured, not estimated:
+Clean is under 1.5 for plainlint and under 1.0 for stratlint. The bands differ because the
+denominators do: plainlint counts the prose it scanned, stratlint counts the whole document. The sentence count is measured, not estimated:
 `--max-sentence 15` is the claim the whole skill rests on, so it is the flag that checks it.
 
 ## Rules and further reading

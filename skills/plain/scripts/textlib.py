@@ -28,8 +28,13 @@ FRONTMATTER = re.compile(r"\A---\r?\n.*?\r?\n---[ \t]*\r?\n", re.S)
 CODE_BLOCK = re.compile(r"```.*?```", re.S)
 
 IGNORE_BLOCK = re.compile(
-    r"<!--\s*plainlint-ignore-start\s*-->.*?<!--\s*plainlint-ignore-end\s*-->", re.S)
-
+    # Either linter's markers. A file that discusses the words one of them flags
+    # usually discusses the other's too, and two marker names meant two ways to
+    # get it wrong.
+    r"<!--\s*(?:plainlint|stratlint)-ignore-start\s*-->.*?"
+    r"<!--\s*(?:plainlint|stratlint)-ignore-end\s*-->",
+    re.S,
+)
 URL = re.compile(r"https?://\S+")
 
 def count_words(sentence: str) -> int:

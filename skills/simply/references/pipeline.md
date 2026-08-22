@@ -119,7 +119,11 @@ python3 {root}/skills/plain/scripts/plainlint.py runs/<slug>/<stamp>/04-plain.md
 python3 {root}/skills/plain-strategy/scripts/stratlint.py runs/<slug>/<stamp>/04-plain.md --lang en
 ```
 
-Under 1.5 weighted findings per 100 words is clean. For the hard sentence-length and pointer checks,
+Clean is under 1.5 for plainlint and under 1.0 for stratlint, and the two are not comparable:
+plainlint scores per 100 words of prose it scanned, stratlint per 100 words of the whole document.
+Read each verdict against its own band rather than against one number.
+
+For the hard sentence-length and pointer checks,
 `scripts/check_artifact.py` runs on the rendered artifact in step 7. Your job here is the judgement
 the script cannot make: is an abstraction still an abstraction, does a number have a real comparison,
 did a sentence get shorter by losing meaning.
