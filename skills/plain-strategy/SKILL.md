@@ -13,9 +13,9 @@ So this skill does two things in order. First the substance test: is there a cho
 
 ## Two jobs
 
-**Job 1 — Review.** Someone hands you a strategy document. Run the seven tests, report each finding with its location and what is wrong with it, and give a verdict. Do not rewrite the whole thing unasked.
+**Job 1, Review.** Someone hands you a strategy document. Run the seven tests, report each finding with its location and what is wrong with it, and give a verdict. Do not rewrite the whole thing unasked.
 
-**Job 2 — Write.** Someone wants a strategy document. Apply the tests as you write, and deliver in the format below.
+**Job 2, Write.** Someone wants a strategy document. Apply the tests as you write, and deliver in the format below.
 
 When in doubt: if an existing document is attached, it is job 1.
 
@@ -97,7 +97,7 @@ And the honest limit: this skill makes it visible that nothing is there. It cann
 
 ## Going deeper
 
-- [references/strategy-jargon.md](references/strategy-jargon.md) — Full replacement lists in English and Dutch, with what to write instead of each term. Read this when rewriting.
-- [references/tests.md](references/tests.md) — The seven tests in full, with their origin, more examples, and the follow-up questions per test. Read this when reviewing.
-- [references/format.md](references/format.md) — Every delivery table, for writing and for review.
-- [scripts/stratlint.py](scripts/stratlint.py) — The linter. Run with `--help` for all options.
+- [references/strategy-jargon.md](references/strategy-jargon.md). Full replacement lists in English and Dutch, with what to write instead of each term. Read this when rewriting.
+- [references/tests.md](references/tests.md). The seven tests in full, with their origin, more examples, and the follow-up questions per test. Read this when reviewing.
+- [references/format.md](references/format.md). Every delivery table, for writing and for review.
+- [scripts/stratlint.py](scripts/stratlint.py). The linter. Run with `--help` for all options.

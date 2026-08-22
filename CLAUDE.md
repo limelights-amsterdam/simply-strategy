@@ -5,7 +5,7 @@ A Claude Code plugin. One job: turn a folder of strategy documents into one plai
 ## The split that matters
 
 **Markdown holds everything a human edits.** Every prompt, rule, angle brief and filter is a `.md`
-file under `skills/`. `workflows/simply.js` holds only wiring — which agent runs when, and which file
+file under `skills/`. `workflows/simply.js` holds only wiring, which agent runs when, and which file
 it reads. It contains no strategy content and never should.
 
 Change how an agent thinks: edit markdown. Change the shape of the run: edit the script.
@@ -54,9 +54,10 @@ runs/<slug>/<stamp>/       output, one directory per run. Durable, not /tmp
 - **The filter order is substance, then language, then de-slop.** Rewriting an empty sentence gives
   you a tidy empty sentence.
 - **Never invent a number.** `[TO FILL: what is needed]`, always.
-- **No em dashes in anything the run generates.** The de-slop filter strips them from `04-plain.md`
-  and the artifact. This repo's own documentation is written for people and uses ordinary
-  punctuation. The ban is about generated prose, where an em dash is an AI tell, not about English.
+- **No em dashes anywhere, including this repo's own documentation.** The de-slop filter strips them
+  from `04-plain.md` and the artifact, and the docs now hold to the same rule. The earlier version of
+  this line exempted the documentation on the grounds that the ban was about generated prose. That
+  exemption covered 79 of them, which is what an exemption is for.
 - **Output language is English**, whatever the source documents are in.
 - **The artifact is black and white.** Two colours plus one grey. This includes the SVGs.
 - **Never write a bare path to a plugin file.** `skills/`, `scripts/`, `templates/` and `design/`

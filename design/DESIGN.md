@@ -1,4 +1,4 @@
-# Simple Strategy Artifact — design system
+# The simple strategy artifact: design system
 
 Point a coding agent at this file and it produces the artifact. One HTML file, black and white,
 opens without a network, prints on any machine in the room.
@@ -113,7 +113,7 @@ Under 900px the margin collapses and numerals move above their statement.
 **Section head.** A 1px `--rule` hairline the full width of the measure, then the label in small
 uppercase sans, then `--gap-block`. Nothing else. From Kinfolk.
 
-**The one sentence.** Serif at the largest size, centred, and **wider than the measure** — it
+**The one sentence.** Serif at the largest size, centred, and **wider than the measure**. It
 breaks out to `48rem` so a long sentence does not wrap six times. Alone on the screen, `6rem` above
 and below. Nothing may share this space. From SSENSE.
 
@@ -125,7 +125,7 @@ Repeat three times. From Vucko.
 Left column headed `STOPS`, right headed `STARTS`, both in section-head type. Items in body serif.
 
 **The bet.** A three-part row: assumption, test, date. Separated by `→` in `--rule`. Labels and body in `--ink`. Labels in
-caption sans above each part. From Duna's restraint — no boxes.
+caption sans above each part. From Duna's restraint, no boxes.
 
 **Figure caption.** Every figure carries one line beneath it in caption type, saying in words what
 the figure shows. A reader who cannot see the figure still gets the finding.
@@ -186,24 +186,24 @@ hairline axes at 1px solid, never dashed.
 
 ### The six
 
-**0 · `matrix`** — a two by two, every item placed by what it stops rather than by how big it is.
+**0 · `matrix`**. A two by two, every item placed by what it stops rather than by how big it is.
 Column labels above the grid, row labels in a left gutter, never inside a quadrant. This is not a
 framework being added: the run already ranks by must-solve against important, and already splits
 gaps into what stops a decision and what stops the work. The figure draws a ranking that is
 already there.
 
-**0b · `timeline`** — marks left to right. Its strongest use is the empty one: four years and four
+**0b · `timeline`**. Marks left to right. Its strongest use is the empty one: four years and four
 blank ticks says the deck has no dates more plainly than a sentence does.
 
-**0c · `overlap`** — two circles, used **only when the overlap is the finding**. Labels sit outside
+**0c · `overlap`**. Two circles, used **only when the overlap is the finding**. Labels sit outside
 the circles, never on the stroke. Most Venn diagrams are decoration and area without colour is
 guessing, so the bar for this one is high.
 
-**1 · `hero`** — one number, alone. The default when the answer is a single figure.
+**1 · `hero`**. One number, alone. The default when the answer is a single figure.
 Sans, 300 weight, `clamp(4rem, 10vw, 9rem)`, with one line of caption beneath.
 Never serif: a display serif at that size reads as decoration rather than as a fact.
 
-**2 · `hundred`** — a ten by ten dot grid, N filled and the rest outlined.
+**2 · `hundred`**. A ten by ten dot grid, N filled and the rest outlined.
 This is the "every number gets a comparison" rule made literal. A reader can count it, where a meter
 would ask them to read a scale.
 
@@ -215,17 +215,17 @@ would ask them to read a scale.
 </svg>
 ```
 
-**3 · `gap`** — promise against delivery. Two bars from one baseline.
+**3 · `gap`**. Promise against delivery. Two bars from one baseline.
 The promise is an outline, the delivery is solid, and the empty space between them is the finding.
 Direct label at the end of each bar. This is the single most useful figure for a strategy page.
 
-**4 · `people`** — one in three, or two in five. Simple figures, N filled and the rest outlined.
+**4 · `people`**. One in three, or two in five. Simple figures, N filled and the rest outlined.
 For headcount only. A number about money uses `hundred`, so the two never get confused.
 
-**5 · `order`** — assumption, then test, then date. A hairline with three ticks and a label under each.
+**5 · `order`**. Assumption, then test, then date. A hairline with three ticks and a label under each.
 Also used for what has to happen before what. Left to right is always time.
 
-**6 · `against`** — two documents that cannot both be true. Two marks on a centre line, pointing
+**6 · `against`**. Two documents that cannot both be true. Two marks on a centre line, pointing
 away from each other, each labelled with its source. One is hatched at 45 degrees so the pair stays
 distinct in print.
 

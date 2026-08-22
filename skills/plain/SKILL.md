@@ -29,7 +29,7 @@ When in doubt: if a text or file is attached, it is a rewrite. Otherwise it is c
 **Normal** for explanation, READMEs, mail, status updates and conversation. Max 25 words per
 sentence, averaging under 15. Second person. Contractions are fine.
 
-**Strict** for instructions, procedures, error messages, API docs and warnings — anywhere misreading
+**Strict** for instructions, procedures, error messages, API docs and warnings, anywhere misreading
 costs money or safety. Max 20 words in an instruction and 25 in description, one instruction per
 sentence, imperative, no semicolons, no em dashes. See
 [references/strict-mode.md](references/strict-mode.md).
@@ -40,13 +40,13 @@ When in doubt: normal. Strict is a torque wrench. You use it on a bolt, not on e
 
 Vague text nearly always matches one of seven named patterns. Walk them before you send anything.
 
-1. **Synonym rotation** — the same thing gets three names in one paragraph
-2. **Stacked hedging** — auxiliaries pile up until nothing happens
-3. **Frozen verbs** — a verb disguised as a noun, with an empty verb in front
-4. **Marketing adjectives** — words that claim quality instead of showing it
-5. **Run-on sentences** — four ideas joined by dashes where four sentences belonged
-6. **Office speak** — words that sound like work but point at nothing
-7. **Abstract instruction** — correct, but nobody can tell what to do
+1. **Synonym rotation**. The same thing gets three names in one paragraph
+2. **Stacked hedging**. Auxiliaries pile up until nothing happens
+3. **Frozen verbs**. A verb disguised as a noun, with an empty verb in front
+4. **Marketing adjectives**. Words that claim quality instead of showing it
+5. **Run-on sentences**. Four ideas joined by dashes where four sentences belonged
+6. **Office speak**. Words that sound like work but point at nothing
+7. **Abstract instruction**. Correct, but nobody can tell what to do
 
 Each one with examples and the fix, plus the tone rules that keep the result from reading like a
 manual: [references/patterns.md](references/patterns.md).
@@ -97,9 +97,9 @@ neutral.
 
 ## Going deeper
 
-- [references/patterns.md](references/patterns.md) — the seven patterns in full, plus the tone rules
-- [references/slop-patterns.md](references/slop-patterns.md) — replacement lists: marketing words,
+- [references/patterns.md](references/patterns.md). The seven patterns in full, plus the tone rules
+- [references/slop-patterns.md](references/slop-patterns.md). Replacement lists: marketing words,
   office speak, frozen verbs, hedges, with an alternative per word
-- [references/strict-mode.md](references/strict-mode.md) — the ASD-STE100 rules that matter, plus the
+- [references/strict-mode.md](references/strict-mode.md). The ASD-STE100 rules that matter, plus the
   format for warnings and safety instructions
-- [references/tables.md](references/tables.md) — the closing table formats
+- [references/tables.md](references/tables.md). The closing table formats

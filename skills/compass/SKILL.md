@@ -23,14 +23,14 @@ without one overwriting the other.
 Start from [references/template.md](references/template.md).
 
 A goal list is too tight. It can only tell you things you already knew to ask about. An anti-vision
-and a boundary let an advisor notice something you never wrote a goal for — and that is where the
+and a boundary let an advisor notice something you never wrote a goal for, and that is where the
 useful findings come from.
 
 So the order matters. Ask what they refuse before you ask what they want.
 
 ## Two modes
 
-**Read it from material.** `/simply-strategy:compass ./deck/` — the better mode, and the one to offer first. Read
+**Read it from material.** `/simply-strategy:compass ./deck/`, the better mode, and the one to offer first. Read
 everything in the folder, draft all five fields, and mark each one `drafted` or `missing`. Then show
 the draft and ask for corrections.
 
@@ -42,7 +42,7 @@ Formats:
 | Format | Works |
 |---|---|
 | Markdown, plain text | Yes. Cheapest and cleanest |
-| Images of slides — PNG, JPG | Yes, read natively |
+| Images of slides, PNG, JPG | Yes, read natively |
 | PDF | Works, but 20 pages per read and slow. Fine for a document, not for a 60-slide deck |
 | PowerPoint, Keynote | No. Export to PDF or images first |
 

@@ -23,7 +23,7 @@ and sit under the same root.
 
 ---
 
-## 1 · spec — Spec Agent
+## 1 · spec: the Spec Agent
 
 **Gets:** the material folder, including its `compass.md`
 **Writes:** `01-spec.md`
@@ -31,7 +31,7 @@ and sit under the same root.
 Read every file in the folder. Produce:
 
 1. **An inventory table.** One row per file: name, what it is, date, which function owns it, page
-   count. A file you could not read gets a row saying so — never omit it silently.
+   count. A file you could not read gets a row saying so, never omit it silently.
 2. **The question**, in one sentence, derived from the material and from the Compass. If the Compass
    gives it, use theirs. If it does not, derive one and mark it `[DERIVED]`.
 3. **What is not here.** Which document the material obviously references but does not include.
@@ -40,7 +40,7 @@ Read every file in the folder. Produce:
 
 ---
 
-## 2 · panel — four angles, in parallel
+## 2 · panel: four angles, in parallel
 
 **Gets:** `01-spec.md`, the material, `<material>/compass.md`
 **Writes:** `02-substance.md`, `02-contradict.md`, `02-compass.md`, `02-attack.md`
@@ -49,7 +49,7 @@ Briefs in `angles.md`. Each angle is blind to the others.
 
 ---
 
-## 3 · plan — Plan Agent
+## 3 · plan: the Plan Agent
 
 **Gets:** all four `02-*.md` files, `01-spec.md`, `<material>/compass.md`
 **Writes:** `03-plan.md`
@@ -74,7 +74,7 @@ the ranking was never made and the run has produced a longer document rather tha
 
 ---
 
-## 4 · flatten — Flattener
+## 4 · flatten: the Flattener
 
 **Gets:** `03-plan.md`
 **Writes:** `04-plain.md`
@@ -93,7 +93,7 @@ this whole step.
 
 ---
 
-## 5 · review — three reviewers, in parallel
+## 5 · review: three reviewers, in parallel
 
 **Gets:** the four `02-*.md` files, `03-plan.md` and `04-plain.md`
 **Writes:** `05-true.md`, `05-simple.md`, `05-invented.md`
@@ -130,7 +130,7 @@ did a sentence get shorter by losing meaning.
 
 ---
 
-## 6 · coordinate — Review Coordinator
+## 6 · coordinate: the Review Coordinator
 
 **Gets:** the three `05-*.md` files, `04-plain.md`
 **Writes:** `04-plain.md` (revised), `05-verdict.md`
@@ -138,8 +138,7 @@ did a sentence get shorter by losing meaning.
 Tally. **A finding that two or more reviewers call fatal is decisive.** One critic is an opinion, two
 is a signal.
 
-Consolidate into must-fix and should-fix. Apply the must-fix list to `04-plain.md`. One round only —
-an endless polish loop eats the coffee.
+Consolidate into must-fix and should-fix. Apply the must-fix list to `04-plain.md`. One round only, an endless polish loop eats the coffee.
 
 **Then read it back as a person would.** Load `skills/humanizer/SKILL.md` and pass over
 `04-plain.md` once. This is the last point where anyone reads the whole thing as prose rather than
@@ -161,7 +160,7 @@ must-fix list.
 
 ---
 
-## 7 · artifact — Artifact Agent
+## 7 · artifact: the Artifact Agent
 
 **Gets:** `04-plain.md` for the page. `01-spec.md`, the four `02-*.md`, `03-plan.md` and
 `05-verdict.md` for the log. Plus `<material>/compass.md` and `design/DESIGN.md`

@@ -36,7 +36,7 @@ A percentage on its own is a decoration. Turn it into something countable.
 - 40 basis points → four cents on every ten euros
 
 **Fails when** the comparison needs a number the document does not have. Flag it. Never estimate a
-denominator to make a comparison work — that is inventing a number with extra steps.
+denominator to make a comparison work, that is inventing a number with extra steps.
 
 ## 4. Every recommendation gets its sacrifice
 

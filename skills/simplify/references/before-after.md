@@ -9,13 +9,13 @@ the original hid a number, the flattened version flags it rather than inventing 
 
 ## 1. The governing thought
 
-**L5 — as written**
+**L5, as written**
 
 > Our strategic ambition is to become the leading omnichannel partner for premium personal care,
 > leveraging our physical footprint as a differentiator while accelerating digital-first customer
 > acquisition across key European markets.
 
-**L1 — flattened**
+**L1, flattened**
 
 > We sell in shops and online. Right now the shops make the money.
 > We want the website to make money too.
@@ -23,7 +23,7 @@ the original hid a number, the flattened version flags it rather than inventing 
 > That belief is the whole plan. Nobody has tested it.
 
 What happened: "leveraging our physical footprint as a differentiator" is an assumption pretending to
-be a fact. Flattening exposes it. The last two lines are not editorialising — they are the claim,
+be a fact. Flattening exposes it. The last two lines are not editorialising, they are the claim,
 stated plainly.
 
 ---
@@ -83,11 +83,11 @@ worry is the useful part.
 
 ## 5. A contradiction between two documents
 
-**L5 — HR annual plan**
+**L5, HR annual plan**
 
 > Headcount will remain flat through the plan period as we drive efficiency through automation.
 
-**L5 — Commercial strategy**
+**L5, Commercial strategy**
 
 > The direct sales motion will be scaled significantly to support the enterprise push.
 

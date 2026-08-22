@@ -48,7 +48,7 @@ Most documents ship at L5 while the room believes they are at L2. You deliver L1
    in the reasoning log, not in smaller type.
 
 Worked pairs on real strategy language: [references/before-after.md](references/before-after.md).
-Read that file before you flatten anything — the move is easier to copy than to describe.
+Read that file before you flatten anything, the move is easier to copy than to describe.
 
 ## What you may not do
 
@@ -83,6 +83,6 @@ denominators do: plainlint counts the prose it scanned, stratlint counts the who
 
 ## Rules and further reading
 
-- [references/rules.md](references/rules.md) — the first five moves in full, with the failure mode of each
-- [references/before-after.md](references/before-after.md) — worked pairs. Read this one first
-- [references/output.md](references/output.md) — the six sections, and what may be left unanswered
+- [references/rules.md](references/rules.md). The first five moves in full, with the failure mode of each
+- [references/before-after.md](references/before-after.md). Worked pairs. Read this one first
+- [references/output.md](references/output.md). The six sections, and what may be left unanswered

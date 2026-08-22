@@ -8,7 +8,7 @@ asking them first stops the rest turning into a wish list.
 ## 1. Anti-vision
 
 **Ask:** Describe a Tuesday five years from now, if nothing changes and this strategy quietly fails.
-Not a disaster — a normal working day. What are you doing, who is in the room, what is the mood? And
+Not a disaster, a normal working day. What are you doing, who is in the room, what is the mood? And
 then: what exactly is rotten about that?
 
 **Push for:** a scene, not an adjective. "A boring company" is not an answer. "Still doing the same
@@ -82,7 +82,7 @@ When drafting from a deck rather than asking:
 
 - **Anti-vision** hides in the risk slide, the "why now" slide, and in anything phrased as "if we do
   nothing". Quote it.
-- **Boundaries** hide in what the document assumes without arguing for it — a margin floor, a market
+- **Boundaries** hide in what the document assumes without arguing for it, a margin floor, a market
   it never questions staying in, a team size treated as fixed.
 - **The question** is usually on the first or last slide, and is usually too broad. Draft the
   narrower version and say you narrowed it.
