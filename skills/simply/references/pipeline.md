@@ -98,6 +98,13 @@ So you owe two more things, and they are the reason this step exists rather than
 findings: the thing that is true because of them. Test it by removing any one must-solve. If the
 sentence survives untouched, it is a summary. If it weakens, it is an argument.
 
+**Say first what the plan decides, then what it lacks.** The run looks for what is missing, so a
+page assembled from its findings reads as an audit however good the plan is. Correct for that here:
+the governing thought and section 1 name the real choices the plan makes (the ones that passed the
+opposite test in `02-angles.md`) before they name the gap. The one genuinely strong point the
+`attack` pass opened with goes into section 1's support, with its pointer. A plan that chooses gets
+credit for it on the page; a plan that does not, does not. This is not optimism, it is completeness.
+
 **The order the findings have to come in.** Write the through-line as a numbered list of claims, one
 per section, in the order a reader must meet them. Each one advances from the last. Read the list on
 its own with nothing else: if it makes the case without the body, the page will too.

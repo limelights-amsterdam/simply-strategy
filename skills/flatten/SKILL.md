@@ -77,6 +77,7 @@ rests on, so it is the flag that checks it.
 
 ## Rules and further reading
 
-- [references/rules.md](references/rules.md). The first five moves in full, with the failure mode of each
+- [references/rules.md](references/rules.md). The first five moves in full, with the failure mode of each, and
+  the page's vocabulary: one name per thing, none of the run's own words, no fragments
 - [references/before-after.md](references/before-after.md). Worked pairs. Read this one first
 - [references/output.md](references/output.md). The six sections, and what may be left unanswered

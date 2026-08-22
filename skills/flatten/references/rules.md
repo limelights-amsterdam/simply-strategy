@@ -63,6 +63,44 @@ it will not serve.*
 
 ---
 
+## 6. One name per thing, and none of the run's own words
+
+The page calls the material **the plan**, from the first line to the last. Not "this vision" in one
+paragraph and "the document" in the next, whatever the material calls itself. The same for every
+recurring thing: one verb for what the plan does to money ("taking money back", not also "reclaims"),
+one name for each organisation.
+
+The run has words of its own that never reach the page: compass, angle, must-solve, flatten level,
+pointer, TO FILL. A gap is a sentence ("Nobody has said who builds it"), a source is a superscript,
+the level lives in the log. The reader of the page does not know what a compass field is and does
+not need to.
+
+Words that sound plain to the writer and are not to a board, with what to write instead:
+
+| Not this | This |
+|---|---|
+| award, awarded | payment, paid, benefit decided |
+| scope | what it is for, what it keeps |
+| enforcement | checking for misuse |
+| baseline | a starting number |
+| in-house | itself |
+| indispensable | cannot do without |
+| legal route, legal basis | a law behind it, who changes the law |
+| stakeholder | the name of the person or body |
+
+**No fragments, no colon as a verb.** "Systems due now." is a note. "The systems are due now." is a
+sentence. "The heaviest bet: the Belastingdienst stays." hides the verb; "The biggest bet is on the
+Belastingdienst. It must stay until the new process works." has two.
+
+**Your own reading is labelled, in four words.** "That is our reading." at the end of the sentence,
+not a clause about what the plan does not state.
+
+**Fails when** a term from the material survives because it was in the material. The material's
+word for a thing is evidence of what it says, not a reason to keep it on a page meant for people who
+never read the material.
+
+---
+
 ## The order
 
 Substance, then language, then de-slop. Always.
