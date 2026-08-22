@@ -1,7 +1,7 @@
 {
   "name": "simply-strategy",
   "displayName": "Simply Strategy",
-  "description": "Point it at a folder of strategy documents. Get back one page a board reads in under six minutes.",
+  "description": "Explain any strategy like I'm 5: a dead-simple HTML picture explainer of what a folder of strategy documents actually says, and it never invents a decision or a number. Use /simply-strategy <folder>.",
   "version": "0.1.0",
   "author": {
     "name": "Tim van den Bosch",
