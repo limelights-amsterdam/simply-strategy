@@ -8,7 +8,7 @@ Every step reads `house-rules.md` first. Every step writes exactly one file and 
 
 ## 1 · spec — Spec Agent
 
-**Gets:** the material folder, `kompas.md`
+**Gets:** the material folder, including its `kompas.md`
 **Writes:** `01-spec.md`
 
 Read every file in the folder. Produce:
@@ -25,7 +25,7 @@ Read every file in the folder. Produce:
 
 ## 2 · panel — four angles, in parallel
 
-**Gets:** `01-spec.md`, the material, `kompas.md`
+**Gets:** `01-spec.md`, the material, `<material>/kompas.md`
 **Writes:** `02-substance.md`, `02-contradict.md`, `02-kompas.md`, `02-attack.md`
 
 Briefs in `angles.md`. Each angle is blind to the others.
@@ -34,7 +34,7 @@ Briefs in `angles.md`. Each angle is blind to the others.
 
 ## 3 · plan — Plan Agent
 
-**Gets:** all four `02-*.md` files, `01-spec.md`, `kompas.md`
+**Gets:** all four `02-*.md` files, `01-spec.md`, `<material>/kompas.md`
 **Writes:** `03-plan.md`
 
 **First, the tension check.** Read the four angle files side by side. If they broadly agree, an angle
@@ -124,7 +124,7 @@ must-fix list.
 
 ## 7 · artifact — Artifact Agent
 
-**Gets:** `04-plain.md`, `05-verdict.md`, `01-spec.md`, `kompas.md`, `design/DESIGN.md`
+**Gets:** `04-plain.md`, `05-verdict.md`, `01-spec.md`, `<material>/kompas.md`, `design/DESIGN.md`
 **Writes:** `simple-strategy-artifact.html`, `reasoning.html`
 
 Read `output-structure.md` first. It says what to fill and what to check.

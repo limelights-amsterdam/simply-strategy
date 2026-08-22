@@ -22,7 +22,7 @@ const R = 'skills/simply/references'
 
 const brief = (task) => `You are one agent in a Simply Strategy run.
 Read ${R}/house-rules.md first. It applies to everything you write.
-The material is in ${folder}. The intake is in kompas.md. Output goes to ${out}/.
+The material is in ${folder}. The intake is ${folder}kompas.md. Output goes to ${out}/.
 ${task}
 Write only your own file. Return one line: the path you wrote.`
 

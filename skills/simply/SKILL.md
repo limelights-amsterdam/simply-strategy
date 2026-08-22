@@ -22,8 +22,8 @@ The run is a workflow: `workflows/simply.js`. It executes in the background and 
 runs. Watch it with `/workflows`.
 
 ```
-/kompas ./deck/          fills kompas.md — once, not per run
-/simply ./material/      the run, about 25 minutes
+/kompas ./material/<client>/    fills that folder's kompas.md. Once per client, not per run
+/simply ./material/<client>/    the run, about 25 minutes
 ```
 
 If the workflow runtime is unavailable, run the seven steps in `references/pipeline.md` yourself with

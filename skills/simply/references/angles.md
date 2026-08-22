@@ -58,7 +58,7 @@ Never soften a contradiction into "tension". Two things that cannot both be true
 
 **Writes:** `02-kompas.md`
 
-**Job:** Read `kompas.md`. Does this material walk toward the anti-vision, and does it spend
+**Job:** Read the Kompas that sits in the material folder. Does this material walk toward the anti-vision, and does it spend
 something the boundaries say we keep?
 
 This is the angle nobody normally has. Two questions, in this order:
@@ -72,7 +72,7 @@ This is the angle nobody normally has. Two questions, in this order:
 Then: which `[MISSING]` Kompas field would have changed your answer? Name it. That is what makes
 someone fill it in next time.
 
-If `kompas.md` is empty or absent, say so in one line and stop. Do not improvise a Kompas.
+If the Kompas is empty or absent, say so in one line and stop. Do not improvise a Kompas.
 
 ---
 

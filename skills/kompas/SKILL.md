@@ -5,8 +5,22 @@ description: Fill the Kompas - the five-field intake that steers a Simply Strate
 
 # Kompas
 
-The Kompas steers a Simply Strategy run. It is filled once, not per run, and it lives in `kompas.md`
-at the project root.
+The Kompas steers a Simply Strategy run. It is filled once per client, not once per run, and it
+lives **inside the material folder** as `kompas.md`:
+
+```
+material/<client>/
+├── kompas.md          the intake. Belongs to this client, not to the plugin
+├── annual-plan.md
+└── vision-2030.md
+```
+
+It sits there rather than in the project root for three reasons. It is client material, so it is
+covered by the same rule that keeps `material/` out of git. It travels with the documents it
+describes, so moving the folder moves the intake with it. And two clients can be set up side by side
+without one overwriting the other.
+
+Start from [references/template.md](references/template.md).
 
 A goal list is too tight. It can only tell you things you already knew to ask about. An anti-vision
 and a boundary let an advisor notice something you never wrote a goal for — and that is where the
@@ -62,6 +76,7 @@ The full prompts, with what a good answer looks like and how to push when an ans
 
 ## Output
 
-Write `kompas.md` with all five fields, each marked `given`, `drafted from <source>`, or `[MISSING]`.
+Write `<material-folder>/kompas.md` with all five fields, each marked `given`,
+`drafted from <source>`, or `[MISSING]`.
 Close with one line saying how many fields are filled and what the run will be blind to without the
 rest.

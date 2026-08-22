@@ -4,9 +4,6 @@ runs/*/
 material/*
 !material/.gitkeep
 
-# Per-project intake. Contains client material.
-kompas.md
-
 # Python
 __pycache__/
 *.pyc

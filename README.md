@@ -3,8 +3,8 @@
 Point it at a folder of strategy documents. Get back one page a board reads in four minutes.
 
 ```
-/kompas ./deck/         once, drafts five fields from their own material, you correct it
-/simply ./material/     no questions, about 25 minutes. Watch it with /workflows
+/kompas ./material/acme/    once per client, drafts five fields from their own material
+/simply ./material/acme/    no questions, about 25 minutes. Watch it with /workflows
 ```
 
 Out comes `simple-strategy-artifact.html`. Black and white, big type, very few words, prints on any
@@ -93,6 +93,10 @@ say *this plan walks toward precisely that* or *this plan spends the thing you s
 Five fields, all optional. Fill it by pointing at their own deck and correcting the draft, or by
 answering five questions. A half-filled Kompas still runs, and the artifact names what was missing.
 
+It is written to `material/<client>/kompas.md`, next to the documents it describes, not to the
+project root. It is client material, it travels with the folder it belongs to, and two clients can
+be set up side by side.
+
 ## The seven steps
 
 Linear where a step needs everything before it, parallel where it does not.
@@ -175,7 +179,8 @@ skills/red-team/            the attack angle
 scripts/check_artifact.py   deterministic verification of the rendered output
 design/DESIGN.md            two colours, one column, print-clean
 templates/                  artifact.html, reasoning.html
-runs/<slug>/                output
+material/<client>/          input, plus that client's kompas.md. Git-ignored
+runs/<slug>/                output. Git-ignored
 ```
 
 Everything a human edits is markdown. `simply.js` names files and agents and holds nothing else, so
