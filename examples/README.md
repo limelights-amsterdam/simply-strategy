@@ -18,8 +18,13 @@ read, what it threw away, where it is unsure, and what shipped with a flag.
 Both files validate against the checker, which is the point of keeping them here:
 
 ```
-python3 scripts/check_artifact.py examples/
+python3 scripts/check_artifact.py examples/ --material examples/material/
 ```
+
+`material/` holds two stand-ins for the documents the page cites. They are there
+so the pointer check can run: without `--material` it reports that it could not
+run, and a check that could not run stops the artifact the same way a failure
+does.
 
 The file names match what a run writes, so the checker finds the pair the same
 way it does in `runs/<slug>/<stamp>/`. If a change to the templates breaks the contract,
