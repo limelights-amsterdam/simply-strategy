@@ -1,6 +1,9 @@
 export const meta = {
   name: 'simply',
-  description: 'Turn a folder of strategy documents into one simple strategy artifact',
+  description: 'The parallel variant. Nine agents, the panel blind to each other',
+  whenToUse: 'Only when a folder holds several documents that must be checked against each other. '
+    + 'The default is the sequential skill: measured on the same deck it produced 714 words to this '
+    + "version's 3848, no untraced figures to this version's nine, and headings that make a claim.",
   whenToUse: 'When you have a folder of strategy material and want one plain-language page out of it',
   phases: [
     { title: 'Spec',     detail: 'inventory the folder and derive the question' },

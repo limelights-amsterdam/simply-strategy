@@ -1,103 +1,83 @@
 ---
 name: simply
-description: Turn a folder of strategy documents into one plain-language HTML page a board reads in under six minutes. Runs six steps - inventory, a panel of four independent angles, a forced ranking to exactly three must-solve items, a flatten pass to child-level language, a verify pass that traces every figure back to the source, and a black-and-white artifact. Use when the user types /simply, points at a folder of strategy material and asks for something readable out of it, or says flatten this folder, run the strategy through it, make one page out of these documents, or what do all these documents actually say together.
-allowed-tools: Bash(date *) Bash(python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check_artifact.py *) Bash(python3 ${CLAUDE_PLUGIN_ROOT}/skills/plain/scripts/plainlint.py *) Bash(python3 ${CLAUDE_PLUGIN_ROOT}/skills/plain-strategy/scripts/stratlint.py *)
+description: Distil a folder of strategy documents into one plain-language HTML page that anyone can read. You run six steps yourself in order - inventory the folder, read it from four angles, force a ranking to three must-solve items and write the argument, flatten it to child-level language, verify every figure against the source with three scripts, and render a black-and-white artifact. Use when the user types /simply, points at a folder of strategy material and asks for something readable out of it, or says flatten this folder, distil these documents, make one page out of this, or what do all these documents actually say together.
+allowed-tools: Bash(python3 *), Read, Write, Edit, Glob, Grep
 ---
 
 # Simply
 
-Distilling, not shortening. A folder holds a decision inside a great deal of context, and the job
-is to boil it down until what is being decided is visible to anyone, not only to the people who
-wrote it. The context comes down with it: every figure traces to a source, and nothing is added on
-the way.
+Distilling, not shortening. A folder holds a decision inside a great deal of context. The job is to
+boil it down until what is being decided is visible to anyone, and to bring the context down with
+it: every figure traces to a source, and nothing is added on the way.
 
-One folder in, one page out. The page says what the documents actually decided, in language a
-ten-year-old follows, with every number traceable to a source. It is written for the board, and the
-bar is that anyone in the company could follow it. The whole design rests on one problem:
-**flattening a vague document produces a beautifully simple lie.** Most strategy documents are vague
-on purpose, so four angles test the material before anything is flattened, and a verify pass checks
-that the simplification stayed true.
+## You run this yourself, in order
 
-## How to run it
+Six steps, one after another, each writing a numbered file. **No subagents.** Nothing is held in
+memory between steps, so the files are the state and you can stop and resume at any of them.
 
-```
-/simply-strategy:compass ./material/<client>/   fills that folder's compass.md. Once per client
-/simply-strategy:simply  ./material/<client>/   the run, in the background
-```
+That is not a limitation. It was measured against a nine-agent parallel version on the same deck:
 
-The run is a dynamic workflow. Start it with the Workflow tool. Do not work the six steps by hand
-while the runtime is available. Run `date +%Y-%m-%d-%H%M` first, then make this call, unparaphrased:
+| | Words | Pointers | Untraced figures | Headings that make a claim |
+|---|---|---|---|---|
+| Parallel, nine agents | 3848 | 97 | **9** | 0 of 6 |
+| **You, in order** | **714** | 11 | **0** | **6 of 6** |
 
-```
-Workflow({
-  name: "simply-strategy:simply",
-  args: { folder: "<the folder the user named>", root: "${CLAUDE_PLUGIN_ROOT}",
-          stamp: "<what date printed>" }
-})
-```
+The parallel version buys one thing you cannot have: four angles blind to each other, which is what
+makes agreement between them evidence. You lose that. What you gain is that every step sees the last,
+which is why the argument holds together and the figures trace.
 
-`stamp` is what keeps a second run from overwriting the first. Output lands in
-`runs/<slug>/<stamp>/`, grouped by client and sorted by time. The script cannot produce it, because
-the workflow runtime forbids `Date.now()`, and it has to be stable across a resume: the same args
-have to give the same path or `resumeFromRunId` writes somewhere new. Leave it out and the run
-writes to `runs/<slug>/` and overwrites what was there. It says so in the progress log rather than
-doing it quietly.
+**The one number to watch is the pointers.** Working alone, it is easy to write a good sentence and
+forget where it came from. A distillation that drops what a claim rests on is a shorter document.
 
-`root` is how the run finds this plugin's own files. Claude Code substitutes `${CLAUDE_PLUGIN_ROOT}`
-in this file and not inside the workflow script, so the value has to be handed over here. From a
-clone the placeholder stays literal, the script falls back to `.`, and the run starts with
-`Workflow({ scriptPath: "workflows/simply.js", args: { folder: "<folder>", stamp: "<stamp>" } })`.
+## The steps
 
-It runs in the background and asks nothing. Watch it with `/workflows`. When it returns, report the
-two file paths and the final check table.
+| # | Step | Writes |
+|---|---|---|
+| 1 | Inventory the folder, and what it names but does not contain | `01-spec.md` |
+| 2 | Read it from four angles, one pass each | `02-angles.md` |
+| 3 | Rank to exactly three, and **write the argument** | `03-plan.md` |
+| 4 | Flatten to L1, headings from the argument | `04-plain.md` |
+| 5 | Run three scripts, then check both fidelity hops | `05-verdict.md` |
+| 6 | Render, then check the rendered page | two HTML files |
 
-Steps 5 and 7 shell out to the three Python scripts. The frontmatter pre-approves them for the turn
-that starts the run. A background run outlives that turn, and a workflow cannot ask, so a run can
-sit and wait on a permission prompt. To settle it for good, add the three `Bash(python3 ...)` rules
-to your own permission settings before a long run.
-
-If the workflow runtime is unavailable, run the six steps in
-[references/pipeline.md](references/pipeline.md) yourself with subagents, same order, same names.
-
-## If a run dies
-
-A stopped run resumes only inside the session that started it. Leave Claude Code with a run going
-and the next session starts it from step 1, which on a large folder is 44 minutes and a million
-tokens paid twice.
-
-It is recoverable by hand, and that is the reason every step writes a numbered file. Look in
-`runs/<slug>/<stamp>/`, find the highest number that finished, and run the remaining steps from
-[references/pipeline.md](references/pipeline.md) as subagents. Nothing in the pipeline is held in
-memory between steps, so a run that died after `03-plan.md` costs you steps 4 to 7, not the panel.
-
-## The six steps
-
-Spec, a panel of four, plan, flatten, verify, artifact. Nine agents,
-two fan-outs, no loops. Output goes to `runs/<slug>/<stamp>/`. The first full run took 43.7 minutes
-on 100KB of material, and a smaller folder is quicker.
-
-What each step gets, must produce, and how it fails: [references/pipeline.md](references/pipeline.md).
+What each one gets, must produce, and how it fails: [references/pipeline.md](references/pipeline.md).
 That file owns the six steps. Do not restate them here.
 
-## What makes it more than four prompts
+Output goes to `runs/<slug>/<stamp>/`. Get the stamp from `date +%Y-%m-%d-%H%M` before you start, so
+a second run does not overwrite the first.
 
-Every step reads [references/house-rules.md](references/house-rules.md) before its own brief. That
-file owns the filter and the rules no agent may break: three must-solve seats and not four, no
-invented number, a pointer on every claim, nothing softened. The Flattener compresses, it does not
-rescue, so consultant prose in step 2 gives you tidy consultant prose in step 4. The four angles are
-blind to each other, which is what makes step 3's tension check mean something, and two reviewers
-calling one thing fatal is decisive because one critic is only an opinion.
+## What makes it more than six prompts
+
+**The filter runs on every step.** [references/house-rules.md](references/house-rules.md) is the
+first thing to read and it applies to everything you write.
+
+**Step 3 owes an argument, not a sort.** A governing thought the whole page is evidence for, and the
+through-line as one claim per section. The flattener turns that into the headings. Without it the
+page is a well-ranked list, which is what it was before this step existed.
+
+**Step 5 is three scripts and one judgement.** Tracing a figure to a source is a lookup, so
+`check_facts.py` does it. On the parallel run, the agent whose whole job was catching invented
+figures passed a file the script found nine untraced figures in.
+
+**Three seats.** Exactly three must-solve items. A model that may choose, doesn't.
+
+**No invented numbers.** An unknown figure, owner or date is `[TO FILL: what is needed]`. Your own
+arithmetic on their figures is allowed and must say so on the same line.
 
 ## What ships
 
-`simple-strategy-artifact.html`, black and white, self-contained, prints clean. Next to it
-`reasoning.html`, whose cut list and unsure list may never be empty. Both structures, and what fills
-them: [references/output-structure.md](references/output-structure.md).
+`simple-strategy-artifact.html`, six sections, black and white, prints clean.
+`reasoning.html`, what you read, what you set aside, where you are unsure.
 
-Step 6 verifies itself with `check_artifact.py` under the plugin root, because rendering is the only
-step nothing downstream would catch. Exit code 0 or it does not ship.
+Both structures: [references/output-structure.md](references/output-structure.md).
+
+## The parallel variant
+
+`workflows/simply.js` runs the same six steps as nine agents with the panel in parallel. It is not
+the default, on the evidence above. Reach for it when a folder holds several documents that need
+checking against each other, since that is the one job four blind angles do better than one reader.
 
 ## What it is not for
 
-Writing the strategy. This flattens one that already exists. If the folder contains no decision, the
-artifact says so, which is the most useful thing it can return.
+Writing the strategy. This distils one that exists. If the folder contains no decision, the page says
+so, and that is the most useful thing it can return.

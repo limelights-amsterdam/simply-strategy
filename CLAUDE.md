@@ -4,6 +4,13 @@ A Claude Code plugin. One job: turn a folder of strategy documents into one plai
 
 ## The split that matters
 
+**The skill is the product, not the workflow.** `/simply` is six steps one reader walks in order,
+writing numbered files. `workflows/simply.js` runs the same six as nine agents with the panel in
+parallel, and it is the variant rather than the default. Measured on the same 76-slide deck: the
+sequential run produced 714 words with no untraced figures and six headings that each make a claim;
+the parallel run produced 3848 words, nine untraced figures and six headings that named their own
+sections.
+
 **Markdown holds everything a human edits.** Every prompt, rule, angle brief and filter is a `.md`
 file under `skills/`. `workflows/simply.js` holds only wiring, which agent runs when, and which file
 it reads. It contains no strategy content and never should.

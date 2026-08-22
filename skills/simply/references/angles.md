@@ -1,10 +1,13 @@
 # The four angles
 
-Four agents read the same material at the same time and never see each other's output. That is
-deliberate: independence is what makes the tension check meaningful.
+Four readings of the same material, one lens each, in the order below. They go in one file,
+`02-angles.md`, under four headings.
 
-Each writes to its own file. Each has one job and stays inside it, and the split is by *where they
-look*, not by how hard they push:
+Each pass knows what the last found, so **agreement between them is not evidence**. Weight a finding
+by what it rests on instead: does the material state it, or is it arithmetic on the material's own
+figures.
+
+The split is by *where they look*, not by how hard they push:
 
 | Angle | Looks at |
 |---|---|
@@ -13,15 +16,15 @@ look*, not by how hard they push:
 | `compass` | The material against what this client said they refuse |
 | `attack` | The plan against the outside world. Competitors, customers, regulators, execution |
 
-Two angles auditing the same surface produce one finding counted twice, which reads like
-confirmation and is not. If your findings could have come from another angle's brief, you are in the
-wrong place.
+Two passes auditing the same surface produce one finding written twice, which reads like weight and
+is not. If a finding could have come from an earlier pass's brief, say so and move on rather than
+restating it.
 
 ---
 
 ## substance
 
-**Writes:** `02-substance.md`
+**Under the heading:** `substance`
 
 **Job:** Is there a decision in this material at all?
 
@@ -44,7 +47,7 @@ Method: `skills/plain-strategy/`.
 
 ## contradict
 
-**Writes:** `02-contradict.md`
+**Under the heading:** `contradict`
 
 **Job:** Where do these documents disagree with each other?
 
@@ -68,7 +71,7 @@ Never soften a contradiction into "tension". Two things that cannot both be true
 
 ## compass
 
-**Writes:** `02-compass.md`
+**Under the heading:** `compass`
 
 **Job:** Read the Compass that sits in the material folder. Does this material walk toward the anti-vision, and does it spend
 something the boundaries say we keep?
@@ -90,7 +93,7 @@ If the Compass is empty or absent, say so in one line and stop. Do not improvise
 
 ## attack
 
-**Writes:** `02-attack.md`
+**Under the heading:** `attack`
 
 **Job:** What does the world do to this plan?
 

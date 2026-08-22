@@ -1,8 +1,11 @@
 # The pipeline
 
-Seven steps. What each one gets, what it must produce, and where it fails.
+Six steps, run in order by one reader. What each one gets, what it must produce, and where it fails.
 
-Every step reads `house-rules.md` first. Every step writes exactly one file and owns it.
+Read `house-rules.md` first. It applies to everything you write, at every step.
+
+Each step writes numbered files and nothing is held in memory between them. That is the recovery
+path: if you stop, look at which numbered file exists and start at the next step.
 
 ## Where output goes
 
@@ -23,7 +26,7 @@ and sit under the same root.
 
 ---
 
-## 1 · spec: the Spec Agent
+## 1 · spec: what is in the folder
 
 **Gets:** the material folder, including its `compass.md`
 **Writes:** `01-spec.md`
@@ -40,18 +43,38 @@ Read every file in the folder. Produce:
 
 ---
 
-## 2 · panel: four angles, in parallel
+## 2 · angles: four passes, in order
 
-**Gets:** `01-spec.md`, the material, `<material>/compass.md`
-**Writes:** `02-substance.md`, `02-contradict.md`, `02-compass.md`, `02-attack.md`
+**Gets:** `01-spec.md`, the material
+**Writes:** `02-angles.md`
 
-Briefs in `angles.md`. Each angle is blind to the others.
+Four readings of the same material, each with one lens, in this order. Briefs in `angles.md`.
+
+| Pass | Looks at |
+|---|---|
+| `substance` | Each claim against itself. Is there a decision in this sentence at all |
+| `contradict` | The documents against each other, or one document against itself |
+| `compass` | The material against what this client said they refuse |
+| `attack` | The plan against the outside world |
+
+**Say what the sequence costs, in the file.** In the parallel version these four never see each
+other, which is what makes agreement between them evidence. Here each pass knows what the last found,
+so convergence proves nothing and there is no tension check.
+
+Weight a finding instead by what it rests on: does the material state it, or is it arithmetic on the
+material's own figures. Both are traceable without anyone agreeing.
+
+**If `compass.md` does not exist, that pass writes one line saying so and stops.** Do not improvise
+an anti-vision. The cost of running without an intake belongs in the output, not hidden.
+
+**Fails when** a later pass quietly restates an earlier one. Name the pass that found each thing, so
+step 3 can see a repeat for what it is.
 
 ---
 
-## 3 · plan: the Plan Agent
+## 3 · plan: rank to three, then write the argument
 
-**Gets:** all four `02-*.md` files, `01-spec.md`, `<material>/compass.md`
+**Gets:** `02-angles.md`, `01-spec.md`, `<material>/compass.md`
 **Writes:** `03-plan.md`
 
 **First, the tension check.** Read the four angle files side by side. If they broadly agree, an angle
@@ -101,7 +124,7 @@ the ranking was never made and the run has produced a longer document rather tha
 
 ---
 
-## 4 · flatten: the Flattener
+## 4 · flatten: down to L1
 
 **Gets:** `03-plan.md`
 **Writes:** `04-plain.md`
@@ -115,18 +138,23 @@ Verify with `python3 {root}/scripts/check_headings.py` on the rendered page in s
 Read `skills/flatten/references/before-after.md` and `references/output.md` first. The second one
 carries the rule that makes the budget reachable: **write the finding, not the chain that supports
 it.** One figure and one line per must-solve; the quotes, the arithmetic and the demoted findings
-stay where they already are, in `02-*.md` and `03-plan.md`, and step 7 surfaces them in the log.
+stay where they already are, in `02-angles.md` and `03-plan.md`, and step 7 surfaces them in the log.
 
 You are not cutting evidence. You are declining to copy it forward.
 
-**Fails when** it drops a claim to make a sentence shorter. Losing content is the failure mode of
-this whole step.
+**Every section carries at least one pointer, and every figure carries one.** This was measured, not
+assumed: working through the steps alone produced 1.4 pointers per 100 words where the parallel
+version produced 3.1. Alone it is easy to write a good sentence and lose where it came from, and a
+distillation that drops what a claim rests on is a shorter document.
+
+**Fails when** it drops a claim to make a sentence shorter, or when a section arrives with no
+pointer in it. Losing content is the failure mode of this whole step.
 
 ---
 
-## 5 · verify: one agent and three scripts
+## 5 · verify: three scripts, then one judgement
 
-**Gets:** the four `02-*.md`, `03-plan.md`, `04-plain.md`
+**Gets:** `02-angles.md`, `03-plan.md`, `04-plain.md`
 **Writes:** `04-plain.md` revised, `05-verdict.md`
 
 This step used to be three reviewers and a coordinator. Two of those reviewers were doing work a
@@ -151,10 +179,19 @@ python3 {root}/skills/plain-strategy/scripts/stratlint.py runs/<slug>/<stamp>/04
 Every figure traces, or says whose arithmetic it is, or is `[TO FILL: …]`. Every sentence is under
 fifteen words. Both linters clean. Fix what they report before you read anything.
 
+### Count the pointers before you read anything else
+
+```bash
+grep -c '\[slide' runs/<slug>/<stamp>/04-plain.md
+```
+
+Under two per hundred words, go back to step 4 rather than forward. This is the failure mode of
+running alone and it does not announce itself: the page reads well and cannot be checked.
+
 ### Then do the one thing no script can
 
 **Did anything get lost between what the panel found and what is on the page?** Check both hops,
-`02-*` to `03-plan`, and `03-plan` to `04-plain`. Nothing else checks the plan itself, so a
+`02-angles` to `03-plan`, and `03-plan` to `04-plain`. Nothing else checks the plan itself, so a
 mis-ranked plan would flatten faithfully into a confident, wrong page.
 
 This is judgement, which is why it stays with an agent: a finding can survive word for word and
@@ -170,9 +207,9 @@ agent to touch the text, and a free hand here undoes the ranking.
 
 ---
 
-## 6 · artifact: the Artifact Agent
+## 6 · artifact: render, then check the page
 
-**Gets:** `04-plain.md` for the page. `01-spec.md`, the four `02-*.md`, `03-plan.md` and
+**Gets:** `04-plain.md` for the page. `01-spec.md`, `02-angles.md`, `03-plan.md` and
 `05-verdict.md` for the log. Plus `<material>/compass.md` and `design/DESIGN.md`
 **Writes:** `simple-strategy-artifact.html`, `reasoning.html`
 
@@ -181,7 +218,7 @@ Read `output-structure.md` first. It says what to fill and what to check.
 Fill `templates/artifact.html` from the six sections.
 
 Fill `templates/reasoning.html` from the files that already hold the evidence: `01-spec.md` for what
-was read and what is missing, the four `02-*.md` for who found what, `03-plan.md` for what was
+was read and what is missing, `02-angles.md` for who found what, `03-plan.md` for what was
 demoted and why, `05-verdict.md` for what was fixed and what shipped flagged.
 
 Nothing gets written twice. The page and the log are two views of the same run, and the log is the

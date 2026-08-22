@@ -171,16 +171,21 @@ the log is built from the files the earlier steps already wrote.
 Every file in that folder is one agent's output, and nothing else writes it. If a run dies, the
 last file tells you which step to restart from.
 
-Nine agents. One fan-out, no loops.
+Six steps, walked in order by one reader. No subagents, nothing held in memory between them, so the
+numbered files are the state and a stopped run resumes at the next one.
+
+There is a parallel variant, `workflows/simply.js`, which runs the same six steps as nine agents with
+the panel blind to each other. It is not the default. On the same 76-slide deck the sequential run
+produced 714 words with no untraced figures; the parallel run produced 3848 words and nine figures
+that appear nowhere in the source. Reach for the parallel version when a folder holds several
+documents that need checking against each other, which is the one job four blind readers do better.
 
 The first full run took 43.7 minutes and 1.2M subagent tokens on 100KB of material, with no errors.
 A smaller folder is quicker. Most of that time is the four angles each reading everything separately,
 which is the part that makes the tension check worth having, so it is not the first thing to trade
 away for speed.
 
-The angles are blind to each other on purpose. That is what makes step 3's **tension check** mean
-something: if the four come back agreeing, an angle did not bite, and the Plan Agent records its
-findings as weak rather than treating agreement as confirmation. Four agents nodding politely is
+In the parallel variant the angles are blind to each other on purpose. That is what makes step 3's **tension check** mean
 worse than one agent, because it reads like a second opinion when it is an echo.
 
 ## The rules it will not break
