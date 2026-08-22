@@ -76,7 +76,20 @@ The full prompts, with what a good answer looks like and how to push when an ans
 
 ## Output
 
-Write `<material-folder>/compass.md` with all five fields, each marked `given`,
-`drafted from <source>`, or `[MISSING]`.
-Close with one line saying how many fields are filled and what the run will be blind to without the
-rest.
+Write `<material-folder>/compass.md`. Start at field 1. No preamble.
+
+Do not open with a line saying where it was drafted from, when, or that the fields are marked. The
+file already sits in the folder it was drafted from, the marker on each field already says where that
+field came from, and git already knows the date. A header restating those things is three lines the
+reader has to get past before reaching anything they can correct.
+
+Each field carries its own marker on the heading line:
+
+```markdown
+## 1. Anti-vision — `drafted from vision-2030.md, slide 2`
+## 2. Boundaries — `given`
+## 4. The room — `[MISSING]`
+```
+
+Close with one line: how many fields are filled, and what the run will be blind to without the rest.
+That line earns its place because it tells the reader what to do next. The opening one did not.
