@@ -3,7 +3,19 @@
 Four agents read the same material at the same time and never see each other's output. That is
 deliberate: independence is what makes the tension check meaningful.
 
-Each writes to its own file. Each has one job and stays inside it.
+Each writes to its own file. Each has one job and stays inside it, and the split is by *where they
+look*, not by how hard they push:
+
+| Angle | Looks at |
+|---|---|
+| `substance` | Each claim against itself. Is there a decision in this sentence at all |
+| `contradict` | The documents against each other. What cannot both be true |
+| `compass` | The material against what this client said they refuse |
+| `attack` | The plan against the outside world. Competitors, customers, regulators, execution |
+
+Two angles auditing the same surface produce one finding counted twice, which reads like
+confirmation and is not. If your findings could have come from another angle's brief, you are in the
+wrong place.
 
 ---
 
@@ -80,12 +92,34 @@ If the Compass is empty or absent, say so in one line and stop. Do not improvise
 
 **Writes:** `02-attack.md`
 
-**Job:** What breaks this?
+**Job:** What does the world do to this plan?
 
-Load `skills/red-team/SKILL.md` and apply it to these documents. Exactly five challenges, each with
-the pain in one sentence, why it hurts, and an open question for the room.
+Load `skills/red-team/SKILL.md`. Exactly five challenges, each with the pain in one sentence, why it
+hurts, and an open question for the room.
 
-You are attacking the *documents*, not running a consulting firm's house style. Quote what they say.
-Generic warnings are worthless here.
+**Look outward, not inward.** The `contradict` angle already audits the documents against each other,
+so a challenge that amounts to "these two slides disagree" is a finding it will make with better
+evidence, and yours becomes an echo. Four angles where two find the same thing is three angles and a
+repeat.
+
+Your ground is everything outside the paper. Take the plan at its word, assume it is internally
+consistent, and then ask what happens to it:
+
+| Lens | The question |
+|---|---|
+| **The competitor** | A smart rival reads this plan today. What do they do on Monday that this plan has no answer to? |
+| **The customer** | Where does the customer refuse to behave the way the plan needs them to? |
+| **The regulator, the works council, the auditor** | Who has to approve something here, and what do they say? |
+| **Execution reality** | Which step needs a capability, a person or a supplier the organisation does not have? |
+| **Timing and sequence** | What has to happen before what, and where does the order break? |
+| **Behaviour** | The plan is logical. Where does it snap on habit, incentive or self-interest? |
+
+Logical is not the same as true. A plan that is perfect on paper can fail on all six of those without
+a single internal inconsistency, which is exactly the failure mode no other angle is looking for.
+
+Use the assumption audit and the opposite test from the red-team skill on the load-bearing beliefs,
+but land each challenge in the outside world rather than in the document.
+
+Quote what the plan says, then say what happens to it. Generic warnings are worthless here.
 
 Open with one genuinely strong point so the room knows you read it.
