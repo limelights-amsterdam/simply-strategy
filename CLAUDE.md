@@ -30,7 +30,7 @@ skills/red-team/            the attack angle
 design/DESIGN.md            two colours, one column, print-clean
 scripts/check_artifact.py   deterministic verification of the rendered output
 templates/                  artifact.html, reasoning.html
-examples/                   a worked, anonymised run. Validates in CI
+examples/                   a worked, anonymised run. `check_artifact.py examples/` verifies it
 runs/<slug>/<stamp>/       output, one directory per run. Durable, not /tmp
 ```
 
@@ -44,14 +44,13 @@ runs/<slug>/<stamp>/       output, one directory per run. Durable, not /tmp
   under about 1000 words, and never past the documented 500 lines.
 
   These are ceilings with a reason, not targets. A file that is 40 words over and coherent beats one
-  cut to fit. The one description worth spending over the ceiling on is trigger coverage: `plain`
-  (152) and `plain-strategy` (149) both run long because they list trigger phrases in two languages,
+  cut to fit. The one thing worth spending over the ceiling on is trigger coverage: `plain` and
+  `plain-strategy` both run long because they spell out the everyday phrases that should fire them,
   and a skill that never fires costs more than a description that runs long. Anything else over the
   ceiling is weight that belongs in `references/`.
 
-  This replaces an 80-line rule that was stricter than the documented guidance, counted the wrong
-  thing, and was broken by six of seven skills here. Lines are a bad proxy: a one-line description
-  can carry 150 words and cost more than the body it introduces.
+  Do not quote the counts here. `python3 scripts/check_skills.py` measures them, names the two
+  exceptions and exits 1 on anything else.
 - **The filter order is substance, then language, then de-slop.** Rewriting an empty sentence gives
   you a tidy empty sentence.
 - **Never invent a number.** `[TO FILL: what is needed]`, always.
@@ -61,9 +60,13 @@ runs/<slug>/<stamp>/       output, one directory per run. Durable, not /tmp
 - **Output language is English**, whatever the source documents are in.
 - **The artifact is black and white.** Two colours plus one grey. This includes the SVGs.
 - **Never write a bare path to a plugin file.** `skills/`, `scripts/`, `templates/` and `design/`
-  live under the plugin, which is not the folder the user is working in. In `simply.js` build every
-  such path from `root`. In a reference file an agent reads, the run tells it to prefix them. A path
-  that is correct in a clone and wrong once installed is the failure mode this repo keeps hitting.
+  live under the plugin, which is not the folder the user is working in. A path that is correct in a
+  clone and wrong once installed is the failure mode this repo keeps hitting.
+
+  One convention, everywhere an agent reads: **a command spells `{root}/`, prose may write the bare
+  path.** In `simply.js` build the path from `root`. Never write a path relative to the file it sits
+  in, such as `../plain/scripts/`: an agent resolves it against the working directory, not against
+  your file.
 - **Publish the measured number, not the hoped-for one.** Runtimes, agent counts and word counts in
   the docs come from a real run. If you change the shape of the run, measure it again.
 
@@ -82,7 +85,8 @@ python3 skills/plain/scripts/plainlint.py runs/<slug>/<stamp>/04-plain.md
 python3 skills/plain-strategy/scripts/stratlint.py runs/<slug>/<stamp>/04-plain.md
 ```
 
-Under 1.5 weighted findings per 100 words is clean.
+Each linter prints its own verdict band and they are not the same number. Read the band, or gate
+on it with `--fail-over`.
 
 The artifact checker, after a run:
 
@@ -105,6 +109,7 @@ When you add a rule, put it where it belongs and link to it:
 | The seven substance tests, in full | `skills/plain-strategy/references/tests.md` |
 | The language rules and replacement lists | `skills/plain/references/` |
 | How the run is started, and where the plugin root comes from | `skills/simply/SKILL.md` |
+| The length budget: page, caption, sentence | `skills/simplify/references/output.md` |
 
 `house-rules.md` keeps a compact copy of the seven tests on purpose. Every agent reads it first, and
 sending each one to open another file to find the core checklist costs a read per agent.

@@ -1,6 +1,6 @@
 ---
 name: simply
-description: Turn a folder of strategy documents into one plain-language HTML page a CEO reads in under six minutes. Runs seven steps - inventory, a panel of four independent angles, a forced ranking to exactly three must-solve items, a flatten pass to child-level language, three reviewers, one repair round, and a black-and-white artifact. Use when the user types /simply, points at a folder of strategy material and asks for something readable out of it, or says flatten this folder, run the strategy through it, make one page out of these documents, or what do all these documents actually say together.
+description: Turn a folder of strategy documents into one plain-language HTML page a board reads in under six minutes. Runs seven steps - inventory, a panel of four independent angles, a forced ranking to exactly three must-solve items, a flatten pass to child-level language, three reviewers, one repair round, and a black-and-white artifact. Use when the user types /simply, points at a folder of strategy material and asks for something readable out of it, or says flatten this folder, run the strategy through it, make one page out of these documents, or what do all these documents actually say together.
 allowed-tools: Bash(date *) Bash(python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check_artifact.py *) Bash(python3 ${CLAUDE_PLUGIN_ROOT}/skills/plain/scripts/plainlint.py *) Bash(python3 ${CLAUDE_PLUGIN_ROOT}/skills/plain-strategy/scripts/stratlint.py *)
 ---
 
@@ -17,7 +17,7 @@ that the simplification stayed true.
 
 ```
 /simply-strategy:compass ./material/<client>/   fills that folder's compass.md. Once per client
-/simply-strategy:simply  ./material/<client>/   the run, about 45 minutes
+/simply-strategy:simply  ./material/<client>/   the run, in the background
 ```
 
 The run is a dynamic workflow. Start it with the Workflow tool. Do not work the seven steps by hand

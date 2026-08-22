@@ -97,19 +97,55 @@ It is written to `material/<client>/compass.md`, next to the documents it descri
 project root. It is client material, it travels with the folder it belongs to, and two clients can
 be set up side by side.
 
-## The seven steps
+## The run, phase by phase
 
-Linear where a step needs everything before it, parallel where it does not.
+Six phases, the same six `/workflows` shows while it runs. Each phase reads files the phases before
+it wrote, and writes its own. The numbers on the files are the step numbers in
+`skills/simply/references/pipeline.md`. Steps 6 and 7 share the last phase.
 
-| # | Step | Shape | Writes | Job |
-|---|---|---|---|---|
-| 1 | Spec Agent | linear | `01-spec.md` | Every file: what it is, its date, who owns it. And what the material references but does not contain |
-| 2 | Panel | 4 parallel | `02-*.md` | substance · contradiction · compass · red team |
-| 3 | Plan Agent | linear | `03-plan.md` | Four angles into one. Tension check, then exactly three must-solve |
-| 4 | Flattener | linear | `04-plain.md` | L1 |
-| 5 | Reviewers | 3 parallel | `05-*.md` | Still true? Actually simple? Anything invented? |
-| 6 | Review Coordinator | linear | `05-verdict.md` | Consolidates must-fix and applies it. One round |
-| 7 | Artifact Agent | linear | two HTML pages | Renders, then verifies its own output |
+```
+runs/<slug>/<stamp>/
+│
+├─ Spec · 1 agent
+│    reads   the material folder and its compass.md
+│    writes  01-spec.md            every file, its date, its owner. And what the material cites
+│                                  but does not contain
+│
+├─ Panel · 4 agents, in parallel, blind to each other
+│    reads   the material, compass.md and 01-spec.md
+│    writes  02-substance.md       is there a decision in here at all?
+│            02-contradict.md      where do the documents disagree with each other?
+│            02-compass.md         does the material walk toward what the client said they want?
+│            02-attack.md          what does the world do to this plan? The red team
+│
+├─ Plan · 1 agent
+│    reads   01-spec.md, the four 02 files and compass.md
+│    writes  03-plan.md            tension check first, then exactly three must-solve items
+│
+├─ Flatten · 1 agent
+│    reads   03-plan.md
+│    writes  04-plain.md           the page in plain language, at level L1
+│
+├─ Review · 3 agents, in parallel
+│    reads   the four 02 files, 03-plan.md and 04-plain.md
+│    writes  05-true.md            did anything get lost between panel, plan and page?
+│            05-simple.md          is it actually L1? The linters count, the reviewer judges
+│            05-invented.md        does every number trace back to a document?
+│
+└─ Artifact · 2 agents, one after the other
+     coordinate
+       reads   the three 05 files and 04-plain.md
+       writes  05-verdict.md       what must be fixed. Two reviewers calling it fatal is decisive
+               04-plain.md         revised, in one round
+     artifact
+       reads   04-plain.md, 05-verdict.md, 01-spec.md, compass.md and the two templates
+       writes  simple-strategy-artifact.html    the page
+               reasoning.html                   what it read, what it cut, where it is unsure
+       then runs check_artifact.py on both. Exit 0 or it does not ship
+```
+
+Every file in that folder is one agent's output, and nothing else writes it. If a run dies, the
+last file tells you which step to restart from.
 
 Twelve agents. Two fan-outs, five single minds, one repair round, no loops.
 
@@ -148,10 +184,14 @@ Rendering is the only step nothing downstream would catch, so it verifies itself
 python3 scripts/check_artifact.py runs/<slug>/<stamp>/
 ```
 
-Thirteen checks: six sections present, no unfilled slots, nothing loaded over the network, exactly
-three must-solve items, every one with a source pointer, every sentence under 15 words, no silently
-empty section, every `[TO FILL]` describing what is needed, no em dashes, and a reasoning log whose
-"what it threw away" and "where it is unsure" are not empty. Exit code 1 and it does not ship.
+It checks the six sections, unfilled slots, anything loading over the network, the three must-solve
+items and their source pointers, sentence length, the page's reading time, silently empty sections,
+what each `[TO FILL]` says, em dashes, and a reasoning log whose cut list and unsure list carry
+something. With `--material` it also checks that every pointer names a file that exists.
+
+A check that scanned nothing reports `not run`, not a tick, and blocks the same way a failure does.
+Exit code 1 and it does not ship. The table it prints is the list; this paragraph is not kept in
+step with it.
 
 Checks a script can make are made by a script. The reviewers spend their judgement on what a script
 cannot see: whether an abstraction is still an abstraction, whether a number has a real comparison,
@@ -164,7 +204,8 @@ python3 skills/plain/scripts/plainlint.py runs/<slug>/<stamp>/04-plain.md --mode
 python3 skills/plain-strategy/scripts/stratlint.py runs/<slug>/<stamp>/04-plain.md
 ```
 
-Under 1.5 weighted findings per 100 words is clean.
+Each linter prints its own verdict band, and the two bands are not the same number. Read the band,
+or gate on it with `--fail-over`.
 
 The three commands above are written from a clone of this repo. Installed as a plugin, the scripts
 sit under the plugin directory rather than the one you are working in, and the run prefixes them
@@ -172,26 +213,21 @@ itself from the root the skill hands it.
 
 ## What is in here
 
+Two folders you touch:
+
 ```
-.claude-plugin/             plugin.json and the marketplace entry that serves it
-workflows/simply.js         the run. ~90 lines of wiring, no strategy content
-skills/simply/              what the run's agents read
-  references/house-rules.md   prepended to every agent. The filter and the unbreakable rules
-  references/pipeline.md      what each step gets, must produce, and how it fails
-  references/angles.md        the four panel briefs
-  references/output-structure.md  the four visual slots and the two files
-skills/compass/              the intake. Read a deck, or ask five questions
-skills/simplify/            the flattener. references/output.md defines the six sections
-skills/plain/               language filter + plainlint.py
-skills/plain-strategy/      substance filter + stratlint.py
-skills/stop-slop/           de-slop filter
-skills/red-team/            the attack angle
-scripts/check_artifact.py   deterministic verification of the rendered output
-design/DESIGN.md            two colours, one column, print-clean
-templates/                  artifact.html, reasoning.html
 material/<client>/          input, plus that client's compass.md. Git-ignored
-runs/<slug>/<stamp>/       output, one directory per run. Git-ignored
+runs/<slug>/<stamp>/        output, one directory per run. Git-ignored
 ```
+
+Everything else is the plugin. `workflows/simply.js` is the run, about 90 lines of wiring with no
+strategy content. `skills/` holds what the agents read, one folder per job: `simply/` the run's own
+references, `compass/` the intake, `simplify/` the flattener, `plain/` and `plain-strategy/` the two
+filters with their linters, `stop-slop/` and `red-team/`. `templates/` and `design/DESIGN.md` decide
+how the page looks, `scripts/` verifies it, and `examples/` is a worked run the checker validates.
+
+The full tree, kept current for people working on this, is in `CLAUDE.md`. It is not repeated here,
+because two trees drift and one of them is then wrong.
 
 Everything a human edits is markdown. `simply.js` names files and agents and holds nothing else, so
 changing how the red team thinks means editing a `.md`, never the script.
@@ -208,14 +244,9 @@ Every normative rule has exactly one owner file. The table in `CLAUDE.md` says w
 Needs Claude Code 2.1.154 or later for the workflow runtime. Python 3 for the three scripts. Nothing
 else, and nothing is fetched at run time.
 
-Steps 5 and 7 shell out to Python. A workflow runs in the background and cannot ask you anything, so
-a run that meets a permission prompt sits and waits. Before a long run, allow the three commands:
-
-```
-Bash(python3 */scripts/check_artifact.py *)
-Bash(python3 */skills/plain/scripts/plainlint.py *)
-Bash(python3 */skills/plain-strategy/scripts/stratlint.py *)
-```
+Steps 5 and 7 shell out to Python, and a background run cannot stop to ask you. The rules to allow
+before a long run, and why the skill's own pre-approval is not enough on its own, are in
+`skills/simply/SKILL.md`, which owns that.
 
 ## What it is not for
 
