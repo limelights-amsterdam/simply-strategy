@@ -31,7 +31,7 @@ design/DESIGN.md            two colours, one column, print-clean
 scripts/check_artifact.py   deterministic verification of the rendered output
 templates/                  artifact.html, reasoning.html
 examples/                   a worked, anonymised run. Validates in CI
-runs/<slug>/                output. Durable, not /tmp
+runs/<slug>/<stamp>/       output, one directory per run. Durable, not /tmp
 ```
 
 ## House rules for working in this repo
@@ -75,11 +75,11 @@ runs/<slug>/                output. Durable, not /tmp
 /workflows                                      live progress
 ```
 
-Linters, on `runs/<slug>/04-plain.md`:
+Linters, on `runs/<slug>/<stamp>/04-plain.md`:
 
 ```
-python3 skills/plain/scripts/plainlint.py runs/<slug>/04-plain.md
-python3 skills/plain-strategy/scripts/stratlint.py runs/<slug>/04-plain.md
+python3 skills/plain/scripts/plainlint.py runs/<slug>/<stamp>/04-plain.md
+python3 skills/plain-strategy/scripts/stratlint.py runs/<slug>/<stamp>/04-plain.md
 ```
 
 Under 1.5 weighted findings per 100 words is clean.
@@ -87,7 +87,7 @@ Under 1.5 weighted findings per 100 words is clean.
 The artifact checker, after a run:
 
 ```
-python3 scripts/check_artifact.py runs/<slug>/
+python3 scripts/check_artifact.py runs/<slug>/<stamp>/
 ```
 
 ## One owner per rule

@@ -145,7 +145,7 @@ worse than one agent, because it reads like a second opinion when it is an echo.
 Rendering is the only step nothing downstream would catch, so it verifies itself:
 
 ```
-python3 scripts/check_artifact.py runs/<slug>/
+python3 scripts/check_artifact.py runs/<slug>/<stamp>/
 ```
 
 Thirteen checks: six sections present, no unfilled slots, nothing loaded over the network, exactly
@@ -160,8 +160,8 @@ and whether a sentence got shorter by losing meaning.
 The two language linters run on the flattened markdown:
 
 ```
-python3 skills/plain/scripts/plainlint.py runs/<slug>/04-plain.md --mode strict
-python3 skills/plain-strategy/scripts/stratlint.py runs/<slug>/04-plain.md
+python3 skills/plain/scripts/plainlint.py runs/<slug>/<stamp>/04-plain.md --mode strict
+python3 skills/plain-strategy/scripts/stratlint.py runs/<slug>/<stamp>/04-plain.md
 ```
 
 Under 1.5 weighted findings per 100 words is clean.
@@ -190,7 +190,7 @@ scripts/check_artifact.py   deterministic verification of the rendered output
 design/DESIGN.md            two colours, one column, print-clean
 templates/                  artifact.html, reasoning.html
 material/<client>/          input, plus that client's compass.md. Git-ignored
-runs/<slug>/                output. Git-ignored
+runs/<slug>/<stamp>/       output, one directory per run. Git-ignored
 ```
 
 Everything a human edits is markdown. `simply.js` names files and agents and holds nothing else, so

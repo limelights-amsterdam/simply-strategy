@@ -26,7 +26,13 @@ const slug = (folder.replace(/\/+$/, '').split('/').pop() || 'run').toLowerCase(
 const passed = (args && args.root) || '.'
 const root = (!passed || passed.includes('CLAUDE_PLUGIN_ROOT') ? '.' : passed).replace(/\/+$/, '')
 
-const out = `runs/${slug}`
+// A second run must not quietly overwrite the first. The stamp comes from outside because the
+// runtime forbids Date.now(), which would break resume. Same args in, same path out, so
+// resumeFromRunId still lands where the first attempt did.
+// Stripped to date characters: it becomes a path segment, and a stamp carrying ../ would write
+// outside runs/.
+const stamp = String((args && args.stamp) || '').replace(/[^0-9A-Za-z-]/g, '').slice(0, 32)
+const out = stamp ? `runs/${slug}/${stamp}` : `runs/${slug}`
 const R = `${root}/skills/simply/references`
 
 const brief = (task) => `You are one agent in a Simply Strategy run.
@@ -41,6 +47,7 @@ ${task}
 You own the files this step names. Write nothing else. Return one line: the path you wrote.`
 
 log(`material: ${folder} · output: ${out} · plugin: ${root}`)
+if (!stamp) log('no stamp was given, so this run overwrites any earlier run on this folder')
 
 phase('Spec')
 await agent(brief(`Your step is "1 · spec" in ${R}/pipeline.md. Follow it and write ${out}/01-spec.md.`),

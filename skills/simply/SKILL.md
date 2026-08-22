@@ -1,7 +1,7 @@
 ---
 name: simply
 description: Turn a folder of strategy documents into one plain-language HTML page a CEO reads in under six minutes. Runs seven steps - inventory, a panel of four independent angles, a forced ranking to exactly three must-solve items, a flatten pass to child-level language, three reviewers, one repair round, and a black-and-white artifact. Use when the user types /simply, points at a folder of strategy material and asks for something readable out of it, or says flatten this folder, run the strategy through it, make one page out of these documents, or what do all these documents actually say together.
-allowed-tools: Bash(python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check_artifact.py *) Bash(python3 ${CLAUDE_PLUGIN_ROOT}/skills/plain/scripts/plainlint.py *) Bash(python3 ${CLAUDE_PLUGIN_ROOT}/skills/plain-strategy/scripts/stratlint.py *)
+allowed-tools: Bash(date *) Bash(python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check_artifact.py *) Bash(python3 ${CLAUDE_PLUGIN_ROOT}/skills/plain/scripts/plainlint.py *) Bash(python3 ${CLAUDE_PLUGIN_ROOT}/skills/plain-strategy/scripts/stratlint.py *)
 ---
 
 # Simply
@@ -21,19 +21,27 @@ that the simplification stayed true.
 ```
 
 The run is a dynamic workflow. Start it with the Workflow tool. Do not work the seven steps by hand
-while the runtime is available, and do not paraphrase this call:
+while the runtime is available. Run `date +%Y-%m-%d-%H%M` first, then make this call, unparaphrased:
 
 ```
 Workflow({
   name: "simply-strategy:simply",
-  args: { folder: "<the folder the user named>", root: "${CLAUDE_PLUGIN_ROOT}" }
+  args: { folder: "<the folder the user named>", root: "${CLAUDE_PLUGIN_ROOT}",
+          stamp: "<what date printed>" }
 })
 ```
+
+`stamp` is what keeps a second run from overwriting the first. Output lands in
+`runs/<slug>/<stamp>/`, grouped by client and sorted by time. The script cannot produce it, because
+the workflow runtime forbids `Date.now()`, and it has to be stable across a resume: the same args
+have to give the same path or `resumeFromRunId` writes somewhere new. Leave it out and the run
+writes to `runs/<slug>/` and overwrites what was there. It says so in the progress log rather than
+doing it quietly.
 
 `root` is how the run finds this plugin's own files. Claude Code substitutes `${CLAUDE_PLUGIN_ROOT}`
 in this file and not inside the workflow script, so the value has to be handed over here. From a
 clone the placeholder stays literal, the script falls back to `.`, and the run starts with
-`Workflow({ scriptPath: "workflows/simply.js", args: { folder: "<folder>" } })`.
+`Workflow({ scriptPath: "workflows/simply.js", args: { folder: "<folder>", stamp: "<stamp>" } })`.
 
 It runs in the background and asks nothing. Watch it with `/workflows`. When it returns, report the
 two file paths and the final check table.
@@ -49,8 +57,8 @@ If the workflow runtime is unavailable, run the seven steps in
 ## The seven steps
 
 Spec, a panel of four, plan, flatten, three reviewers, one repair round, artifact. Twelve agents,
-two fan-outs, no loops. Output goes to `runs/<slug>/`. The first full run took 43.7 minutes on 100KB
-of material, and a smaller folder is quicker.
+two fan-outs, no loops. Output goes to `runs/<slug>/<stamp>/`. The first full run took 43.7 minutes
+on 100KB of material, and a smaller folder is quicker.
 
 What each step gets, must produce, and how it fails: [references/pipeline.md](references/pipeline.md).
 That file owns the seven steps. Do not restate them here.
