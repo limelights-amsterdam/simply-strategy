@@ -15,7 +15,7 @@ per run cannot be checked and cannot be trusted twice.
 |---|---|---|---|
 | 1 | Section 1 | The one sentence | `hero`, one number alone, or type only when there is no single number |
 | 2 | Section 2 | The three must-solves | One per must-solve: `gap` when it is promise against delivery, `overlap` only when the overlap is the finding |
-| 3 | Section 3 | What stops, and what starts | Two columns of type, stops left and starts right. No figure |
+| 3 | Section 3 | What stops, and what starts | Running prose, one paragraph each. No figure |
 | 4 | Section 4 | The bet: assumption, test, date | `timeline`, left to right is always time. Its strongest use is the empty one: four marks with no dates says more than a sentence |
 
 Section 6 may add `eisenhower`, every gap placed by what it stops, when there are more gaps than a
@@ -38,6 +38,8 @@ that are easy to break while filling:
   anything: without colour those are guessing.
 - No `<img>`, no icon library, no emoji, no CDN, no JavaScript. One file, opens with no network.
 - Sentence case in every heading. No em dashes in the copy.
+- Running prose. No bullet lists, no grids, no bracketed `[TO FILL]` markers on the page: a gap is a
+  sentence, and the markers stay in `04-plain.md` and the reasoning log. A board reads paragraphs.
 - Every claim carries a source pointer, or it does not go on the page. On the page a pointer is a
   superscript numeral that resolves to the source list in the footer, one entry per file and page,
   numbered in order of first use. Never a bracket mid-sentence.

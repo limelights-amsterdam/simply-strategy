@@ -22,8 +22,6 @@ body{background:var(--paper);color:var(--ink);font-family:var(--serif);line-heig
 .rule{border:0;border-top:1px solid var(--rule);margin:0}
 .caption{font-family:var(--sans);font-size:.8125rem;line-height:1.45;color:var(--muted)}
 .src{font-family:var(--sans);font-size:.8125rem;color:var(--muted)}
-.tofill{font-family:var(--mono);font-size:.8125rem;border:1px solid var(--rule);padding:2px 4px;
-  white-space:nowrap}
 .unanswered{font-style:italic;color:var(--muted)}
 sup{font-family:var(--sans);font-size:.65em;line-height:0;vertical-align:super;color:var(--muted);margin-left:1px}
 .refs{font-family:var(--sans);font-size:.8125rem;color:var(--muted);line-height:1.6;margin:1rem 0 2rem 1.1rem}
@@ -34,6 +32,7 @@ header .rule{margin-bottom:1.25rem}
 header .meta{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
 
 section{margin-bottom:var(--gap-section)}
+section p{margin-bottom:1.1rem}
 section > .rule{margin-bottom:1rem}
 section > h2{font-family:var(--sans);font-weight:700;font-size:1.5rem;line-height:1.2;
   letter-spacing:-.01em;margin-bottom:var(--gap-block)}
@@ -50,26 +49,12 @@ section > h2{font-family:var(--sans);font-weight:700;font-size:1.5rem;line-heigh
 .must .stmt{font-size:clamp(1.6rem,3vw,2.4rem);line-height:1.15;letter-spacing:-.01em}
 .must .rule{margin:1rem 0 .6rem}
 
-/* slot 3: stop / start */
-.split{display:grid;grid-template-columns:1fr 1px 1fr;gap:0 2rem}
-.split .bar{background:var(--rule)}
-.split ul{list-style:none}
-.split li{margin-bottom:.9rem}
-.split .kicker{display:block;margin-bottom:1rem}
 
-/* slot 4: the bet */
-.bet{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:0 .9rem;align-items:start;
-  margin-bottom:var(--gap-block)}
-.bet .arrow{color:var(--rule);font-family:var(--sans);align-self:center}
-.bet .kicker{display:block;margin-bottom:.5rem}
-.bet p{font-size:1rem;line-height:1.45}
 
 .conflict{margin-bottom:var(--gap-block)}
 .conflict .side{margin-bottom:.6rem}
 .conflict .verdict{font-size:1rem;margin-top:.6rem}
 
-.gaps{list-style:none}
-.gaps li{margin-bottom:.8rem}
 
 footer{margin-top:var(--gap-section)}
 footer .rule{margin-bottom:.75rem}
@@ -78,10 +63,6 @@ footer .meta{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
 @media (max-width:640px){
   :root{--margin:0rem}
   .must .n{position:static;width:auto;display:block;margin-bottom:.25rem}
-  .split{grid-template-columns:1fr;gap:2.5rem}
-  .split .bar{display:none}
-  .bet{grid-template-columns:1fr;gap:1.25rem}
-  .bet .arrow{display:none}
 }
 @media print{
   @page{size:A4;margin:18mm}
@@ -127,37 +108,23 @@ footer .meta{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
   </div>
 </section>
 
-<!-- 3 · what we stop doing -->
+<!-- 3 · what we stop doing. Running prose, not two columns: one paragraph of
+     stops, one of starts, each item a sentence with its pointer -->
 <section id="stop">
   <hr class="rule"><h2>{{CLAIM_3}}</h2>
-  <div class="split">
-    <div>
-      <span class="kicker">Stops</span>
-      <ul>{{STOPS}}</ul>
-    </div>
-    <div class="bar"></div>
-    <div>
-      <span class="kicker">Starts</span>
-      <ul>{{STARTS}}</ul>
-    </div>
-  </div>
-  <!-- when no sacrifice was named, replace the split with: -->
-  <!-- <p class="unanswered">The plan does not say what this costs.</p> -->
+  <p>{{STOPS_AS_SENTENCES}}</p>
+  <p>{{STARTS_AS_SENTENCES}}</p>
+  <!-- when no sacrifice was named, or nothing is costed: -->
+  <p class="unanswered">The plan does not say what this costs.<sup>{{REF}}</sup></p>
 </section>
 
-<!-- 4 · what has to be true -->
+<!-- 4 · what has to be true. One paragraph per bet, heaviest first: the assumption,
+     how it would be tested, and when we would know. "There is no date" when there is
+     none. The [TO FILL] for it goes in section 6 -->
 <section id="bet">
   <hr class="rule"><h2>{{CLAIM_4}}</h2>
-  <!-- repeat per assumption -->
-  <div class="bet">
-    <div><span class="kicker">Assumption</span><p>{{ASSUMPTION}}</p></div>
-    <div class="arrow">&rarr;</div>
-    <div><span class="kicker">How we test it</span><p>{{TEST}}</p></div>
-    <div class="arrow">&rarr;</div>
-    <div><span class="kicker">When we know</span><p>{{WHEN}}</p></div>
-  </div>
-  <!-- when a bet has no date, the cell says "No date". The [TO FILL] goes in section 6;
-       the page does not announce that -->
+  <p>{{BET_ASSUMPTION}}<sup>{{REF}}</sup> {{BET_TEST}} {{BET_WHEN}}</p>
+  <!-- an optional figure from templates/figures.html, with its caption -->
 </section>
 
 <!-- 5 · what the documents disagree about -->
@@ -172,12 +139,13 @@ footer .meta{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
   </div>
 </section>
 
-<!-- 6 · what we do not know -->
+<!-- 6 · what we do not know. Running prose: each gap as a question and one line on
+     what it blocks. No bracketed markers on the page; those live in 04-plain.md and
+     the reasoning log -->
 <section id="gaps">
   <hr class="rule"><h2>{{CLAIM_6}}</h2>
-  <ul class="gaps">
-    <li><span class="tofill">{{TO_FILL}}</span> {{GAP_EXPLANATION}}</li>
-  </ul>
+  <p>{{GAPS_AS_QUESTIONS}}</p>
+  <p>{{EMPTY_COMPASS_FIELDS_AND_MISSING_BASELINES}}</p>
 </section>
 
 <footer>
