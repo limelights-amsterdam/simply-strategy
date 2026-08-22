@@ -43,12 +43,17 @@ This is the page that survives a hostile question.
 Rendering is the only step nothing downstream checks, so it checks itself:
 
 ```bash
-python3 scripts/check_artifact.py runs/<slug>/
+python3 {root}/scripts/check_artifact.py runs/<slug>/ --material <material folder>
 ```
 
-Exit code 0 or it does not ship. The checker verifies the six sections, unfilled slots, sentence
-length, source pointers, the three-item count, em dashes, and that the reasoning log's cut list and
-unsure list are not empty. Fix what it reports and run it again.
+`{root}` is the plugin root from your prompt. Exit code 0 or it does not ship.
+
+The checker verifies the six sections, unfilled slots, sentence length, the three-item count, em
+dashes, and that the reasoning log's cut list and unsure list are not empty. With `--material` it
+also checks that every source pointer names a file that actually exists in that folder, which is the
+one thing a confident citation of a document nobody has would otherwise get past.
+
+It also enforces the length budget. Fix what it reports and run it again.
 
 If a check cannot pass because the material genuinely does not support it, that belongs in section 6
 and in the reasoning log. It does not belong in a silent workaround.

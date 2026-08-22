@@ -4,6 +4,15 @@ Seven steps. What each one gets, what it must produce, and where it fails.
 
 Every step reads `house-rules.md` first. Every step writes exactly one file and owns it.
 
+## Paths in this file
+
+`{root}` is the plugin root, handed to you in your prompt. When the plugin is installed it is not the
+working directory, so a bare `scripts/...` resolves to nothing.
+
+Commands below are written with `{root}` spelled out, because a command with a wrong path fails
+silently in the middle of a long run. Prose references to skill files are left bare for readability
+and sit under the same root.
+
 ---
 
 ## 1 · spec — Spec Agent
@@ -92,8 +101,9 @@ The `simple` reviewer does not count by eye. That count is the claim the whole p
 it is measured:
 
 ```bash
-python3 skills/plain/scripts/plainlint.py runs/<slug>/04-plain.md --mode strict
-python3 skills/plain-strategy/scripts/stratlint.py runs/<slug>/04-plain.md
+python3 {root}/skills/plain/scripts/plainlint.py runs/<slug>/04-plain.md \
+  --lang en --max-sentence 15
+python3 {root}/skills/plain-strategy/scripts/stratlint.py runs/<slug>/04-plain.md --lang en
 ```
 
 Under 1.5 weighted findings per 100 words is clean. For the hard sentence-length and pointer checks,
@@ -135,7 +145,7 @@ the verdict and the Compass.
 Then verify your own work, because nothing downstream does:
 
 ```bash
-python3 scripts/check_artifact.py runs/<slug>/
+python3 {root}/scripts/check_artifact.py runs/<slug>/ --material <material folder>
 ```
 
 Exit code 0 or it does not ship. Fix what it reports and run it again. If a check cannot pass because

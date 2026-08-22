@@ -40,6 +40,12 @@ Most documents ship at L5 while the room believes they are at L2. You deliver L1
    doing Y" is written next to it.
 5. **Nothing survives the opposite test.** Reverse the claim. If no sensible organisation would claim
    the reverse, it is not a choice and it does not go on the page.
+6. **Group sentences into paragraphs.** The 15-word limit is on the sentence, not the paragraph. A
+   page of one-line paragraphs reads like a telegram, and it is the failure mode this skill falls
+   into when it is trying hardest. Sentences that serve one thought sit together.
+7. **Stay inside the budget.** The whole page is 1200 words, and the evidence under each must-solve
+   is 40. See [references/output.md](references/output.md). A finding that needs more room belongs
+   in the reasoning log, not in smaller type.
 
 Worked pairs on real strategy language: [references/before-after.md](references/before-after.md).
 Read that file before you flatten anything — the move is easier to copy than to describe.

@@ -327,8 +327,8 @@ def scan_punctuation(report: Report, lines, mode: str) -> None:
             )
 
 
-def scan_sentences(report: Report, lines, mode: str) -> None:
-    cap = 20 if mode == "strict" else 25
+def scan_sentences(report: Report, lines, mode: str, max_sentence: int = 0) -> None:
+    cap = max_sentence if max_sentence else (20 if mode == "strict" else 25)
     para: list[str] = []
     para_start = 1
 
@@ -413,12 +413,12 @@ def scan_synonyms(report: Report, text: str) -> None:
                 )
 
 
-def analyze(name: str, text: str, lang: str, mode: str) -> Report:
+def analyze(name: str, text: str, lang: str, mode: str, max_sentence: int = 0) -> Report:
     clean = strip_noise(text)
     report = Report(name=name, lang=lang if lang != "auto" else detect_lang(clean))
     lines = prose_lines(clean)
 
-    scan_sentences(report, lines, mode)
+    scan_sentences(report, lines, mode, max_sentence)
     scan_punctuation(report, lines, mode)
     scan_phrases(report, lines, MARKETING, "marketing word", "claims quality without evidence")
     scan_phrases(report, lines, OFFICE_VERBS, "office speak", "points at no action")
@@ -496,6 +496,9 @@ def main() -> int:
     ap.add_argument("--lang", choices=["auto", "en"], default="auto")
     ap.add_argument("--mode", choices=["normal", "strict"], default="normal",
                     help="strict uses 20 words per sentence instead of 25")
+    ap.add_argument("--max-sentence", type=int, default=0, metavar="N",
+                    help="hard word limit per sentence, overrides the mode. "
+                         "Use 15 for child-level text")
     ap.add_argument("--show", type=int, default=25,
                     help="findings shown per file (0 = all)")
     ap.add_argument("--fail-over", type=float, default=None,
@@ -505,11 +508,11 @@ def main() -> int:
     reports: list[Report] = []
     for path in args.files:
         if path == "-":
-            reports.append(analyze("stdin", sys.stdin.read(), args.lang, args.mode))
+            reports.append(analyze("stdin", sys.stdin.read(), args.lang, args.mode, args.max_sentence))
             continue
         try:
             with open(path, encoding="utf-8") as fh:
-                reports.append(analyze(path, fh.read(), args.lang, args.mode))
+                reports.append(analyze(path, fh.read(), args.lang, args.mode, args.max_sentence))
         except OSError as exc:
             print(f"cannot read {path}: {exc}", file=sys.stderr)
             return 2

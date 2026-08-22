@@ -127,6 +127,13 @@ Left column headed `STOPS`, right headed `STARTS`, both in section-head type. It
 **The bet.** A three-part row: assumption, test, date. Separated by `→` in `--rule`. Labels and body in `--ink`. Labels in
 caption sans above each part. From Duna's restraint — no boxes.
 
+**Figure caption.** Every figure carries one line beneath it in caption type, saying in words what
+the figure shows. A reader who cannot see the figure still gets the finding.
+
+**Caption.** One line, about 40 words at most. Caption type is small on purpose, so anything longer
+than a line puts the page's own evidence in its least readable text. If it will not fit, it belongs
+in `reasoning.html`.
+
 **Source pointer.** Caption sans, in `--muted`, in brackets, at the end of the claim it belongs to:
 `(annual-plan-2027.md, p.12)`.
 
@@ -135,22 +142,73 @@ caption sans above each part. From Duna's restraint — no boxes.
 
 **Footer.** On every page: run date, source folder, and the line `AI-supported draft`. Caption sans in `--muted`, above a full-width hairline.
 
-## 7. The four visual slots
+## 7. The figure vocabulary
 
-This section owns how each slot looks. What fills them is defined in
-`skills/simply/references/output-structure.md`, and the sections themselves in
-`skills/simplify/references/output.md`. One definition each, so they cannot drift apart.
+Six figures. The renderer picks from these and fills in numbers. It does not invent a seventh,
+because a layout that varies per run cannot be checked and cannot be trusted twice.
 
-| Slot | Form |
-|---|---|
-| 1 | Type only, full bleed, wider than the measure. No graphic |
-| 2 | Three numeral-and-statement blocks, hairline under each |
-| 3 | Vertical split, one 1px hairline between the columns |
-| 4 | A three-part row, separated by `→` in `--rule` |
+All are inline SVG, drawn in `--ink` on `--paper` with `--rule` for axes. No `<img>`, no library.
 
-All inline SVG or plain HTML. No `<img>`, ever.
+### What one ink changes
 
-A slot whose content is missing is dropped. An empty graphic is worse than no graphic.
+Every rule below follows from having no colour. Identity normally rides on hue; here it has to ride
+on **position, shape, fill state and a direct label**. So:
+
+- **Every mark is labelled where it sits.** A legend box is a lookup the reader has to perform, and
+  in mono there is nothing to look up. Direct labels are not optional here.
+- **Two things being compared are distinguished by fill, not by tone.** One solid, one outline. Never
+  two greys, because a mono printer collapses them.
+- **Texture is the third channel when fill is not enough.** Hatching at 45°, or its 135° mirror,
+  never horizontal or vertical, because those read as gridlines. Ordered when it carries a value.
+- **No pie, no donut, no dual axis, no stacked anything.** Area comparison without colour is guessing.
+
+Marks follow the standard specs: bars capped at 24px with a 4px rounded data-end and a square
+baseline, lines at 2px, markers at 8px or more, a 2px paper gap between touching marks, and
+hairline axes at 1px solid, never dashed.
+
+### The six
+
+**1 · `hero`** — one number, alone. The default when the answer is a single figure.
+Sans, 300 weight, `clamp(4rem, 10vw, 9rem)`, with one line of caption beneath.
+Never serif: a display serif at that size reads as decoration rather than as a fact.
+
+**2 · `hundred`** — a ten by ten dot grid, N filled and the rest outlined.
+This is the "every number gets a comparison" rule made literal. A reader can count it, where a meter
+would ask them to read a scale.
+
+```html
+<svg viewBox="0 0 210 210" role="img" aria-label="95 of every 100">
+  <!-- 100 dots, r=6, 21px pitch. Filled up to N, outlined after. -->
+  <circle cx="10" cy="10" r="6" fill="#0A0A0A"/>
+  <circle cx="31" cy="10" r="6" fill="none" stroke="#0A0A0A" stroke-width="1"/>
+</svg>
+```
+
+**3 · `gap`** — promise against delivery. Two bars from one baseline.
+The promise is an outline, the delivery is solid, and the empty space between them is the finding.
+Direct label at the end of each bar. This is the single most useful figure for a strategy page.
+
+**4 · `people`** — one in three, or two in five. Simple figures, N filled and the rest outlined.
+For headcount only. A number about money uses `hundred`, so the two never get confused.
+
+**5 · `order`** — assumption, then test, then date. A hairline with three ticks and a label under each.
+Also used for what has to happen before what. Left to right is always time.
+
+**6 · `against`** — two documents that cannot both be true. Two marks on a centre line, pointing
+away from each other, each labelled with its source. One is hatched at 45 degrees so the pair stays
+distinct in print.
+
+### Where each one goes
+
+| Slot | Sits after | Figure |
+|---|---|---|
+| 1 | Section 1 | `hero`, or type alone when the finding has no single number |
+| 2 | Section 2 | One per must-solve. `hundred`, `gap` or `people`, whichever the finding is about |
+| 3 | Section 3 | `against`, stop on one side and start on the other |
+| 4 | Section 4 | `order` |
+
+A slot whose content has no number takes the type-only treatment. A figure with an invented number
+is worse than no figure, so `[TO FILL]` never becomes a drawing.
 
 ## 8. Print
 
@@ -173,6 +231,7 @@ Test it by printing, not by looking at print preview.
 ## 9. Hard rules
 
 - Four colour values. No fifth. `--rule` never touches text.
+- The whole page is 1200 words, about six minutes. A caption is one line.
 - No `<img>`, no icon library, no emoji, no CDN, no JavaScript.
 - No box shadow, no border radius above 0, no gradient.
 - Sentence case in every heading.

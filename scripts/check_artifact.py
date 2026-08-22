@@ -40,6 +40,12 @@ SECTION_NAMES = {
 # be absent, because a missing section reads as a complete answer.
 MAY_BE_UNANSWERED = {"stop", "bet", "conflicts"}
 
+# How much content a section needs before it counts as answered. Section 1 is one
+# sentence by design and section 6 can legitimately hold a single gap, so a flat
+# threshold would fail exactly the pages that got it right.
+MIN_CONTENT = {"one": 30, "must-solve": 120, "stop": 120,
+               "bet": 120, "conflicts": 120, "gaps": 30}
+
 # What matters is whether the page fetches anything, not whether a URL appears in
 # it. An inline SVG declares xmlns="http://www.w3.org/2000/svg" and fetches
 # nothing, so a bare https?:// match rejected exactly the output DESIGN.md asks
@@ -164,7 +170,7 @@ def check_artifact(path: str, r: Result) -> None:
         if not body:
             continue
         content = text_of(re.sub(r'<span class="kicker">.*?</span>', " ", body, flags=re.S))
-        if len(content) >= 120:
+        if len(content) >= MIN_CONTENT.get(sid, 120):
             continue
         if sid in MAY_BE_UNANSWERED and UNANSWERED.search(content):
             continue                      # short on purpose, and it says so
