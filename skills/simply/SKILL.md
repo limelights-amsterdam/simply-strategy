@@ -54,6 +54,17 @@ to your own permission settings before a long run.
 If the workflow runtime is unavailable, run the seven steps in
 [references/pipeline.md](references/pipeline.md) yourself with subagents, same order, same names.
 
+## If a run dies
+
+A stopped run resumes only inside the session that started it. Leave Claude Code with a run going
+and the next session starts it from step 1, which on a large folder is 44 minutes and a million
+tokens paid twice.
+
+It is recoverable by hand, and that is the reason every step writes a numbered file. Look in
+`runs/<slug>/<stamp>/`, find the highest number that finished, and run the remaining steps from
+[references/pipeline.md](references/pipeline.md) as subagents. Nothing in the pipeline is held in
+memory between steps, so a run that died after `03-plan.md` costs you steps 4 to 7, not the panel.
+
 ## The seven steps
 
 Spec, a panel of four, plan, flatten, three reviewers, one repair round, artifact. Twelve agents,
