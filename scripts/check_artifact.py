@@ -60,12 +60,24 @@ class Result:
         return [c for c in self.checks if not c["hard"] and not c["ok"]]
 
 
+BLOCK = ("p", "div", "li", "td", "th", "tr", "h1", "h2", "h3", "h4", "section",
+         "ul", "ol", "table", "br", "hr", "figcaption", "blockquote")
+
+
 def text_of(fragment: str) -> str:
-    """Visible text: drop tags, comments, style and script blocks."""
+    """Visible text: drop tags, comments, style and script blocks.
+
+    A closing block tag ends a sentence. Without this, three table cells or three
+    list items run together into one very long "sentence" and the length check
+    reports a failure that is not there.
+    """
     f = re.sub(r"<!--.*?-->", " ", fragment, flags=re.S)
     f = re.sub(r"<(style|script)\b.*?</\1>", " ", f, flags=re.S | re.I)
+    f = re.sub(rf"</?(?:{'|'.join(BLOCK)})\b[^>]*>", " \u2028 ", f, flags=re.I)
     f = re.sub(r"<[^>]+>", " ", f)
-    return re.sub(r"\s+", " ", html.unescape(f)).strip()
+    f = html.unescape(f)
+    f = re.sub(r"[ \t]+", " ", f)
+    return re.sub(r"(?:\s*\u2028\s*)+", "\u2028", f).strip(" \u2028")
 
 
 def section(doc: str, sid: str) -> str:
@@ -77,7 +89,7 @@ def sentences(t: str):
     """Split on sentence enders. A source pointer in brackets is not a sentence."""
     t = POINTER.sub(" ", t)
     t = TOFILL.sub(" TOFILL ", t)
-    return [s.strip() for s in re.split(r"(?<=[.!?])\s+", t) if s.strip()]
+    return [s.strip() for s in re.split(r"(?<=[.!?])\s+|\u2028", t) if s.strip()]
 
 
 def count_words(s: str) -> int:
@@ -106,6 +118,7 @@ def check_artifact(path: str, r: Result) -> None:
     r.add("Exactly three must-solve items", len(musts) == 3, f"found {len(musts)}")
 
     unsourced = [re.sub(r"^\d+\s*", "", text_of(m))[:60] for m in musts if not POINTER.search(m)]
+    unsourced = [u.replace("\u2028", " ") for u in unsourced]
     r.add("Every must-solve carries a source pointer", not unsourced,
           "; ".join(unsourced) if unsourced else f"{len(musts)} of {len(musts)}")
 
