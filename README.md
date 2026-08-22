@@ -139,10 +139,16 @@ runs/<slug>/<stamp>/
        writes  05-verdict.md       what must be fixed. Two reviewers calling it fatal is decisive
                04-plain.md         revised, in one round
      artifact
-       reads   04-plain.md, 05-verdict.md, 01-spec.md, compass.md and the two templates
+       reads   04-plain.md for the page. 01-spec.md, the four 02 files, 03-plan.md and
+               05-verdict.md for the log. Plus compass.md and the two templates
        writes  simple-strategy-artifact.html    the page
-               reasoning.html                   what it read, what it cut, where it is unsure
+               reasoning.html                   what it read, who found what, what was demoted
+                                                and why, and what shipped with a flag
        then runs check_artifact.py on both. Exit 0 or it does not ship
+
+The page carries the finding and the log carries the chain. That is what keeps the page inside its
+word budget without the evidence being the thing that gets cut. Nothing is deleted, it moves, and
+the log is built from the files the earlier steps already wrote.
 ```
 
 Every file in that folder is one agent's output, and nothing else writes it. If a run dies, the

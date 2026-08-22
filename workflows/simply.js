@@ -98,8 +98,18 @@ ${out}/04-plain.md in one round, and write ${out}/05-verdict.md.`),
   { label: 'coordinate', phase: 'Artifact' })
 
 const artifact = await agent(brief(`Your step is "7 · artifact" in ${R}/pipeline.md.
-Read ${R}/output-structure.md, ${root}/design/DESIGN.md, ${out}/04-plain.md, ${out}/05-verdict.md
-and ${out}/01-spec.md. Fill ${root}/templates/artifact.html and ${root}/templates/reasoning.html.
+Read ${R}/output-structure.md and ${root}/design/DESIGN.md first.
+
+You build two files from two sets of inputs, and the split is the point of this step. The page
+carries the finding, the log carries the chain.
+
+The page is ${out}/04-plain.md.
+The log is ${out}/01-spec.md for what was read and what is missing, the four ${out}/02-*.md for
+which angle found what, ${out}/03-plan.md for what was demoted and why, and ${out}/05-verdict.md for
+what was fixed and what shipped with a flag. Surface those. Do not copy the page into the log, and
+do not move evidence onto the page to make it look supported.
+
+Fill ${root}/templates/artifact.html and ${root}/templates/reasoning.html.
 This step owns two files. Write ${out}/simple-strategy-artifact.html and ${out}/reasoning.html.
 Self-contained, black and white.
 Then run: python3 ${root}/scripts/check_artifact.py ${out}/ --material ${folder}
