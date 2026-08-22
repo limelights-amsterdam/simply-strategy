@@ -73,11 +73,23 @@ class Result:
     checks: list = field(default_factory=list)
 
     def add(self, name, ok, detail="", hard=True):
-        self.checks.append({"check": name, "ok": bool(ok), "detail": detail, "hard": hard})
+        """ok=True passed, ok=False failed, ok=None could not run.
+
+        The third state exists because a check that scanned nothing used to report
+        a tick. Six section-bound checks passed on a page with no section ids,
+        which turned broken markup into a clean bill of health. A false pass is
+        more expensive than a false fail, so "not run" is its own outcome and it
+        blocks shipping the same way a failure does.
+        """
+        self.checks.append({"check": name, "ok": ok, "detail": detail, "hard": hard})
 
     @property
     def failed_hard(self):
-        return [c for c in self.checks if c["hard"] and not c["ok"]]
+        return [c for c in self.checks if c["hard"] and c["ok"] is False]
+
+    @property
+    def not_run(self):
+        return [c for c in self.checks if c["ok"] is None]
 
     @property
     def warned(self):
@@ -137,14 +149,20 @@ def check_artifact(path: str, r: Result) -> None:
     r.add("Self-contained, nothing loads", not net,
           ", ".join(net[:5]) if net else "no img, script, CDN or remote font")
 
+    scanned = [s for s in SECTIONS if section(doc, s)]
     musts = re.findall(r'<div class="must">.*?</div>\s*</div>|<div class="must">.*?(?=<div class="must">|</section>)',
                        section(doc, "must-solve"), re.S)
-    r.add("Exactly three must-solve items", len(musts) == 3, f"found {len(musts)}")
+    r.add("Exactly three must-solve items",
+          None if not section(doc, "must-solve") else len(musts) == 3,
+          "the must-solve section was not found" if not section(doc, "must-solve")
+          else f"found {len(musts)}")
 
     unsourced = [re.sub(r"^\d+\s*", "", text_of(m))[:60] for m in musts if not POINTER.search(m)]
     unsourced = [u.replace("\u2028", " ") for u in unsourced]
-    r.add("Every must-solve carries a source pointer", not unsourced,
-          "; ".join(unsourced) if unsourced else f"{len(musts)} of {len(musts)}")
+    r.add("Every must-solve carries a source pointer",
+          None if not musts else not unsourced,
+          "no must-solve items to check" if not musts
+          else "; ".join(unsourced) if unsourced else f"{len(musts)} of {len(musts)}")
 
     long_sentences = []
     for sid in SECTIONS:
@@ -157,9 +175,11 @@ def check_artifact(path: str, r: Result) -> None:
             n = count_words(s)
             if n > MAX_WORDS:
                 long_sentences.append((SECTION_NAMES[sid], n, re.sub(r"^\d+\s*", "", s)[:70]))
-    r.add(f"Every sentence under {MAX_WORDS} words", not long_sentences,
-          "; ".join(f"{sec}: {n}w — {s}" for sec, n, s in long_sentences[:4])
-          if long_sentences else "longest is within the limit")
+    r.add(f"Every sentence under {MAX_WORDS} words",
+          None if not scanned else not long_sentences,
+          "no sections to scan" if not scanned
+          else "; ".join(f"{sec}: {n}w — {s}" for sec, n, s in long_sentences[:4])
+          if long_sentences else f"longest is within the limit, {len(scanned)} section(s) scanned")
 
     # A section the material cannot answer says so in a sentence. It is never left
     # thin and never dropped, because a short section reads as a complete answer
@@ -175,10 +195,11 @@ def check_artifact(path: str, r: Result) -> None:
         if sid in MAY_BE_UNANSWERED and UNANSWERED.search(content):
             continue                      # short on purpose, and it says so
         (unsaid if sid in MAY_BE_UNANSWERED else thin).append(SECTION_NAMES[sid])
-    r.add("No section is silently empty", not thin,
-          ", ".join(thin) if thin else "none")
-    r.add("A short optional section says it is unanswered", not unsaid,
-          ", ".join(f"{n} is thin and does not say why" for n in unsaid) if unsaid
+    r.add("No section is silently empty", None if not scanned else not thin,
+          "no sections to scan" if not scanned else ", ".join(thin) if thin else "none")
+    r.add("A short optional section says it is unanswered", None if not scanned else not unsaid,
+          "no sections to scan" if not scanned
+          else ", ".join(f"{n} is thin and does not say why" for n in unsaid) if unsaid
           else "none short, or each says so")
 
     vague = [t.strip() for t in TOFILL.findall(doc) if len(t.strip()) < 4]
@@ -207,7 +228,9 @@ def check_artifact(path: str, r: Result) -> None:
             if n > MAX_SUPPORT_WORDS:
                 long_support.append(f"{i}: {n}w")
     r.add(f"Supporting line stays a caption, {MAX_SUPPORT_WORDS} words",
-          not long_support, ", ".join(long_support) if long_support else "all within")
+          None if not musts else not long_support,
+          "no must-solve items to check" if not musts
+          else ", ".join(long_support) if long_support else "all within")
 
 
 def check_pointers(doc_path: str, material: str, r: Result) -> None:
@@ -235,6 +258,14 @@ def check_pointers(doc_path: str, material: str, r: Result) -> None:
 
 def check_reasoning(path: str, r: Result) -> None:
     doc = open(path, encoding="utf-8").read()
+
+    # An unfilled {{SLOT}} is not content. Without this, a bare template passes the
+    # "not empty" checks on its own placeholders, which is the same false pass the
+    # missing section ids produced, one level down.
+    unfilled = sorted(set(UNFILLED.findall(doc)))
+    r.add("reasoning.html has no unfilled slots", not unfilled,
+          ", ".join(unfilled[:6]) if unfilled else "none")
+    doc = UNFILLED.sub(" ", doc)
     for sid, label in [("cut", "What it threw away"), ("unsure", "Where it is unsure")]:
         body = section(doc, sid)
         content = text_of(re.sub(r'<span class="kicker">.*?</span>|<th\b.*?</th>', " ",
@@ -253,12 +284,20 @@ def render(r: Result, files) -> str:
     out.append("| Check | Status | Detail |")
     out.append("| --- | --- | --- |")
     for c in r.checks:
-        mark = "✅ pass" if c["ok"] else ("❌ fail" if c["hard"] else "⚠️ watch")
+        mark = ("⏭️ not run" if c["ok"] is None
+                else "✅ pass" if c["ok"]
+                else "❌ fail" if c["hard"] else "⚠️ watch")
         out.append(f"| {c['check']} | {mark} | {c['detail']} |")
     out.append("")
-    hard, warn = len(r.failed_hard), len(r.warned)
+    hard, warn, skipped = len(r.failed_hard), len(r.warned), len(r.not_run)
+    if skipped:
+        out.append(f"**{skipped} check(s) could not run.** A check that scanned nothing is not a "
+                   "check that passed. Fix the markup first, then read the rest of this table.")
+        out.append("")
     if hard:
         out.append(f"**{hard} hard check(s) failed.** The artifact does not ship until these pass.")
+    elif skipped:
+        pass
     elif warn:
         out.append(f"All hard checks pass. {warn} thing(s) to look at.")
     else:
@@ -304,6 +343,7 @@ def main() -> int:
     if a.json:
         print(json.dumps({"checks": r.checks,
                           "failed": len(r.failed_hard),
+                          "not_run": len(r.not_run),
                           "warned": len(r.warned)}, indent=2))
     else:
         print(render(r, files))
