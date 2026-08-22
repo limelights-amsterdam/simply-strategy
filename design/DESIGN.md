@@ -129,19 +129,20 @@ caption sans above each part. From Duna's restraint — no boxes.
 
 ## 7. The four visual slots
 
-Fixed. The renderer fills them and never invents a fifth.
+This section owns how each slot looks. What fills them is defined in
+`skills/simply/references/output-structure.md`, and the sections themselves in
+`skills/simplify/references/output.md`. One definition each, so they cannot drift apart.
 
-| Slot | After | Shows | Form |
-|---|---|---|---|
-| 1 | Section 1 | The one sentence | Type only, full bleed. No graphic |
-| 2 | Section 2 | The three must-solves | Three numeral-and-statement blocks |
-| 3 | Section 3 | Stop and start | Vertical split, one hairline |
-| 4 | Section 4 | The bet | Assumption → test → date |
+| Slot | Form |
+|---|---|
+| 1 | Type only, full bleed, wider than the measure. No graphic |
+| 2 | Three numeral-and-statement blocks, hairline under each |
+| 3 | Vertical split, one 1px hairline between the columns |
+| 4 | A three-part row, separated by `→` in `--rule` |
 
 All inline SVG or plain HTML. No `<img>`, ever.
 
-A slot whose content is missing is dropped, and its section carries the not-answered line instead. An
-empty graphic is worse than no graphic.
+A slot whose content is missing is dropped. An empty graphic is worse than no graphic.
 
 ## 8. Print
 

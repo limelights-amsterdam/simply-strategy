@@ -55,16 +55,14 @@ Read that file before you flatten anything — the move is easier to copy than t
 
 ## Output
 
-Six sections, in this order. This is also the structure of the artifact.
+Six sections: the one sentence, the three things that must be solved, what we stop doing, what has to
+be true, what the documents disagree about, what we do not know.
 
-1. **The one sentence.** What this whole thing is actually about.
-2. **The three things that must be solved.** Exactly three. Numbered. Not four, not two.
-3. **What we stop doing.** The sacrifice. Usually the half that was missing.
-4. **What has to be true for this to work.** The bet, written down as assumption, test and date.
-5. **What the documents disagree about.** Named, with who says what.
-6. **What we do not know.** Every `[TO FILL]`, collected.
+Sections 3 to 5 may say the plan does not answer them. They may never be dropped, because a missing
+section reads as a complete answer. The definition, with the rule for each:
+[references/output.md](references/output.md).
 
-Close with one line: the level the input came in at, and what it went out at.
+Close with the flatten level the input came in at, and what it went out at.
 
 ## Check yourself
 
@@ -80,3 +78,4 @@ The linter will not do that count for you, and it is the claim the whole skill r
 
 - [references/rules.md](references/rules.md) — the five moves in full, with the failure mode of each
 - [references/before-after.md](references/before-after.md) — worked pairs. Read this one first
+- [references/output.md](references/output.md) — the six sections, and what may be left unanswered

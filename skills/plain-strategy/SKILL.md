@@ -54,17 +54,12 @@ Do not replace these with a synonym. Replace them with the fact, the number or t
 
 ## The language layer
 
-Once the substance holds, the ordinary plain-language rules apply. Briefly:
+Once the substance holds, load the `plain` skill and apply it. It owns the language rules, the
+replacement lists and the linter, and restating them here only creates two versions that drift.
 
-- One name per thing, throughout the document.
-- At most 25 words per sentence, averaging under 15. Vary the length, or it reads like a metronome.
-- Active voice. Make it visible who acts, because in strategy that is often the information itself.
-- Actions live in verbs, not in nouns. "We decide", not "the decision-making process".
-- No semicolons, at most one em dash per page.
-- No words that claim quality without evidence.
-- Answer first, support after. The reader of a board memo reads the first paragraph and sometimes nothing else.
-
-If the `plain` skill is also installed, use its references and linter for this layer. Otherwise the list above is enough.
+The one rule that is specific to strategy writing: **answer first, support after.** The reader of a
+board memo reads the first paragraph and sometimes nothing else. Everything about the language layer
+follows from that ordering choice.
 
 ## The delivery format
 

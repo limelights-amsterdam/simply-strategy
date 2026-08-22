@@ -49,6 +49,22 @@ uncomfortable line in `reasoning.html`.
 
 Ten agents. Two fan-outs, five single minds, one repair round, no loops.
 
+## It checks its own work
+
+The last step is the one nothing downstream would catch, so it verifies itself:
+
+```
+python3 scripts/check_artifact.py runs/<slug>/
+```
+
+Six sections present, no unfilled slots, nothing loaded over the network, exactly three must-solve
+items, every one with a source pointer, every sentence under 15 words, and a reasoning log whose
+"what it threw away" and "where it is unsure" are not empty. Exit code 1 and it does not ship.
+
+Checks a script can make are made by a script. The reviewers spend their judgement on what a script
+cannot see: whether an abstraction is still an abstraction, and whether a sentence got shorter by
+losing meaning.
+
 ## The rules it will not break
 
 - **Exactly three must-solve items.** A model that may choose, doesn't. A model with three seats has

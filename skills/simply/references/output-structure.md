@@ -1,53 +1,54 @@
-# The artifact
+# Rendering the artifact
 
-Six sections and four visual slots. Both fixed. The renderer fills them, it never invents a layout.
+This file owns how the artifact is built. It does not define what goes in it.
 
-## The six sections
-
-| # | Section | Content | Empty when |
-|---|---|---|---|
-| 1 | **The one sentence** | What this whole folder is actually about | Never. If this cannot be written, the run failed |
-| 2 | **The three things that must be solved** | Exactly three, numbered | Never |
-| 3 | **What we stop doing** | The sacrifice, per must-solve | Allowed, and then it says so: *the plan does not say what this costs* |
-| 4 | **What has to be true** | The bet: assumption, how we test it, when we know | Allowed, and then it says so |
-| 5 | **What the documents disagree about** | Named contradictions, both sides quoted | Allowed only if the contradict angle found none, and then it says that explicitly |
-| 6 | **What we do not know** | Every `[TO FILL]`, plus every `[MISSING]` Kompas field | Never. An empty section 6 means something was papered over |
-
-Sections 3 to 6 may say "the plan does not answer this". They may not be silently dropped. A missing
-section reads as a complete answer, which is the one thing this artifact must never do.
+- **What the six sections are:** `skills/simplify/references/output.md`
+- **How everything looks:** `design/DESIGN.md`
 
 ## The four visual slots
 
-| Slot | After section | Shows | Form |
-|---|---|---|---|
-| 1 | 1 | The one sentence | Type only, full bleed. No graphic |
-| 2 | 2 | The three must-solves | Three equal blocks, numbered |
-| 3 | 3 | Stop and start | A vertical split. Left what stops, right what starts |
-| 4 | 4 | The bet | A row: assumption → test → date |
+The slots are fixed. The renderer fills them and never invents a fifth, because a layout that varies
+per run cannot be checked and cannot be trusted twice.
 
-All four are inline SVG. Black, white, one grey. No gradients, no shadows, no icons from a library.
+| Slot | Sits after | Filled from |
+|---|---|---|
+| 1 | Section 1 | The one sentence |
+| 2 | Section 2 | The three must-solves |
+| 3 | Section 3 | What stops, and what starts |
+| 4 | Section 4 | The bet: assumption, test, date |
 
-If a slot has no content — no sacrifice was named, say — the slot is dropped and the section carries
-the "the plan does not answer this" line instead. An empty graphic is worse than no graphic.
+Their form, type sizes and rules live in `design/DESIGN.md` section 7. Do not restate them here.
 
-## reasoning.html
+A slot whose content is missing is dropped, and its section carries the unanswered line instead. An
+empty graphic is worse than no graphic.
 
-The second file. Four parts, none of which may be empty:
+## The two files
 
-1. **What it read.** The inventory table from `01-spec.md`, including files it could not read.
+**`simple-strategy-artifact.html`** from `templates/artifact.html`. The six sections, four slots.
+
+**`reasoning.html`** from `templates/reasoning.html`. Five parts, and the first three may not be empty:
+
+1. **What it read.** The inventory from `01-spec.md`, including files it could not read.
 2. **What it threw away.** Everything demoted to important or nice-to-know, with why. A run that
    discarded nothing is a pass-through, not a process.
 3. **Where it is unsure.** Every flag from `05-verdict.md`, every `[TO FILL]`, every `[MISSING]`
-   Kompas field. Plus the flatten level the input came in at.
-4. **The tension check.** Whether the four angles agreed too much, and which one was sent back.
+   intake field, and the flatten level the input came in at.
+4. **The tension check.** Whether the angles agreed too much, and which one was sent back.
+5. **Shipped with a flag.** What survived review with a note on it. Nothing is fixed silently.
 
-This is the page that survives a hostile question. Parts 2 and 3 being non-empty is a hard check, not
-a preference.
+This is the page that survives a hostile question.
 
-## Rules for both files
+## Before you call it done
 
-- Two colours plus one grey. This includes the SVGs.
-- One column, roughly 65 characters wide.
-- Self-contained: CSS inline, SVG inline, no CDN, no fonts fetched over the network.
-- `@media print` that holds. The paper version is what goes on the table.
-- A footer on every page: the run date, the source folder, and the line *AI-supported draft*.
+Rendering is the only step nothing downstream checks, so it checks itself:
+
+```bash
+python3 scripts/check_artifact.py runs/<slug>/
+```
+
+Exit code 0 or it does not ship. The checker verifies the six sections, unfilled slots, sentence
+length, source pointers, the three-item count, em dashes, and that the reasoning log's cut list and
+unsure list are not empty. Fix what it reports and run it again.
+
+If a check cannot pass because the material genuinely does not support it, that belongs in section 6
+and in the reasoning log. It does not belong in a silent workaround.

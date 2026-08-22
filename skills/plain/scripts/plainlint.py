@@ -15,7 +15,7 @@ Gebruik:
     echo "je tekst" | python3 plainlint.py -
     python3 plainlint.py tekst.md --fail-over 2.0     # exit 1 bij een hogere score
 
-De linter beoordeelt vorm, niet inhoud. Een lege alinea die nul scoort is nog
+The linter judges form, not content. An empty paragraph that scores zero is still
 steeds leeg.
 """
 
@@ -30,19 +30,6 @@ from dataclasses import dataclass, field
 # ------------------------------------------------------------------- word lists
 
 MARKETING = {
-    "nl": [
-        "naadloos", "naadloze", "krachtig", "krachtige", "baanbrekend", "baanbrekende",
-        "revolutionair", "revolutionaire", "toonaangevend", "toonaangevende",
-        "marktleidend", "marktleidende", "innovatief", "innovatieve", "geavanceerd",
-        "geavanceerde", "moeiteloos", "moeiteloze", "robuust", "robuuste",
-        "next level", "futureproof", "future-proof", "state-of-the-art",
-        "razendsnel", "razendsnelle", "bliksemsnel", "gebruiksvriendelijk",
-        "gebruiksvriendelijke", "intuitief", "intuïtief", "intuïtieve",
-        "hoogwaardig", "hoogwaardige", "ongeëvenaard", "ongeevenaard",
-        "cutting edge", "game changer", "gamechanger", "disruptief", "disruptieve",
-        "op maat gemaakte", "unieke combinatie", "ultieme", "perfecte oplossing",
-        "compleet pakket", "optimale", "maximale flexibiliteit",
-    ],
     "en": [
         "seamless", "seamlessly", "frictionless", "powerful", "cutting-edge",
         "cutting edge", "next-generation", "next generation", "state-of-the-art",
@@ -57,15 +44,6 @@ MARKETING = {
 }
 
 OFFICE_VERBS = {
-    "nl": [
-        "oppakken", "opgepakt", "meenemen", "meegenomen", "borgen", "geborgd",
-        "inregelen", "ingeregeld", "uitrollen", "uitgerold", "kortsluiten",
-        "afstemmen", "afgestemd", "terugkoppelen", "teruggekoppeld", "aanvliegen",
-        "neerzetten", "even kijken naar", "in kaart brengen", "faciliteren",
-        "bewerkstelligen", "draagvlak", "proactief", "de mogelijkheid bieden om",
-        "communiceren richting", "handvatten", "meerwaarde", "toegevoegde waarde",
-        "op de radar", "kort schakelen", "aanhaken", "meepakken",
-    ],
     "en": [
         "reach out", "reached out", "dive into", "deep dive", "diving into",
         "spin up", "spun up", "kick off", "kicked off", "circle back",
@@ -78,14 +56,6 @@ OFFICE_VERBS = {
 }
 
 HEDGES = {
-    "nl": [
-        "het is belangrijk om op te merken", "het is goed om te weten",
-        "het is belangrijk te vermelden", "het is de moeite waard",
-        "kan mogelijk", "zou kunnen bijdragen", "mogelijkerwijs", "wellicht",
-        "in principe", "over het algemeen", "in veel gevallen", "doorgaans",
-        "enigszins", "min of meer", "in zekere zin", "als het ware",
-        "naar verwachting", "in sommige gevallen", "relatief gezien",
-    ],
     "en": [
         "it is important to note", "it's important to note", "it should be noted",
         "it is worth noting", "it's worth mentioning", "may potentially",
@@ -96,11 +66,6 @@ HEDGES = {
 }
 
 FILLER = {
-    "nl": [
-        "in deze sectie", "zoals eerder vermeld", "in de wereld van vandaag",
-        "laten we eens kijken", "er zijn een aantal factoren", "kortom",
-        "in het kort samengevat", "zoals we allemaal weten",
-    ],
     "en": [
         "in this section", "as mentioned earlier", "in today's fast-paced",
         "let's dive into", "there are a number of factors", "in conclusion",
@@ -109,15 +74,6 @@ FILLER = {
 }
 
 NOMINALIZATION = {
-    "nl": [
-        r"\been\s+\w+(?:atie|ering|ing|ment)\s+(?:uitvoeren|doen|maken|nemen|realiseren|doorvoeren)\b",
-        r"\b(?:uitvoeren|doen|maken|nemen|bieden|verrichten|realiseren)\s+van\s+(?:een|de|het)\s+\w+",
-        r"\bgebruikmaken\s+van\b",
-        r"\bover(?:gaan|ging)\s+tot\s+\w+ing\b",
-        r"\bin\s+overweging\s+nemen\b",
-        r"\btot\s+uitvoering\s+brengen\b",
-        r"\bter\s+beschikking\s+stellen\b",
-    ],
     "en": [
         r"\b(?:perform|conduct|carry\s+out|undertake|provide|make|do|give)\s+(?:a|an|the)?\s*\w+(?:tion|sion|ment|ance|ence|sis|ing)\b",
         r"\bhas\s+the\s+ability\s+to\b",
@@ -128,16 +84,6 @@ NOMINALIZATION = {
 }
 
 PASSIVE = {
-    "nl": [
-        # wordt/werd + voltooid deelwoord, ook met prefix (uitgevoerd, verwijderd)
-        r"\b(?:wordt|worden|werd|werden)\s+(?:\w+\s+){0,2}"
-        r"(?:\w*ge\w+[dt]|\w+eerd|(?:ver|ont|be|her|er)\w+[dt])\b",
-        r"\b(?:kan|kunnen|moet|moeten|zal|zullen)\s+worden\s+(?:\w+\s+){0,2}"
-        r"(?:\w*ge\w+[dt]|\w+eerd|(?:ver|ont|be|her|er)\w+[dt])\b",
-        r"\b(?:is|zijn|was|waren)\s+(?:\w+\s+){0,2}\w*ge\w+[dt]\s+door\b",
-        r"\bdient\s+te\s+worden\b",
-        r"\ber\s+(?:wordt|worden|werd|werden)\b",
-    ],
     "en": [
         r"\b(?:is|are|was|were|be|been|being)\s+(?:\w+ly\s+)?(?:\w+ed|written|done|made|taken|given|shown|known|found|built|held|kept|sent|set|put|chosen|driven)\b(?!\s+(?:to|by\s+you))",
         r"\bit\s+(?:was|is|has\s+been)\s+(?:decided|determined|found|observed|noted)\b",
@@ -145,11 +91,6 @@ PASSIVE = {
 }
 
 PARALLELISM = {
-    "nl": [
-        r"\bniet\s+alleen\b[^.!?]{0,60}\bmaar\s+ook\b",
-        r"\bhet\s+is\s+geen\b[^.!?]{0,40},\s*het\s+is\b",
-        r"\bdit\s+is\s+niet\b[^.!?]{0,40},\s*(?:dit|het)\s+is\b",
-    ],
     "en": [
         r"\bit'?s\s+not\s+(?:just\s+)?\w+[,;]\s*it'?s\b",
         r"\bnot\s+only\b[^.!?]{0,60}\bbut\s+also\b",
@@ -158,18 +99,6 @@ PARALLELISM = {
 }
 
 SYNONYM_CLUSTERS = {
-    "nl": [
-        ["gebruiker", "klant", "afnemer", "eindgebruiker", "bezoeker"],
-        ["applicatie", "tool", "platform", "oplossing", "systeem"],
-        ["probleem", "issue", "bug", "storing", "defect"],
-        ["manier", "aanpak", "methode", "wijze", "werkwijze"],
-        ["beginnen", "starten", "aanvangen", "initieren", "initiëren"],
-        ["verwijderen", "weghalen", "wissen", "schrappen", "deleten"],
-        ["aanpassen", "wijzigen", "veranderen", "updaten", "bijwerken"],
-        ["tonen", "weergeven", "presenteren", "displayen"],
-        ["maken", "bouwen", "creeren", "creëren", "aanmaken"],
-        ["controleren", "nakijken", "checken", "verifieren", "verifiëren"],
-    ],
     "en": [
         ["user", "customer", "client", "visitor"],
         ["application", "tool", "platform", "solution", "system"],
@@ -185,15 +114,11 @@ SYNONYM_CLUSTERS = {
 }
 
 FORMAL = {
-    "nl": ["teneinde", "alvorens", "derhalve", "middels", "dienaangaande",
-           "voornoemde", "zulks", "omtrent", "te allen tijde", "conform"],
     "en": ["utilize", "commence", "terminate", "prior to", "subsequent to",
            "pursuant to", "ascertain", "endeavor", "in order to",
            "at this point in time", "aforementioned"],
 }
 
-NL_STOPWORDS = {"de", "het", "een", "en", "van", "is", "dat", "niet", "voor",
-                "op", "met", "zijn", "je", "te", "aan", "die", "er", "ook", "als"}
 EN_STOPWORDS = {"the", "and", "of", "to", "is", "in", "that", "for", "with",
                 "not", "you", "are", "it", "on", "as", "this", "be", "at", "or"}
 
@@ -201,8 +126,8 @@ EN_STOPWORDS = {"the", "and", "of", "to", "is", "in", "that", "for", "with",
 
 
 # Not every finding weighs the same. A semicolon or a marketing word is
-# altijd fout. Passief, een formeel woord of een gedachtestreepje is soms de
-# juiste keuze, dus die tellen half mee.
+# always wrong. Passive, a formal word or an em dash is sometimes the right
+# call, so those count half.
 WEIGHTS = {
     "long sentence": 1.0,
     "long paragraph": 1.0,
@@ -212,7 +137,7 @@ WEIGHTS = {
     "hedge": 1.0,
     "filler": 1.0,
     "frozen verb": 1.0,
-    "omkering": 1.0,
+    "inversion": 1.0,
     "em dash": 0.5,
     "formal word": 0.5,
     "passive": 0.5,
@@ -343,12 +268,8 @@ def count_words(sentence: str) -> int:
 
 
 def detect_lang(text: str) -> str:
-    words = re.findall(r"[a-zà-ÿ]+", text.lower())
-    if not words:
-        return "nl"
-    nl = sum(1 for w in words if w in NL_STOPWORDS)
-    en = sum(1 for w in words if w in EN_STOPWORDS)
-    return "en" if en > nl else "nl"
+    """English only. The pipeline writes English, so there is nothing to detect."""
+    return "en"
 
 
 def excerpt(text: str, span: tuple[int, int], width: int = 60) -> str:
@@ -454,18 +375,18 @@ def scan_sentences(report: Report, lines, mode: str) -> None:
 
 
 def _inflections(word: str) -> set[str]:
-    """Buigingsvormen die nog hetzelfde woord zijn.
+    """Inflected forms that are still the same word.
 
     Ruim genoeg om meervoud en vervoeging te vangen, krap genoeg om
     'clear' niet op 'clearly' te laten aanslaan.
     """
     base = word[:-2] if word.endswith("en") and len(word) > 4 else word
     return {word, base, base + "s", base + "en", base + "t", base + "e",
-            base + "ed", base + "es", base + "ing", base + "de", base + "te"}
+            base + "ed", base + "es", base + "ing", base + "d"}
 
 
 def scan_synonyms(report: Report, text: str) -> None:
-    """Meld clusters waarvan twee of meer leden in dezelfde alinea staan.
+    """Report clusters with two or more members in the same paragraph.
 
     Eén melding per cluster per document. Wie hetzelfde ding drie namen geeft
     doet dat overal, en dan is één melding genoeg om het op te lossen.
@@ -506,7 +427,7 @@ def analyze(name: str, text: str, lang: str, mode: str) -> Report:
     scan_phrases(report, lines, FORMAL, "formal word", "an ordinary alternative exists")
     scan_regexes(report, lines, NOMINALIZATION, "frozen verb", "the action sits in the noun")
     scan_regexes(report, lines, PASSIVE, "passive", "the actor is invisible")
-    scan_regexes(report, lines, PARALLELISM, "omkering", "retorische tegenstelling")
+    scan_regexes(report, lines, PARALLELISM, "inversion", "rhetorical contrast")
     scan_synonyms(report, clean)
     return report
 
@@ -572,7 +493,7 @@ def main() -> int:
     ap = argparse.ArgumentParser(
         description="Count the mechanical markers of vague text.")
     ap.add_argument("files", nargs="+", help="files, or - for stdin")
-    ap.add_argument("--lang", choices=["auto", "nl", "en"], default="auto")
+    ap.add_argument("--lang", choices=["auto", "en"], default="auto")
     ap.add_argument("--mode", choices=["normal", "strict"], default="normal",
                     help="strict uses 20 words per sentence instead of 25")
     ap.add_argument("--show", type=int, default=25,

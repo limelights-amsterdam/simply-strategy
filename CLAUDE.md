@@ -26,6 +26,7 @@ skills/plain-strategy/      substance filter + stratlint.py
 skills/stop-slop/           de-slop filter
 skills/red-team/            the attack angle
 design/DESIGN.md            two colours, one column, print-clean
+scripts/check_artifact.py   deterministic verification of the rendered output
 templates/                  artifact.html, reasoning.html
 runs/<slug>/                output. Durable, not /tmp
 ```
@@ -59,3 +60,27 @@ python3 skills/plain-strategy/scripts/stratlint.py runs/<slug>/04-plain.md
 ```
 
 Under 1.5 weighted findings per 100 words is clean.
+
+The artifact checker, after a run:
+
+```
+python3 scripts/check_artifact.py runs/<slug>/
+```
+
+## One owner per rule
+
+Every normative rule lives in exactly one file. Everywhere else is a one-line summary and a pointer.
+When you add a rule, put it where it belongs and link to it:
+
+| Rule | Owner |
+|---|---|
+| The six sections, and what may be unanswered | `skills/simplify/references/output.md` |
+| The four visual slots, and what fills them | `skills/simply/references/output-structure.md` |
+| How anything looks, colour, type, print | `design/DESIGN.md` |
+| The filter and the rules no agent may break | `skills/simply/references/house-rules.md` |
+| What each step gets and must produce | `skills/simply/references/pipeline.md` |
+| The seven substance tests, in full | `skills/plain-strategy/references/tests.md` |
+| The language rules and replacement lists | `skills/plain/references/` |
+
+`house-rules.md` keeps a compact copy of the seven tests on purpose. Every agent reads it first, and
+sending each one to open another file to find the core checklist costs a read per agent.

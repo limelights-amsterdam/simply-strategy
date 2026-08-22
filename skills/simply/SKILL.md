@@ -70,6 +70,9 @@ check fired. Parts two and three may never be empty.
 
 Both structures: [references/output-structure.md](references/output-structure.md).
 
+Step 7 verifies itself with `scripts/check_artifact.py`, because rendering is the only step nothing
+downstream would catch. Exit code 0 or it does not ship.
+
 ## What it is not for
 
 Writing the strategy. This flattens one that already exists. If the folder contains no decision, the

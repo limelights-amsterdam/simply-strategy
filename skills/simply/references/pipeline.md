@@ -49,8 +49,8 @@ Then bundle. Forced ranking:
   not deleted.
 - For each of the three: what it is, which angle found it, what it costs to leave it, and the pointer.
 
-Then the four supporting sections: what we stop doing, what has to be true, what the documents
-disagree about, what we do not know.
+Then the four supporting sections, defined in `skills/simplify/references/output.md`: what we stop
+doing, what has to be true, what the documents disagree about, what we do not know.
 
 **Fails when** it keeps four or five must-solves "because they are all important". If that happens,
 the ranking was never made and the run has produced a longer document rather than a decision.
@@ -84,8 +84,18 @@ Each reviewer returns findings marked **fatal** or **minor**, with the line it a
 | `simple` | Is it actually L1? | A sentence over 15 words, an abstraction with no actor, a number with no comparison |
 | `invented` | Does every number trace to a document? | A figure, date or owner that appears in `04-plain.md` but not in the material |
 
-The `simple` reviewer runs both linters and counts sentences over 15 words by hand. That count is the
-claim the whole product rests on, so it gets counted, not estimated.
+The `simple` reviewer does not count by eye. That count is the claim the whole product rests on, so
+it is measured:
+
+```bash
+python3 skills/plain/scripts/plainlint.py runs/<slug>/04-plain.md --mode strict
+python3 skills/plain-strategy/scripts/stratlint.py runs/<slug>/04-plain.md
+```
+
+Under 1.5 weighted findings per 100 words is clean. For the hard sentence-length and pointer checks,
+`scripts/check_artifact.py` runs on the rendered artifact in step 7. Your job here is the judgement
+the script cannot make: is an abstraction still an abstraction, does a number have a real comparison,
+did a sentence get shorter by losing meaning.
 
 ---
 
@@ -113,9 +123,19 @@ must-fix list.
 **Gets:** `04-plain.md`, `05-verdict.md`, `01-spec.md`, `kompas.md`, `design/DESIGN.md`
 **Writes:** `simple-strategy-artifact.html`, `reasoning.html`
 
-Fill `templates/artifact.html` from the six sections. Fill `templates/reasoning.html` from the spec,
+Read `output-structure.md` first. It says what to fill and what to check.
+
+Fill `templates/artifact.html` from the six sections and `templates/reasoning.html` from the spec,
 the verdict and the Kompas.
 
-Both files self-contained: CSS inline, SVG inline, no CDN, no build step. Black and white only.
+Then verify your own work, because nothing downstream does:
 
-**Fails when** it invents a layout. The four visual slots are fixed. See `output-structure.md`.
+```bash
+python3 scripts/check_artifact.py runs/<slug>/
+```
+
+Exit code 0 or it does not ship. Fix what it reports and run it again. If a check cannot pass because
+the material does not support it, that goes in section 6 and in the reasoning log, never in a silent
+workaround.
+
+**Fails when** it invents a layout, or when it reports success without running the checker.

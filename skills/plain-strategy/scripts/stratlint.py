@@ -30,20 +30,6 @@ from dataclasses import dataclass, field
 # ------------------------------------------------------------------ patterns
 
 JARGON = {
-    "nl": [
-        "synergie", "synergieën", "integrale aanpak", "stip op de horizon",
-        "handelingsperspectief", "randvoorwaardelijk", "kaderstellend",
-        "toekomstbestendig", "strategische verankering", "ontzorgen",
-        "olievlekwerking", "laaghangend fruit", "quick wins", "in de keten",
-        "opschalen", "borgen", "draagvlak creëren", "draagvlak",
-        "meerwaarde", "toegevoegde waarde", "klantreis", "datagedreven",
-        "innovatiekracht", "schaalbaar model", "next level",
-        "stakeholders meenemen", "kritisch kijken naar", "heroverwegen",
-        "de juiste dingen doen", "wendbaar", "ecosysteem", "transitie",
-        "transformatie", "versnellen", "verbinden", "verankeren",
-        "strategische prioriteit", "toekomstvisie", "koersvast",
-        "proactief", "holistisch", "synergievoordelen", "ketenregie",
-    ],
     "en": [
         "synergies", "synergy", "core competencies", "strategic alignment",
         "value creation", "holistic approach", "north star", "double down",
@@ -60,20 +46,6 @@ JARGON = {
 
 # Claims whose opposite nobody would defend.
 EMPTY_CLAIM = {
-    "nl": [
-        r"\b(?:de|onze)\s+klant\s+staat\s+(?:altijd\s+)?centraal\b",
-        r"\bwij?\s+(?:stellen|zetten)\s+(?:de\s+)?\w+\s+(?:centraal|voorop)\b",
-        r"\bwij?\s+(?:zijn|blijven)\s+(?:een\s+)?(?:innovatief|innovatieve|betrouwbaar|betrouwbare|transparant|transparante|wendbaar|wendbare|toonaangevend|toonaangevende|ambitieus|ambitieuze|duurzaam|duurzame|klantgericht|klantgerichte)\b",
-        r"\bwij?\s+(?:investeren|geloven)\s+in\s+(?:kwaliteit|onze\s+mensen|mensen|innovatie|de\s+toekomst)\b",
-        r"\bwij?\s+streven\s+naar\s+(?:excellentie|kwaliteit|groei|het\s+beste|de\s+beste)\b",
-        r"\bwij?\s+(?:versterken|verbeteren|vergroten|behouden)\s+(?:onze|de)\s+(?:positie|marktpositie)\b",
-        r"\bwij?\s+(?:leveren|bieden)\s+(?:hoge\s+|de\s+beste\s+|topkwaliteit|kwaliteit)\b",
-        r"\bwij?\s+luisteren\s+naar\s+(?:onze\s+)?klanten\b",
-        r"\bwij?\s+blijven\s+(?:investeren|inzetten)\s+in\b",
-        r"\bwij?\s+willen\s+(?:groeien|de\s+beste\s+zijn)\b",
-        r"\boog\s+(?:hebben\s+)?voor\s+de\s+klant\b",
-        r"\bwij?\s+werken\s+samen\s+(?:met|aan)\s+(?:onze\s+)?(?:partners|de\s+toekomst)\b",
-    ],
     "en": [
         r"\bwe\s+(?:are|remain|will\s+be)\s+(?:innovative|customer-centric|transparent|agile|reliable|ambitious|data-driven|sustainable|people-first)\b",
         r"\bwe\s+put\s+(?:the\s+)?(?:customer|client|people)s?\s+(?:first|at\s+the\s+cent)\b",
@@ -89,17 +61,6 @@ EMPTY_CLAIM = {
 }
 
 FALSE_SACRIFICE = {
-    "nl": [
-        r"\b(?:wij?\s+)?zegg?en?\s+nee\s+tegen\s+wat\s+niet\s+past\b",
-        r"\b(?:wij?\s+)?focus+en\s+(?:scherper|beter|meer)\b",
-        r"\b(?:wij?\s+)?prioriteren\s+(?:beter|scherper|ruthless)\b",
-        r"\b(?:wij?\s+)?(?:maken|durven)\s+(?:harde\s+)?keuzes?\b",
-        r"\b(?:wij?\s+)?durven\s+te\s+kiezen\b",
-        r"\b(?:wij?\s+)?doen\s+minder,?\s+maar\s+beter\b",
-        r"\b(?:wij?\s+)?herijken\s+(?:de\s+)?portfolio\b",
-        r"\b(?:wij?\s+)?snijden\s+in\s+de\s+kosten\b",
-        r"\bscherpere?\s+keuzes\s+maken\b",
-    ],
     "en": [
         r"\bwe\s+say\s+no\s+to\s+what\s+(?:doesn'?t|does\s+not)\s+fit\b",
         r"\bwe\s+focus\s+(?:more\s+)?(?:sharply|harder|better)\b",
@@ -111,12 +72,6 @@ FALSE_SACRIFICE = {
 }
 
 VAGUE_OWNER = {
-    "nl": [
-        r"\b(?:het\s+team|de\s+organisatie|de\s+afdeling|betrokkenen|men|iedereen|wij\s+allen)\s+(?:gaat|gaan|zal|zullen|moet|moeten|pakt|pakken)\b",
-        r"\bwordt\s+(?:opgepakt|belegd|uitgezet)\s+(?:door\s+(?:het\s+team|de\s+organisatie))?\b",
-        r"\bwij?\s+gaan\s+(?:kijken|onderzoeken|verkennen)\s+(?:naar|of)\b",
-        r"\bnader\s+te\s+bepalen\b",
-    ],
     "en": [
         r"\b(?:the\s+team|the\s+organi[sz]ation|everyone|all\s+of\s+us|stakeholders)\s+(?:will|should|must|needs?\s+to)\b",
         r"\bto\s+be\s+(?:determined|confirmed|assigned)\b",
@@ -125,11 +80,6 @@ VAGUE_OWNER = {
 }
 
 VAGUE_DEADLINE = {
-    "nl": [
-        "op termijn", "te zijner tijd", "zo snel mogelijk", "op korte termijn",
-        "op middellange termijn", "op lange termijn", "in de toekomst",
-        "binnenkort", "doorlopend", "structureel", "continu proces",
-    ],
     "en": [
         "in due course", "in the near future", "as soon as possible", "asap",
         "over time", "on an ongoing basis", "continuously", "in the long run",
@@ -140,16 +90,6 @@ VAGUE_DEADLINE = {
 # --------------------------------------------------- structure recognition
 
 REAL_SACRIFICE = {
-    "nl": [
-        r"\bstopp?en?\s+(?:wij?\s+)?met\s+\w+",
-        r"\bnemen\s+wij?\s+niet\s+(?:meer\s+)?aan\b",
-        r"\bgeen\s+\w+(?:\s+\w+){0,3}\s+meer\b",
-        r"\b(?:bouwen|doen|leveren|maken|verkopen)\s+wij?\s+niet\b",
-        r"\b(?:sluiten|schrappen|beëindigen|afbouwen|stopzetten)\s+wij?\b",
-        r"\bvalt?\s+(?:hierdoor\s+)?af\b",
-        r"\bkrijgt\s+geen\s+(?:nieuwe\s+)?(?:investering|budget|onderhoud)\b",
-        r"\bnemen\s+geen\s+opdrachten\b",
-    ],
     "en": [
         r"\bwe\s+(?:will\s+)?stop\s+\w+",
         r"\bwe\s+(?:will\s+)?(?:close|shut\s+down|discontinue|sunset|wind\s+down)\b",
@@ -182,17 +122,11 @@ OWNER_INLINE = re.compile(
     r"analyseert|owns|delivers|ships|runs|leads)\b")
 
 STOP_CRITERION = {
-    "nl": [r"\b(?:onder|boven|beneden)\s+.{0,30}?\bstopp?en\b", r"\bstopgrens\b",
-           r"\bdan\s+stopp?en\s+wij?\b", r"\bkill[-\s]?criteri",
-           r"\bhalen\s+wij?\s+dat\s+niet\b", r"\btrekken\s+wij?\s+de\s+stekker\b",
-           r"\bals\s+.{0,40}?\bstopp?en\s+wij?\b"],
     "en": [r"\bif\s+.{0,40}?\bwe\s+(?:stop|exit|pull)\b", r"\bkill\s+criteri",
            r"\bstop\s+threshold\b", r"\bbelow\s+.{0,30}?\bwe\s+(?:stop|exit)\b",
            r"\bwe\s+(?:stop|exit)\s+(?:if|when|below)\b"],
 }
 
-NL_STOPWORDS = {"de", "het", "een", "en", "van", "is", "dat", "niet", "voor",
-                "op", "met", "zijn", "wij", "te", "aan", "die", "er", "ook"}
 EN_STOPWORDS = {"the", "and", "of", "to", "is", "in", "that", "for", "with",
                 "not", "we", "are", "it", "on", "as", "this", "be", "at"}
 
@@ -287,10 +221,8 @@ def strip_noise(text: str) -> str:
 
 
 def detect_lang(text: str) -> str:
-    words = re.findall(r"[a-zà-ÿ]+", text.lower())
-    nl = sum(1 for w in words if w in NL_STOPWORDS)
-    en = sum(1 for w in words if w in EN_STOPWORDS)
-    return "en" if en > nl else "nl"
+    """English only. The pipeline writes English, so there is nothing to detect."""
+    return "en"
 
 
 def excerpt(line: str, span: tuple[int, int], width: int = 62) -> str:
@@ -418,7 +350,7 @@ def main() -> int:
     ap = argparse.ArgumentParser(
         description="Check whether a strategy document contains a decision (EN/NL).")
     ap.add_argument("files", nargs="+", help="files, or - for stdin")
-    ap.add_argument("--lang", choices=["auto", "nl", "en"], default="auto")
+    ap.add_argument("--lang", choices=["auto", "en"], default="auto")
     ap.add_argument("--show", type=int, default=25, help="findings per file (0 = all)")
     ap.add_argument("--fail-over", type=float, default=None,
                     help="exit code 1 when the score exceeds this")

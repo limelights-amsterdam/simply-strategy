@@ -64,7 +64,9 @@ ${out}/04-plain.md in one round. Write ${out}/05-verdict.md.`), { label: 'coordi
 const artifact = await agent(brief(`Your step is "7 · artifact" in ${R}/pipeline.md.
 Read ${R}/output-structure.md, design/DESIGN.md, ${out}/04-plain.md, ${out}/05-verdict.md and
 ${out}/01-spec.md. Fill templates/artifact.html and templates/reasoning.html.
-Write ${out}/simple-strategy-artifact.html and ${out}/reasoning.html. Self-contained, black and white.`),
+Write ${out}/simple-strategy-artifact.html and ${out}/reasoning.html. Self-contained, black and white.
+Then run: python3 scripts/check_artifact.py ${out}/
+It must exit 0. Fix what it reports and run it again. Return the final check table.`),
   { label: 'artifact', phase: 'Artifact' })
 
 return { slug, folder, artifact: `${out}/simple-strategy-artifact.html`, reasoning: `${out}/reasoning.html` }
