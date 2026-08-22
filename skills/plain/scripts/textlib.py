@@ -43,7 +43,12 @@ def count_words(sentence: str) -> int:
     Text in brackets counts as one word. So do a number with its unit, an
     abbreviation, and a hyphenated word.
     """
-    s = re.sub(r"\([^)]*\)", " X ", sentence)
+    # A quoted span is one word, per 8.7. strict-mode.md has said so since it was
+    # written; the implementation did not, so a sentence carrying a direct quote
+    # was penalised for the source's verbosity. The one thing a flattener must not
+    # do to fix that is paraphrase the quote.
+    s = re.sub(r"[\"\u201c\u2018][^\"\u201c\u201d\u2018\u2019]{2,}[\"\u201d\u2019]", " Q ", sentence)
+    s = re.sub(r"\([^)]*\)", " X ", s)
     s = re.sub(r"\b(\d[\d.,]*)\s*([A-Za-z°%]{1,4})\b", r"\1\2", s)
     tokens = re.findall(r"[A-Za-zÀ-ÿ0-9][\wÀ-ÿ'’\-/°%]*", s)
     return len(tokens)
