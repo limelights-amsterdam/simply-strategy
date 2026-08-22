@@ -61,7 +61,7 @@ runs/<slug>/<stamp>/        output. Git-ignored
   exemption covered 79 of them, which is what an exemption is for.
 - **Output language is English**, whatever the source documents are in.
 - **The artifact is black and white.** Two colours plus one grey. This includes the SVGs.
-- **Never write a bare path to a plugin file.** `skills/`, `scripts/`, `templates/` and `design/`
+- **Never write a bare path to a plugin file.** `skills/`, `scripts/` and `templates/`
   live under the plugin, which is not the folder the user is working in. A path that is correct in a
   clone and wrong once installed is the failure mode this repo keeps hitting.
 
