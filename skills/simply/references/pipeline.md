@@ -4,6 +4,14 @@ Seven steps. What each one gets, what it must produce, and where it fails.
 
 Every step reads `house-rules.md` first. Every step writes exactly one file and owns it.
 
+## Where output goes
+
+`runs/<slug>/<stamp>/`, grouped by source folder and sorted by time. The stamp arrives from outside
+the run, so a second run on the same folder does not overwrite the first.
+
+If no stamp arrives the path is flat, `runs/<slug>/`, and the run says so in its log rather than
+overwriting in silence.
+
 ## Paths in this file
 
 `{root}` is the plugin root, handed to you in your prompt. When the plugin is installed it is not the
@@ -101,9 +109,9 @@ The `simple` reviewer does not count by eye. That count is the claim the whole p
 it is measured:
 
 ```bash
-python3 {root}/skills/plain/scripts/plainlint.py runs/<slug>/04-plain.md \
+python3 {root}/skills/plain/scripts/plainlint.py runs/<slug>/<stamp>/04-plain.md \
   --lang en --max-sentence 15
-python3 {root}/skills/plain-strategy/scripts/stratlint.py runs/<slug>/04-plain.md --lang en
+python3 {root}/skills/plain-strategy/scripts/stratlint.py runs/<slug>/<stamp>/04-plain.md --lang en
 ```
 
 Under 1.5 weighted findings per 100 words is clean. For the hard sentence-length and pointer checks,
@@ -145,7 +153,7 @@ the verdict and the Compass.
 Then verify your own work, because nothing downstream does:
 
 ```bash
-python3 {root}/scripts/check_artifact.py runs/<slug>/ --material <material folder>
+python3 {root}/scripts/check_artifact.py runs/<slug>/<stamp>/ --material <material folder>
 ```
 
 Exit code 0 or it does not ship. Fix what it reports and run it again. If a check cannot pass because

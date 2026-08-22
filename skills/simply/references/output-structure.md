@@ -43,7 +43,7 @@ This is the page that survives a hostile question.
 Rendering is the only step nothing downstream checks, so it checks itself:
 
 ```bash
-python3 {root}/scripts/check_artifact.py runs/<slug>/ --material <material folder>
+python3 {root}/scripts/check_artifact.py runs/<slug>/<stamp>/ --material <material folder>
 ```
 
 `{root}` is the plugin root from your prompt. Exit code 0 or it does not ship.

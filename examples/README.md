@@ -22,5 +22,5 @@ python3 scripts/check_artifact.py examples/
 ```
 
 The file names match what a run writes, so the checker finds the pair the same
-way it does in `runs/<slug>/`. If a change to the templates breaks the contract,
+way it does in `runs/<slug>/<stamp>/`. If a change to the templates breaks the contract,
 this fails in CI before anyone renders a real one.
