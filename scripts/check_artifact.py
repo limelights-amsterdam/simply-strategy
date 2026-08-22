@@ -82,14 +82,17 @@ MUST = re.compile(r'<div class="must">.*?(?=<div class="must">|</section>)', re.
 class Result:
     checks: list = field(default_factory=list)
 
-    def add(self, name, ok, detail="", hard=True):
+    def add(self, id, name, ok, detail="", hard=True):
         """ok=True passed, ok=False failed, ok=None could not run.
 
         A check that scanned nothing has not passed. A false pass is more
         expensive than a false fail, so "not run" is its own outcome and it
         blocks shipping the same way a failure does.
+
+        `id` is the stable handle the fixtures assert on. The name is display
+        text and may carry a budget number, so it is allowed to change.
         """
-        self.checks.append({"check": name, "ok": ok, "detail": detail, "hard": hard})
+        self.checks.append({"id": id, "check": name, "ok": ok, "detail": detail, "hard": hard})
 
     @property
     def failed_hard(self):
@@ -165,20 +168,20 @@ def check_artifact(path: str, r: Result, max_page_words: int = MAX_PAGE_WORDS) -
     secs = {sid: section(doc, sid) for sid in SECTIONS}
 
     missing = [s for s in SECTIONS if not secs[s]]
-    r.add("All six sections present", not missing,
+    r.add("sections", "All six sections present", not missing,
           "missing: " + ", ".join(SECTIONS[s] for s in missing) if missing else "6 of 6")
 
     unfilled = sorted(set(UNFILLED.findall(doc)))
-    r.add("No unfilled template slots", not unfilled,
+    r.add("unfilled", "No unfilled template slots", not unfilled,
           ", ".join(unfilled[:6]) if unfilled else "none")
 
     net = sorted(set(m.group(0) for m in NETWORK.finditer(doc)))
-    r.add("Self-contained, nothing loads", not net,
+    r.add("self-contained", "Self-contained, nothing loads", not net,
           ", ".join(net[:5]) if net else "no img, script, CDN or remote font")
 
     scanned = [s for s in SECTIONS if secs[s]]
     musts = MUST.findall(secs["must-solve"])
-    r.add("Exactly three must-solve items",
+    r.add("three-musts", "Exactly three must-solve items",
           None if not secs["must-solve"] else len(musts) == 3,
           "the must-solve section was not found" if not secs["must-solve"]
           else f"found {len(musts)}")
@@ -189,7 +192,7 @@ def check_artifact(path: str, r: Result, max_page_words: int = MAX_PAGE_WORDS) -
     unsourced = [re.sub(r"^\d+\s*", "", text_of(m))[:60]
                  for m in musts if not (POINTER.search(m) or SUPREF.search(m))]
     unsourced = [u.replace("\u2028", " ") for u in unsourced]
-    r.add("Every must-solve carries a source pointer",
+    r.add("must-pointers", "Every must-solve carries a source pointer",
           None if not musts else not unsourced,
           "no must-solve items to check" if not musts
           else "; ".join(unsourced) if unsourced else f"{len(musts)} of {len(musts)}")
@@ -204,7 +207,7 @@ def check_artifact(path: str, r: Result, max_page_words: int = MAX_PAGE_WORDS) -
             n = count_words(s)
             if n > MAX_WORDS:
                 long_sentences.append((SECTIONS[sid], n, re.sub(r"^\d+\s*", "", s)[:70]))
-    r.add(f"Every sentence under {MAX_WORDS} words",
+    r.add("sentence-length", f"Every sentence under {MAX_WORDS} words",
           None if not scanned else not long_sentences,
           "no sections to scan" if not scanned
           else "; ".join(f"{sec}: {n}w: {s}" for sec, n, s in long_sentences[:4])
@@ -223,25 +226,25 @@ def check_artifact(path: str, r: Result, max_page_words: int = MAX_PAGE_WORDS) -
         if sid in MAY_BE_UNANSWERED and UNANSWERED.search(content):
             continue                      # short on purpose, and it says so
         (unsaid if sid in MAY_BE_UNANSWERED else thin).append(SECTIONS[sid])
-    r.add("No section is silently empty", None if not scanned else not thin,
+    r.add("thin-sections", "No section is silently empty", None if not scanned else not thin,
           "no sections to scan" if not scanned else ", ".join(thin) if thin else "none")
-    r.add("A short optional section says it is unanswered", None if not scanned else not unsaid,
+    r.add("unanswered-said", "A short optional section says it is unanswered", None if not scanned else not unsaid,
           "no sections to scan" if not scanned
           else ", ".join(f"{n} is thin and does not say why" for n in unsaid) if unsaid
           else "none short, or each says so")
 
     vague = [t.strip() for t in TOFILL.findall(doc) if len(t.strip()) < 4]
-    r.add("Every TO FILL says what is needed", not vague,
+    r.add("tofill-described", "Every TO FILL says what is needed", not vague,
           f"{len(vague)} bare marker(s)" if vague else f"{len(TOFILL.findall(doc))} marker(s), all described")
 
     body_only = re.sub(r"<(style|script)\b.*?</\1>", " ", doc, flags=re.S | re.I)
     dashes = EM_DASH.findall(text_of(body_only))
-    r.add("No em dashes in the copy", not dashes, f"{len(dashes)} found" if dashes else "none")
+    r.add("em-dashes", "No em dashes in the copy", not dashes, f"{len(dashes)} found" if dashes else "none")
 
     # The page promises a reading time. Correct is not the same as short enough.
     total = count_words(text_of(drop_provenance(body_only)).replace("\u2028", " "))
     minutes = total / WPM
-    r.add(f"Fits its reading time, {max_page_words} words", total <= max_page_words,
+    r.add("page-budget", f"Fits its reading time, {max_page_words} words", total <= max_page_words,
           f"{total} words, about {minutes:.1f} minutes at {WPM} a minute"
           f"{'' if total <= max_page_words else f'. Over by {total - max_page_words}'}")
 
@@ -253,7 +256,7 @@ def check_artifact(path: str, r: Result, max_page_words: int = MAX_PAGE_WORDS) -
             n = count_words(text_of(cap).replace("\u2028", " "))
             if n > MAX_CAPTION_WORDS:
                 long_support.append(f"{i}: {n}w")
-    r.add(f"Supporting line stays a caption, {MAX_CAPTION_WORDS} words",
+    r.add("caption-budget", f"Supporting line stays a caption, {MAX_CAPTION_WORDS} words",
           None if not musts else not long_support,
           "no must-solve items to check" if not musts
           else ", ".join(long_support) if long_support else "all within")
@@ -269,7 +272,7 @@ def check_pointers(doc_path: str, material: str, r: Result) -> None:
     doc = open(doc_path, encoding="utf-8").read()
     have = {n.lower() for _, _, fs in os.walk(material) for n in fs}
     if not have:
-        r.add("Pointers name real files", False, f"no files found under {material}")
+        r.add("pointers-exist", "Pointers name real files", False, f"no files found under {material}")
         return
     named, unknown = set(), set()
     for p in POINTER.findall(doc):
@@ -277,7 +280,7 @@ def check_pointers(doc_path: str, material: str, r: Result) -> None:
             named.add(f.lower())
             if f.lower() not in have:
                 unknown.add(f)
-    r.add("Pointers name real files", not unknown,
+    r.add("pointers-exist", "Pointers name real files", not unknown,
           "not in the material folder: " + ", ".join(sorted(unknown)[:5]) if unknown
           else f"{len(named)} distinct file(s), all present")
 
@@ -289,17 +292,17 @@ def check_reasoning(path: str, r: Result) -> None:
     # "not empty" checks on its own placeholders, which is the same false pass the
     # missing section ids produced, one level down.
     unfilled = sorted(set(UNFILLED.findall(doc)))
-    r.add("reasoning.html has no unfilled slots", not unfilled,
+    r.add("reasoning-unfilled", "reasoning.html has no unfilled slots", not unfilled,
           ", ".join(unfilled[:6]) if unfilled else "none")
     doc = UNFILLED.sub(" ", doc)
     for sid, label in [("cut", "What it threw away"), ("unsure", "Where it is unsure")]:
         body = section(doc, sid)
         content = text_of(re.sub(r"<th\b.*?</th>", " ", KICKER.sub(" ", body), flags=re.S | re.I))
-        r.add(f'reasoning.html: "{label}" is not empty', len(content) > 25,
+        r.add(f"reasoning-{sid}", f'reasoning.html: "{label}" is not empty', len(content) > 25,
               f"{len(content)} characters of content")
     net = sorted(set(m.group(0) for m in NETWORK.finditer(doc)))
-    r.add("reasoning.html self-contained", not net, ", ".join(net[:4]) if net else "nothing loads")
-    r.add("reasoning.html names the input flatten level",
+    r.add("reasoning-self-contained", "reasoning.html self-contained", not net, ", ".join(net[:4]) if net else "nothing loads")
+    r.add("reasoning-level", "reasoning.html names the input flatten level",
           bool(re.search(r"\bL[1-5]\b", text_of(section(doc, "unsure")))),
           "", hard=False)
 
@@ -356,13 +359,13 @@ def main() -> int:
     else:
         # Silence here was the same failure this tool exists to catch: the table would
         # read 'all checks pass' on a page whose pointers were never validated.
-        r.add("Pointers name real files", None,
+        r.add("pointers-exist", "Pointers name real files", None,
               "not run, no --material given. Pointer shape was checked, existence was not")
     if os.path.exists(reasoning):
         check_reasoning(reasoning, r)
         files.append(reasoning)
     else:
-        r.add("reasoning.html exists", False, "a run without a reasoning log is not finished")
+        r.add("reasoning-exists", "reasoning.html exists", False, "a run without a reasoning log is not finished")
 
     if a.json:
         print(json.dumps({"checks": r.checks,

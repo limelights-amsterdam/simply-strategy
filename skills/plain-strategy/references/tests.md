@@ -180,9 +180,14 @@ Close a review with one line that places the document. That distinction steers t
 
 | Verdict | When | What it is good for |
 | --- | --- | --- |
-| **Strategy** | A choice with a sacrifice, a mechanism and a point of reckoning | Can be decided on |
-| **Plan** | Actions with owners, but no choice underneath | Can be executed, steers nothing |
-| **Direction** | A shared ambition without sacrifice or number | Can inspire, cannot decide |
-| **Wish** | Targets without mechanism or owner | Back to the drawing board |
+| **Strategy** | A choice with a sacrifice and a point of reckoning, and actions with an owner and a date | Can be decided on and run |
+| **Strategy without execution** | The choice is there, the actions are not | Can be decided on, cannot yet be run |
+| **Plan** | Actions with owners and dates, but no choice underneath | Can be executed, steers nothing |
+| **Direction** | A sacrifice or a number, not both | Can inspire, cannot decide |
+| **Wish** | No sacrifice, no number, no owner | Back to the drawing board |
+
+`stratlint.py` places a document on the same ladder from five yes/no questions: is there a sacrifice,
+a number, a date, an owner, a stop threshold. It sees that a choice was made, not whether it was
+the right one.
 
 Be honest here. A document that is a "direction" does not become a strategy because you filled in the tables. Someone still has to choose, and that is not your job but the reader's. The most useful thing you can do is point at exactly which choice is still open.

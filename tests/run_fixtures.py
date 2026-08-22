@@ -23,29 +23,31 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 CHECKER = ROOT / "scripts" / "check_artifact.py"
 HEADINGS = ROOT / "scripts" / "check_headings.py"
 
-# fixture -> (exit code, {check name fragment: expected state})
-# state is "pass", "fail" or "not run".
+# fixture -> (exit code, {check id: expected state})
+# Ids are the stable handles check_artifact.Result.add sets; display names may
+# carry a budget number and are allowed to change. State is "pass", "fail" or
+# "not run".
 EXPECT = {
     "green":             (0, {}),
-    "no-section-ids":    (1, {"All six sections": "fail",
-                              "Exactly three must-solve": "not run",
-                              "Every sentence under": "not run",
-                              "No section is silently empty": "not run"}),
-    "four-must-solve":   (1, {"Exactly three must-solve": "fail"}),
-    "remote-css":        (1, {"Self-contained": "fail"}),
-    "inline-svg":        (0, {"Self-contained": "pass"}),
-    "em-dash":           (1, {"No em dashes": "fail"}),
-    "no-reasoning":      (1, {"reasoning.html exists": "fail"}),
-    "template-reasoning":(1, {"reasoning.html has no unfilled slots": "fail"}),
-    "table-short-cells": (0, {"Every sentence under": "pass"}),
-    "svg-text-label":    (0, {"Every sentence under": "pass"}),
-    "missing-source":    (1, {"Pointers name real files": "fail"}),
+    "no-section-ids":    (1, {"sections": "fail",
+                              "three-musts": "not run",
+                              "sentence-length": "not run",
+                              "thin-sections": "not run"}),
+    "four-must-solve":   (1, {"three-musts": "fail"}),
+    "remote-css":        (1, {"self-contained": "fail"}),
+    "inline-svg":        (0, {"self-contained": "pass"}),
+    "em-dash":           (1, {"em-dashes": "fail"}),
+    "no-reasoning":      (1, {"reasoning-exists": "fail"}),
+    "template-reasoning":(1, {"reasoning-unfilled": "fail"}),
+    "table-short-cells": (0, {"sentence-length": "pass"}),
+    "svg-text-label":    (0, {"sentence-length": "pass"}),
+    "missing-source":    (1, {"pointers-exist": "fail"}),
 
     # The isolation test for the not-run state. Nothing here fails, so the only
     # reason to exit 1 is a check that could not run. Without this fixture,
     # no-section-ids exits 1 because its sections are missing and the gating is
     # never actually proven, which is how the gap survived in the first place.
-    "green-no-material": (1, {"Pointers name real files": "not run"}),
+    "green-no-material": (1, {"pointers-exist": "not run"}),
 }
 
 # Every fixture carries the material folder its pointers cite, so pointer
@@ -91,7 +93,7 @@ def run(name: str) -> tuple[int, dict]:
         return p.returncode, {}
     state = {}
     for c in data["checks"]:
-        state[c["check"]] = "pass" if c["ok"] is True else "fail" if c["ok"] is False else "not run"
+        state[c["id"]] = "pass" if c["ok"] is True else "fail" if c["ok"] is False else "not run"
     return p.returncode, state
 
 
@@ -109,12 +111,12 @@ def main() -> int:
         problems = []
         if code != want_code:
             problems.append(f"exit {code}, wanted {want_code}")
-        for frag, want in want_checks.items():
-            got = next((v for k, v in state.items() if frag in k), None)
+        for cid, want in want_checks.items():
+            got = state.get(cid)
             if got is None:
-                problems.append(f'"{frag}" produced no row')
+                problems.append(f'"{cid}" produced no row')
             elif got != want:
-                problems.append(f'"{frag}" {got}, wanted {want}')
+                problems.append(f'"{cid}" {got}, wanted {want}')
         verdict = "✅" if not problems else "❌ " + "; ".join(problems)
         print(f"| {name} | {code} | {len(want_checks)} asserted | {verdict} |")
         if problems:
