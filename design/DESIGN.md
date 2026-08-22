@@ -11,7 +11,7 @@ components → rules.
 ## 1. What this is
 
 **Artefact:** one page that says what a folder of strategy documents actually decided.
-**Reader:** the board. A CEO or CFO with four minutes, standing up, probably holding it on paper.
+**Reader:** the board. A CEO or CFO with a few minutes, standing up, probably holding it on paper.
 **The bar:** anyone in a ten-thousand-person company could follow it. That is the standard the page
 is held to, not its distribution list. Writing for the board is what it is for. Writing so a new
 starter could follow it is how you know the board will not have to re-read a sentence.
@@ -231,7 +231,7 @@ Test it by printing, not by looking at print preview.
 ## 9. Hard rules
 
 - Four colour values. No fifth. `--rule` never touches text.
-- The whole page is 1200 words, about six minutes. A caption is one line.
+- The whole page is 1200 words, under six minutes. A caption is one line. A figure carries one.
 - No `<img>`, no icon library, no emoji, no CDN, no JavaScript.
 - No box shadow, no border radius above 0, no gradient.
 - Sentence case in every heading.

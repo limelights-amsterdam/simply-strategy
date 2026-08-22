@@ -190,7 +190,7 @@ def check_artifact(path: str, r: Result) -> None:
     r.add("No em dashes in the copy", not dashes, f"{len(dashes)} found" if dashes else "none")
 
     # The page promises a reading time. Nothing enforced it, and the first real run
-    # came out at 2547 words against a four-minute promise. Correct is not the same
+    # came out at 2547 words against a promise of a few minutes. Correct is not the same
     # as short enough.
     total = count_words(text_of(body_only).replace("\u2028", " "))
     minutes = total / WPM
