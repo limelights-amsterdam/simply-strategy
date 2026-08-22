@@ -16,4 +16,11 @@ Three things a strategy needs that a topic does not:
 - Never invent a number, owner or date. Write `[TO FILL: what is needed]`.
 - Every figure on the page comes from the material, and the page says where.
 
+Four short files under `references/` say how. Read them before you write:
+
+- [material.md](references/material.md): how to read what you were given, and where the page goes.
+- [decision.md](references/decision.md): how to tell whether the material contains a decision, and what the page says when it does not.
+- [words.md](references/words.md): how the page sounds.
+- [page.md](references/page.md): what the page looks like, screen by screen.
+
 Write the artifact beside the material as `simply-strategy.html`.
