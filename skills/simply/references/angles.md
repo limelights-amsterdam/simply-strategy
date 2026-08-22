@@ -54,11 +54,11 @@ Never soften a contradiction into "tension". Two things that cannot both be true
 
 ---
 
-## kompas
+## compass
 
-**Writes:** `02-kompas.md`
+**Writes:** `02-compass.md`
 
-**Job:** Read the Kompas that sits in the material folder. Does this material walk toward the anti-vision, and does it spend
+**Job:** Read the Compass that sits in the material folder. Does this material walk toward the anti-vision, and does it spend
 something the boundaries say we keep?
 
 This is the angle nobody normally has. Two questions, in this order:
@@ -69,10 +69,10 @@ This is the angle nobody normally has. Two questions, in this order:
    those things? A plan that quietly requires a boundary to fall is a plan that will not get
    executed.
 
-Then: which `[MISSING]` Kompas field would have changed your answer? Name it. That is what makes
+Then: which `[MISSING]` Compass field would have changed your answer? Name it. That is what makes
 someone fill it in next time.
 
-If the Kompas is empty or absent, say so in one line and stop. Do not improvise a Kompas.
+If the Compass is empty or absent, say so in one line and stop. Do not improvise a Compass.
 
 ---
 

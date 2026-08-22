@@ -22,7 +22,7 @@ const R = 'skills/simply/references'
 
 const brief = (task) => `You are one agent in a Simply Strategy run.
 Read ${R}/house-rules.md first. It applies to everything you write.
-The material is in ${folder}. The intake is ${folder}kompas.md. Output goes to ${out}/.
+The material is in ${folder}. The intake is ${folder}compass.md. Output goes to ${out}/.
 ${task}
 Write only your own file. Return one line: the path you wrote.`
 
@@ -33,7 +33,7 @@ await agent(brief(`Your step is "1 · spec" in ${R}/pipeline.md. Follow it and w
   { label: 'spec', phase: 'Spec' })
 
 phase('Panel')
-const ANGLES = ['substance', 'contradict', 'kompas', 'attack']
+const ANGLES = ['substance', 'contradict', 'compass', 'attack']
 await parallel(ANGLES.map(a => () =>
   agent(brief(`You are the "${a}" angle. Read ${R}/angles.md and follow the "${a}" section only.
 Read ${out}/01-spec.md. You cannot see the other angles, which is deliberate.

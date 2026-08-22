@@ -8,14 +8,14 @@ Every step reads `house-rules.md` first. Every step writes exactly one file and 
 
 ## 1 · spec — Spec Agent
 
-**Gets:** the material folder, including its `kompas.md`
+**Gets:** the material folder, including its `compass.md`
 **Writes:** `01-spec.md`
 
 Read every file in the folder. Produce:
 
 1. **An inventory table.** One row per file: name, what it is, date, which function owns it, page
    count. A file you could not read gets a row saying so — never omit it silently.
-2. **The question**, in one sentence, derived from the material and from the Kompas. If the Kompas
+2. **The question**, in one sentence, derived from the material and from the Compass. If the Compass
    gives it, use theirs. If it does not, derive one and mark it `[DERIVED]`.
 3. **What is not here.** Which document the material obviously references but does not include.
 
@@ -25,8 +25,8 @@ Read every file in the folder. Produce:
 
 ## 2 · panel — four angles, in parallel
 
-**Gets:** `01-spec.md`, the material, `<material>/kompas.md`
-**Writes:** `02-substance.md`, `02-contradict.md`, `02-kompas.md`, `02-attack.md`
+**Gets:** `01-spec.md`, the material, `<material>/compass.md`
+**Writes:** `02-substance.md`, `02-contradict.md`, `02-compass.md`, `02-attack.md`
 
 Briefs in `angles.md`. Each angle is blind to the others.
 
@@ -34,7 +34,7 @@ Briefs in `angles.md`. Each angle is blind to the others.
 
 ## 3 · plan — Plan Agent
 
-**Gets:** all four `02-*.md` files, `01-spec.md`, `<material>/kompas.md`
+**Gets:** all four `02-*.md` files, `01-spec.md`, `<material>/compass.md`
 **Writes:** `03-plan.md`
 
 **First, the tension check.** Read the four angle files side by side. If they broadly agree, an angle
@@ -124,13 +124,13 @@ must-fix list.
 
 ## 7 · artifact — Artifact Agent
 
-**Gets:** `04-plain.md`, `05-verdict.md`, `01-spec.md`, `<material>/kompas.md`, `design/DESIGN.md`
+**Gets:** `04-plain.md`, `05-verdict.md`, `01-spec.md`, `<material>/compass.md`, `design/DESIGN.md`
 **Writes:** `simple-strategy-artifact.html`, `reasoning.html`
 
 Read `output-structure.md` first. It says what to fill and what to check.
 
 Fill `templates/artifact.html` from the six sections and `templates/reasoning.html` from the spec,
-the verdict and the Kompas.
+the verdict and the Compass.
 
 Then verify your own work, because nothing downstream does:
 

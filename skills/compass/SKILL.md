@@ -1,16 +1,16 @@
 ---
-name: kompas
-description: Fill the Kompas - the five-field intake that steers a Simply Strategy run. Asks what you refuse before it asks what you want, because an anti-vision and a boundary let an advisor notice something you never wrote a goal for. Two modes - read the fields out of an existing deck or set of documents, or ask five questions. Use when the user types /kompas, starts a Simply Strategy run, or says fill the kompas, set up the intake, what do you need from me before the run, or hands over a deck and asks what we can get out of it.
+name: compass
+description: Fill the Compass - the five-field intake that steers a Simply Strategy run. Asks what you refuse before it asks what you want, because an anti-vision and a boundary let an advisor notice something you never wrote a goal for. Two modes - read the fields out of an existing deck or set of documents, or ask five questions. Use when the user types /compass, starts a Simply Strategy run, or says fill the compass, set up the intake, what do you need from me before the run, or hands over a deck and asks what we can get out of it.
 ---
 
-# Kompas
+# Compass
 
-The Kompas steers a Simply Strategy run. It is filled once per client, not once per run, and it
-lives **inside the material folder** as `kompas.md`:
+The Compass steers a Simply Strategy run. It is filled once per client, not once per run, and it
+lives **inside the material folder** as `compass.md`:
 
 ```
 material/<client>/
-├── kompas.md          the intake. Belongs to this client, not to the plugin
+├── compass.md          the intake. Belongs to this client, not to the plugin
 ├── annual-plan.md
 └── vision-2030.md
 ```
@@ -30,7 +30,7 @@ So the order matters. Ask what they refuse before you ask what they want.
 
 ## Two modes
 
-**Read it from material.** `/kompas ./deck/` — the better mode, and the one to offer first. Read
+**Read it from material.** `/compass ./deck/` — the better mode, and the one to offer first. Read
 everything in the folder, draft all five fields, and mark each one `drafted` or `missing`. Then show
 the draft and ask for corrections.
 
@@ -46,7 +46,7 @@ Formats:
 | PDF | Works, but 20 pages per read and slow. Fine for a document, not for a 60-slide deck |
 | PowerPoint, Keynote | No. Export to PDF or images first |
 
-**Ask five questions.** `/kompas` with no argument. Use `AskUserQuestion`, and put anti-vision and
+**Ask five questions.** `/compass` with no argument. Use `AskUserQuestion`, and put anti-vision and
 boundaries first.
 
 ## The five fields
@@ -64,7 +64,7 @@ The full prompts, with what a good answer looks like and how to push when an ans
 
 ## Rules
 
-- **Every field is optional.** A half-filled Kompas still runs. Never block the run on a blank field.
+- **Every field is optional.** A half-filled Compass still runs. Never block the run on a blank field.
 - **Say what is missing, do not fill it in.** An empty field is written as `[MISSING]` and travels
   through to section 6 of the artifact. That is what makes someone fill it in next time.
 - **Never soften an anti-vision.** If someone writes something unkind about their own company, keep
@@ -76,7 +76,7 @@ The full prompts, with what a good answer looks like and how to push when an ans
 
 ## Output
 
-Write `<material-folder>/kompas.md` with all five fields, each marked `given`,
+Write `<material-folder>/compass.md` with all five fields, each marked `given`,
 `drafted from <source>`, or `[MISSING]`.
 Close with one line saying how many fields are filled and what the run will be blind to without the
 rest.

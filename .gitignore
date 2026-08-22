@@ -7,3 +7,8 @@ material/*
 # Python
 __pycache__/
 *.pyc
+
+# The intake belongs in material/<client>/, never in the project root.
+# Ignored here as a safety net in case one lands at the top level.
+/compass.md
+/kompas.md

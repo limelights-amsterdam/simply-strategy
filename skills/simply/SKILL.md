@@ -22,7 +22,7 @@ The run is a workflow: `workflows/simply.js`. It executes in the background and 
 runs. Watch it with `/workflows`.
 
 ```
-/kompas ./material/<client>/    fills that folder's kompas.md. Once per client, not per run
+/compass ./material/<client>/    fills that folder's compass.md. Once per client, not per run
 /simply ./material/<client>/    the run, about 25 minutes
 ```
 
@@ -35,7 +35,7 @@ screen is not.
 | # | Step | Shape | Writes |
 |---|---|---|---|
 | 1 | Spec Agent | linear | `01-spec.md` |
-| 2 | Panel — substance · contradict · kompas · attack | 4 parallel | `02-*.md` |
+| 2 | Panel — substance · contradict · compass · attack | 4 parallel | `02-*.md` |
 | 3 | Plan Agent | linear | `03-plan.md` |
 | 4 | Flattener | linear | `04-plain.md` |
 | 5 | Reviewers — true · simple · invented | 3 parallel | `05-*.md` |

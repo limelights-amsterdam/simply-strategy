@@ -19,8 +19,8 @@ skills/simply/              what the run's agents read
   references/pipeline.md      what each step gets and must produce
   references/angles.md        the four panel briefs
   references/output-structure.md  the six sections of the artifact
-skills/kompas/              the intake. Two modes: read a deck, or ask five questions
-                            writes material/<client>/kompas.md, never the project root
+skills/compass/              the intake. Two modes: read a deck, or ask five questions
+                            writes material/<client>/compass.md, never the project root
 skills/simplify/            the flattener. eli5 for strategy
 skills/plain/               language filter + plainlint.py
 skills/plain-strategy/      substance filter + stratlint.py
@@ -48,7 +48,7 @@ runs/<slug>/                output. Durable, not /tmp
 ## Running it
 
 ```
-/kompas ./material/<client>/   fills that folder's kompas.md
+/compass ./material/<client>/   fills that folder's compass.md
 /simply ./material/<client>/   the run
 /workflows               live progress
 ```

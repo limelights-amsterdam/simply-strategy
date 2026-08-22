@@ -1,8 +1,8 @@
-# Kompas — <client>
+# Compass — <client>
 
-Copy this to `material/<client>/kompas.md` and fill what you know. Leave the rest.
+Copy this to `material/<client>/compass.md` and fill what you know. Leave the rest.
 
-Mark every field `given`, `drafted from <source, page>`, or `[MISSING]`. A half-filled Kompas still
+Mark every field `given`, `drafted from <source, page>`, or `[MISSING]`. A half-filled Compass still
 runs, and the artifact names what was missing. That is what makes someone fill it in next time.
 
 The order is deliberate. Anti-vision and boundaries come first because they do the most work, and
@@ -44,5 +44,5 @@ Fine to leave empty.
 
 ---
 
-**0 of 5 fields filled.** Without the anti-vision and the boundaries, the kompas angle has nothing to
+**0 of 5 fields filled.** Without the anti-vision and the boundaries, the compass angle has nothing to
 test the material against and will say so rather than improvise.
