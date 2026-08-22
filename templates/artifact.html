@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{TITLE}}</title>
+<style>
+:root{
+  --ink:#0A0A0A; --paper:#FFFFFF; --muted:#6B6B6B; --rule:#C9C9C9;
+  --serif:ui-serif,"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --sans:ui-sans-serif,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --measure:34rem; --margin:12rem; --gap-section:7rem; --gap-block:2.5rem;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:17px;-webkit-font-smoothing:antialiased}
+body{background:var(--paper);color:var(--ink);font-family:var(--serif);line-height:1.6}
+.page{max-width:var(--measure);margin:0 auto;padding:5rem 1.5rem 7rem}
+
+.kicker{font-family:var(--sans);font-size:.75rem;font-weight:600;letter-spacing:.16em;
+  text-transform:uppercase;line-height:1}
+.rule{border:0;border-top:1px solid var(--rule);margin:0}
+.caption{font-family:var(--sans);font-size:.8125rem;line-height:1.45;color:var(--muted)}
+.src{font-family:var(--sans);font-size:.8125rem;color:var(--muted)}
+.tofill{font-family:var(--mono);font-size:.8125rem;border:1px solid var(--rule);padding:2px 4px;
+  white-space:nowrap}
+.unanswered{font-style:italic;color:var(--muted)}
+
+header{margin-bottom:var(--gap-section)}
+header .rule{margin-bottom:1.25rem}
+header .meta{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+
+section{margin-bottom:var(--gap-section)}
+section > .rule{margin-bottom:1rem}
+section > .kicker{display:block;margin-bottom:var(--gap-block)}
+
+/* slot 1 — the one sentence */
+.one-sentence{font-size:clamp(2.5rem,5.5vw,4.5rem);line-height:1.05;letter-spacing:-.02em;
+  text-align:center;margin:6rem 0;width:min(48rem,92vw);
+  margin-left:calc(50% - min(24rem,46vw));margin-right:0}
+
+/* slot 2 — the three must-solves */
+.must{position:relative;padding-left:0;margin-bottom:var(--gap-block)}
+.must .n{font-family:var(--sans);font-weight:300;font-size:clamp(4rem,9vw,8rem);line-height:.8;
+  letter-spacing:-.04em;position:absolute;left:calc(-1 * var(--margin));top:-.1em;width:var(--margin)}
+.must .stmt{font-size:clamp(1.6rem,3vw,2.4rem);line-height:1.15;letter-spacing:-.01em}
+.must .rule{margin:1rem 0 .6rem}
+
+/* slot 3 — stop / start */
+.split{display:grid;grid-template-columns:1fr 1px 1fr;gap:0 2rem}
+.split .bar{background:var(--rule)}
+.split ul{list-style:none}
+.split li{margin-bottom:.9rem}
+.split .kicker{display:block;margin-bottom:1rem}
+
+/* slot 4 — the bet */
+.bet{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:0 .9rem;align-items:start;
+  margin-bottom:var(--gap-block)}
+.bet .arrow{color:var(--rule);font-family:var(--sans);align-self:center}
+.bet .kicker{display:block;margin-bottom:.5rem}
+.bet p{font-size:1rem;line-height:1.45}
+
+.conflict{margin-bottom:var(--gap-block)}
+.conflict .side{margin-bottom:.6rem}
+.conflict .verdict{font-size:1rem;margin-top:.6rem}
+
+.gaps{list-style:none}
+.gaps li{margin-bottom:.8rem}
+
+footer{margin-top:var(--gap-section)}
+footer .rule{margin-bottom:.75rem}
+footer .meta{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+
+@media (max-width:900px){
+  :root{--margin:0rem}
+  .must .n{position:static;width:auto;display:block;margin-bottom:.25rem}
+  .split{grid-template-columns:1fr;gap:2.5rem}
+  .split .bar{display:none}
+  .bet{grid-template-columns:1fr;gap:1.25rem}
+  .bet .arrow{display:none}
+}
+@media print{
+  @page{size:A4;margin:18mm}
+  html{font-size:11pt}
+  :root{--margin:8rem;--gap-section:3.5rem}
+  .page{max-width:none;padding:0}
+  section{break-inside:avoid}
+  .kicker,.must .stmt{break-after:avoid}
+  .one-sentence{break-after:page;margin:3rem 0;width:100%;margin-left:0}
+  .src,.caption,.unanswered{color:#000}
+}
+</style>
+</head>
+<body>
+<main class="page">
+
+<header>
+  <hr class="rule">
+  <div class="meta">
+    <span class="kicker">Simple strategy artifact</span>
+    <span class="caption">{{RUN_DATE}} · {{SOURCE_FOLDER}}</span>
+  </div>
+</header>
+
+<!-- 1 · the one sentence -->
+<section id="one">
+  <hr class="rule"><span class="kicker">What this is about</span>
+  <p class="one-sentence">{{ONE_SENTENCE}}</p>
+</section>
+
+<!-- 2 · the three things that must be solved -->
+<section id="must-solve">
+  <hr class="rule"><span class="kicker">Three things must be solved</span>
+  <!-- repeat exactly three times -->
+  <div class="must">
+    <div class="n">{{N}}</div>
+    <p class="stmt">{{MUST_STATEMENT}}</p>
+    <hr class="rule">
+    <p class="caption">{{MUST_COST}} <span class="src">({{MUST_SOURCE}})</span></p>
+  </div>
+</section>
+
+<!-- 3 · what we stop doing -->
+<section id="stop">
+  <hr class="rule"><span class="kicker">What we stop doing</span>
+  <div class="split">
+    <div>
+      <span class="kicker">Stops</span>
+      <ul>{{STOPS}}</ul>
+    </div>
+    <div class="bar"></div>
+    <div>
+      <span class="kicker">Starts</span>
+      <ul>{{STARTS}}</ul>
+    </div>
+  </div>
+  <!-- when no sacrifice was named, replace the split with: -->
+  <!-- <p class="unanswered">The plan does not say what this costs.</p> -->
+</section>
+
+<!-- 4 · what has to be true -->
+<section id="bet">
+  <hr class="rule"><span class="kicker">What has to be true</span>
+  <!-- repeat per assumption -->
+  <div class="bet">
+    <div><span class="kicker">Assumption</span><p>{{ASSUMPTION}}</p></div>
+    <div class="arrow">&rarr;</div>
+    <div><span class="kicker">How we test it</span><p>{{TEST}}</p></div>
+    <div class="arrow">&rarr;</div>
+    <div><span class="kicker">When we know</span><p>{{WHEN}}</p></div>
+  </div>
+</section>
+
+<!-- 5 · what the documents disagree about -->
+<section id="conflicts">
+  <hr class="rule"><span class="kicker">What the documents disagree about</span>
+  <!-- repeat per contradiction -->
+  <div class="conflict">
+    <p class="side">{{SIDE_A}} <span class="src">({{SOURCE_A}})</span></p>
+    <p class="side">{{SIDE_B}} <span class="src">({{SOURCE_B}})</span></p>
+    <hr class="rule">
+    <p class="verdict">{{WHY_BOTH_CANNOT_BE_TRUE}}</p>
+  </div>
+</section>
+
+<!-- 6 · what we do not know -->
+<section id="gaps">
+  <hr class="rule"><span class="kicker">What we do not know</span>
+  <ul class="gaps">
+    <li><span class="tofill">{{TO_FILL}}</span> {{GAP_EXPLANATION}}</li>
+  </ul>
+</section>
+
+<footer>
+  <hr class="rule">
+  <div class="meta">
+    <span class="caption">AI-supported draft</span>
+    <span class="caption">{{RUN_DATE}} · flatten level in &rarr; out: {{LEVEL_IN}} &rarr; L1</span>
+  </div>
+</footer>
+
+</main>
+</body>
+</html>

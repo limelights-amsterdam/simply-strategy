@@ -1,0 +1,5 @@
+.DS_Store
+runs/*/
+!runs/.gitkeep
+material/*
+!material/.gitkeep
