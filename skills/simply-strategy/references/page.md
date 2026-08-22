@@ -8,7 +8,7 @@ the page it came from. Someone who knows nothing reads it in a few minutes and c
 
 ## The shape
 
-- One column, about 44rem wide, on warm paper. Dark ink, one sans, two accents at most (one warm,
+- One column, about 46rem wide, on warm paper, with a rule over the masthead. Dark ink, one sans, two accents at most (one warm,
   one cool) and one green for "decided". No web fonts needed. It prints clean.
 - Header: a small kicker with the document's name, then a headline that tells the whole story in
   two or three short sentences, then one lead line: "This page only says what the document says.
