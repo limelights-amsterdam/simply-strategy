@@ -8,13 +8,12 @@ the page it came from. Someone who knows nothing reads it in a few minutes and c
 
 ## The shape
 
-- A wide page, about 64rem, on warm paper. A masthead with a rule above and below: the headline on
-  the left, the lead on the right behind a hairline. In each section the picture runs the full width
+- A wide page, about 64rem, on warm paper. A masthead with a rule above and below. In each section the picture runs the full width
   and the words under it sit on a wide measure in a large size. Dark ink, one sans, two accents at
   most (one warm, one cool) and one green for "decided". No web fonts needed. It prints clean.
 - Header: a small kicker with the document's name, then a headline that tells the whole story in
-  two or three short sentences, then one lead line: "This page only says what the document says.
-  Each picture names the page it comes from."
+  two or three short sentences. Nothing else; the sources under each section and the footer say
+  where it all comes from.
 - Then the sections, numbered. Each one has the same five parts, in this order:
   1. Kicker: the number and the question, in plain words. "3. The problem they name"
   2. Headline: the answer as one claim. "The allowance system is hard. Three things go wrong."

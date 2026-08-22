@@ -16,13 +16,11 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-heigh
 h1{font-size:clamp(2.4rem,4.8vw,4rem);line-height:1.02;letter-spacing:-.025em;font-weight:800;margin:.6rem 0 0}
 h2{font-size:clamp(1.8rem,3.2vw,2.8rem);line-height:1.08;letter-spacing:-.02em;font-weight:800;margin:.5rem 0 1.25rem;max-width:30ch}
 h3{font-size:1.2rem;line-height:1.25;margin:.25rem 0 .5rem}
-p.lead{font-size:1.15rem;line-height:1.45;color:var(--muted)}
-/* masthead: rule above and below, headline left, the lead right behind a hairline */
+/* masthead: rule above and below */
 header{display:grid;grid-template-columns:repeat(12,1fr);column-gap:2.5rem;row-gap:.5rem;align-items:end;
   border-top:4px solid var(--ink);border-bottom:1px solid var(--rule);padding:1rem 0 1.75rem}
 header .kicker{grid-column:1/-1}
-header h1{grid-column:1/9}
-header p.lead{grid-column:9/13;border-left:1px solid var(--rule);padding-left:1.5rem}
+header h1{grid-column:1/11}
 /* each section: kicker, claim, the picture across the full width, then the words on a wide measure */
 section{padding:3.5rem 0 4rem;border-bottom:1px solid var(--rule)}
 section>.kicker{margin-bottom:.5rem}
@@ -50,7 +48,6 @@ footer{margin-top:3rem;border-top:4px solid var(--ink);padding-top:1rem;font-siz
   html{font-size:17px}
   .page{padding:2rem 1.25rem 4rem}
   header{display:block}
-  header p.lead{border-left:0;padding-left:0;margin-top:1rem}
   .grid2{grid-template-columns:1fr}
   .grid2>div+div{border-left:0;padding-left:0;border-top:1px solid var(--rule);padding-top:1rem}
 }
@@ -63,7 +60,6 @@ footer{margin-top:3rem;border-top:4px solid var(--ink);padding-top:1rem;font-siz
 <header>
   <div class="kicker">[Organisation], [Document], in plain words</div>
   <h1>[The whole story in two or three short sentences. What they do. What they want. What they have not said.]</h1>
-  <p class="lead">This page only says what the document says. Each picture names the page it comes from.</p>
 </header>
 
 <!-- One section per question the document answers. Same five parts every time, in this order.
