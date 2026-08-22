@@ -4,8 +4,7 @@ A Claude Code plugin. Point it at a folder of strategy documents. Get back one p
 under six minutes.
 
 ```
-/simply-strategy:compass ./material/acme/    once per client, five questions or a deck
-/simply-strategy:simply  ./material/acme/    six steps, about half an hour
+/simply-strategy ./material/acme/    the intake once per client, then six steps
 ```
 
 Out comes `simple-strategy-artifact.html`: black and white, big type, few words, prints on any
@@ -94,7 +93,7 @@ It lives at `material/<client>/compass.md`, beside the documents it describes.
 
 ## The six steps
 
-One reader walks them in order. No subagents. Nothing is held in memory between steps, so the
+An intake first, when the folder has no `compass.md` yet. Then six steps, and one reader walks them in order. No subagents. Nothing is held in memory between steps, so the
 numbered files are the state and a stopped run resumes at the next one. Each step sees what the last
 one wrote, which is what keeps the argument whole and the figures traceable.
 
@@ -118,17 +117,18 @@ Exactly three must-solve items. No invented numbers: an unknown figure, owner or
 per hundred words. Nothing is softened. A section the material cannot answer says so in a full
 sentence. The "where I'm unsure" section is never empty.
 
-The full versions, with the why, are in `skills/simply/references/house-rules.md`, which every step
-reads first.
+The full versions, with the why, are in `skills/simply-strategy/references/house-rules.md`, which every
+step reads first.
 
 ## It checks its own work
 
 Three checks and a fixture pass, because a check a script can make should not be a judgement call.
 
 ```bash
-python3 scripts/check_facts.py     runs/<slug>/<stamp>/04-plain.md --material material/<slug>/
-python3 scripts/check_artifact.py  runs/<slug>/<stamp>/ --material material/<slug>/
-python3 scripts/check_headings.py  runs/<slug>/<stamp>/simple-strategy-artifact.html
+S=skills/simply-strategy/scripts
+python3 $S/check_facts.py     runs/<slug>/<stamp>/04-plain.md --material material/<slug>/
+python3 $S/check_artifact.py  runs/<slug>/<stamp>/ --material material/<slug>/
+python3 $S/check_headings.py  runs/<slug>/<stamp>/simple-strategy-artifact.html
 python3 tests/run_fixtures.py
 ```
 
@@ -137,7 +137,7 @@ python3 tests/run_fixtures.py
 | `check_facts` | A figure that appears nowhere in the material and does not say whose arithmetic it is, or a page with too few pointers |
 | `check_artifact` | A missing section, an unfilled slot, a sentence over fifteen words, a page that loads something |
 | `check_headings` | A heading that counts the page or names its own section instead of claiming anything |
-| `run_fixtures` | A regression in `check_artifact` or `check_headings`, across eighteen recorded cases |
+| `run_fixtures` | A regression in `check_artifact` or `check_headings`, across nineteen recorded cases |
 
 Tracing a figure to a source is a lookup, not a judgement, which is why a script does it and not a
 reader who is also trying to be thorough about six other things.
@@ -148,19 +148,18 @@ outcome and stops the artifact the same way a failure does.
 ## What is in here
 
 ```
-skills/simply/            the run. references/ holds the pipeline, the angles and the house rules
-skills/compass/           the intake
-skills/flatten/           the flattener, and what L1 means
-skills/plain/             language filter, plainlint.py, textlib.py
-skills/plain-strategy/    substance filter, stratlint.py
-skills/stop-slop/         de-slop filter
-skills/humanizer/         the last pass, so it reads like a person
-scripts/                  the three checks
-templates/                artifact.html, reasoning.html, figures.html
-tests/                    eighteen fixtures and their expected verdicts
+skills/simply-strategy/
+  SKILL.md                the run
+  references/             house rules, pipeline, angles, output structure, the Compass,
+                          flatten/ substance/ language/
+  scripts/                the three checks and the two linters
+  assets/                 artifact.html, reasoning.html, figures.html
+tests/                    nineteen fixtures and their expected verdicts
 material/<client>/        input, plus that client's compass.md. Git-ignored
 runs/<slug>/<stamp>/      output. Git-ignored
 ```
+
+One skill, so one description rides in context and one `{root}` resolves every path.
 
 Everything a human edits is markdown. Every normative rule has one owner file, listed in `CLAUDE.md`.
 
@@ -169,6 +168,14 @@ Everything a human edits is markdown. Every normative rule has one owner file, l
 ```
 /plugin marketplace add limelights-amsterdam/simply-strategy
 /plugin install simply-strategy
+```
+
+Installed as a plugin, Claude Code namespaces the skill: type `/simply-strategy:simply-strategy`.
+
+From a clone, one symlink instead, and it answers to `/simply-strategy` on its own:
+
+```
+ln -s "$PWD/skills/simply-strategy" ~/.claude/skills/simply-strategy
 ```
 
 Python 3 for the scripts. Nothing else, and nothing is fetched at run time.

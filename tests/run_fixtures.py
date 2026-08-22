@@ -20,8 +20,9 @@ import subprocess
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-CHECKER = ROOT / "scripts" / "check_artifact.py"
-HEADINGS = ROOT / "scripts" / "check_headings.py"
+SCRIPTS = ROOT / "skills" / "simply-strategy" / "scripts"
+CHECKER = SCRIPTS / "check_artifact.py"
+HEADINGS = SCRIPTS / "check_headings.py"
 
 # fixture -> (exit code, {check id: expected state})
 # Ids are the stable handles check_artifact.Result.add sets; display names may
