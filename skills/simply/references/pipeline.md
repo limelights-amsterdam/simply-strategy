@@ -138,7 +138,7 @@ Verify with `python3 {root}/scripts/check_headings.py` on the rendered page in s
 Read `skills/flatten/references/before-after.md` and `references/output.md` first. The second one
 carries the rule that makes the budget reachable: **write the finding, not the chain that supports
 it.** One figure and one line per must-solve; the quotes, the arithmetic and the demoted findings
-stay where they already are, in `02-angles.md` and `03-plan.md`, and step 7 surfaces them in the log.
+stay where they already are, in `02-angles.md` and `03-plan.md`, and step 6 surfaces them in the log.
 
 You are not cutting evidence. You are declining to copy it forward.
 
