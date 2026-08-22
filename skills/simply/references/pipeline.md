@@ -160,7 +160,7 @@ pointer in it. Losing content is the failure mode of this whole step.
 This step used to be three reviewers and a coordinator. Two of those reviewers were doing work a
 script does better, and the measurement is not close.
 
-On the run that produced `runs/client-plan/`, the reviewer whose whole job was to catch invented
+On one client run, the reviewer whose whole job was to catch invented
 figures reported "two fatal, nine minor, no invented owner anywhere in the file". Running
 `check_facts.py` over the same file found **nine figures that appear nowhere in the material**. An
 agent asked to be thorough about numbers was beaten by eighty lines of Python, which is what should
