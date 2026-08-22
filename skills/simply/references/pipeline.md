@@ -69,6 +69,33 @@ Then bundle. Forced ranking:
 Then the four supporting sections, defined in `skills/simplify/references/output.md`: what we stop
 doing, what has to be true, what the documents disagree about, what we do not know.
 
+### Then write the argument, which is the part that was missing
+
+Everything above this line sorts. The panel finds, you rank, the flattener shortens, the reviewers
+check faithfulness. None of that produces an argument, and a page assembled from sorted parts reads
+like a list however good the parts are.
+
+So you owe two more things, and they are the reason this step exists rather than a sort script.
+
+**The governing thought.** One sentence that the whole page is evidence for. Not a summary of the
+findings: the thing that is true because of them. Test it by removing any one must-solve. If the
+sentence survives untouched, it is a summary. If it weakens, it is an argument.
+
+**The order the findings have to come in.** Write the through-line as a numbered list of claims, one
+per section, in the order a reader must meet them. Each one advances from the last. Read the list on
+its own with nothing else: if it makes the case without the body, the page will too.
+
+Write both at the top of `03-plan.md`, under `## The argument`. The flattener turns that list into
+the page's headings, so this is where the story is decided.
+
+Two rules, because this is the step where invention is easiest:
+
+- **Every claim in the through-line rests on a finding an angle made.** Name which one. A line with
+  no finding under it is a line you wrote because it sounded like the next beat.
+- **A heading may not count the page.** "Nine pairs cannot both be true" describes the document.
+  "Where the deck disagrees with itself, it is about money" describes the material. The second is
+  checkable against the source; the first is only checkable against itself.
+
 **Fails when** it keeps four or five must-solves "because they are all important". If that happens,
 the ranking was never made and the run has produced a longer document rather than a decision.
 
@@ -80,6 +107,10 @@ the ranking was never made and the run has produced a longer document rather tha
 **Writes:** `04-plain.md`
 
 Load `skills/simplify/SKILL.md`. Produce the six sections at flatten level L1.
+
+**The headings come from `## The argument` in `03-plan.md`, not from the section names.** One claim
+per section, in that order. A reader who scans the headings and nothing else should get the case.
+Verify with `python3 {root}/scripts/check_headings.py` on the rendered page in step 7.
 
 Read `skills/simplify/references/before-after.md` and `references/output.md` first. The second one
 carries the rule that makes the budget reachable: **write the finding, not the chain that supports

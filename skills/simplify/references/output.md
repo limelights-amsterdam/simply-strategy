@@ -52,6 +52,26 @@ The test is not "did it fit". It is: **can a claim on the page be traced?** If a
 line on the page has no matching entry in the log, it was cut rather than moved,
 and that is the failure this rule exists to prevent.
 
+## The headings carry the argument
+
+The six sections have fixed content. Their **headings do not**: each one states the claim that
+section proves, taken from `## The argument` in `03-plan.md`.
+
+A heading that names the section is a label, and a page of labels is a table of contents:
+
+| Label, what not to write | Claim, what to write |
+|---|---|
+| Three things must be solved | Not one of the three has a number you can act on |
+| Nine pairs cannot both be true | Where the deck disagrees with itself, it is about money |
+| Eight unknowns stop a decision | Four questions have to be answered before anyone decides |
+
+The left column counts the page. The right column says something about the material, which is the
+only kind of sentence a reader can disagree with.
+
+`scripts/check_headings.py` enforces two of the three properties: a heading may not count the page,
+and a number or a name in a heading must appear in the section beneath it. Whether the sequence is
+any good is judgement, and it belongs to the reviewers rather than to a script.
+
 ## The length budget
 
 Correct is not the same as short enough. The first real run produced a page that passed every
