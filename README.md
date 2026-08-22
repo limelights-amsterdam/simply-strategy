@@ -16,19 +16,44 @@ where it is unsure.
 ## Why this exists
 
 There is a plugin called `eli5` whose entire instruction is one sentence: explain this to someone who
-knows nothing, using big pictures and few words. It works, and it works because DNS is already true.
+knows nothing, using big pictures and few words. Its own example is `/eli5 how does DNS work`.
 
-A strategy document is usually not. It is vague on purpose, because vagueness is how a document gets
-signed by six people who disagree. Run `eli5` over it and you get a beautifully simple lie: short
-sentences, big type, confident tone, and underneath it the same unmade decision.
+That example is why it works, and it is worth being precise about why.
 
-So this is `eli5` with the check that has to happen first. Four angles read the material before
-anything is simplified. Three reviewers check that the simplification stayed true. Every number on
-the page traces back to a document and a page, and a number it cannot trace comes out as
-`[TO FILL: what is needed]` rather than as a guess.
+**DNS has a ground truth.** It does one thing, in one way, and that way does not depend on who is
+asking or who signed off on it. When you simplify it, the worst that happens is that you get it
+wrong, and someone who knows DNS can point at the sentence and say no, that is not what happens. The
+simplification is safe because there is something underneath it to be checked against.
 
-It is not a summariser. A summary makes a document shorter. This makes it understandable, which is a
-different job and usually a harder one. Sections often get longer where the original skipped a step.
+**A strategy document usually has no ground truth.** It is not a description of how something works.
+It is a set of claims about what an organisation intends to do, and a good number of those claims
+were left unresolved on purpose, because vagueness is how a document gets signed by six people who
+disagree. "We will strengthen our position in the market" is not a fact that has been badly
+explained. It is a sentence that was written so that the person who wants to buy a competitor and the
+person who wants to cut costs can both nod at it.
+
+Now flatten that sentence. You get something like *we are going to win more customers.* Short, active,
+concrete, and a ten-year-old follows it. It is also a decision that nobody made. Simplifying did not
+reveal the meaning, because there was no meaning to reveal. It manufactured one, and put it on a page
+in confident type where it will get quoted back in a meeting.
+
+That is the failure this exists to prevent. Not a bad summary. A **beautifully simple lie**: short
+sentences, big type, a decisive tone, and underneath it the same unmade decision, now harder to spot
+because it reads so well.
+
+So this is `eli5` with the check that has to happen first. Four angles read the material and test
+whether there is a decision in it at all, before anything is simplified. Three reviewers then check
+that the simplification stayed true to what the angles found. Every number on the page traces back to
+a document and a page, and a number it cannot trace comes out as `[TO FILL: what is needed]` rather
+than as a guess.
+
+When the material genuinely contains no decision, the page says so. That is not the run failing.
+That is the most useful thing it can tell you, and it is the one answer a summariser can never give,
+because a summary of an empty document is a shorter empty document.
+
+It is also not a summariser in the ordinary sense. A summary makes a document shorter. This makes it
+understandable, which is a different job and usually a harder one. Sections often get longer where
+the original skipped a step.
 
 ## Who it is for, and the bar it is held to
 
