@@ -14,7 +14,9 @@ A picture book, not a poster. One page you read top to bottom, picture over word
   have not said. Nothing else; the sources under each section and the footer say
   where it all comes from.
 - Then the sections, numbered. Each one has the same five parts, in this order:
-  1. Kicker: the number and the value question, in plain words. "3. Why can you copy our services easily? "
+  1. Kicker: the number and the question a newcomer would ask, in plain words. "3. Why now?",
+     "5. How do they want to get there?" The kicker is the same kind of question for every
+     document; it is the table of contents. What this document answers goes in the headline.
   2. Headline: the answer as one claim, in one sentence. "Three things go wrong because our HR system fails."
      One sentence is the rule because a headline that needs a second one is carrying two claims,
      and a reader who skims only the headlines then has to choose which one to remember. If the
