@@ -27,4 +27,6 @@ The page is [assets/page.html](assets/page.html). Copy that file to the output p
 
 Write the artifact beside the material as `[datetime]_simply-strategy.html`.
 
+Each section has a kicker and a headline, and they do different jobs. The kicker is the question a newcomer asks, the same kind for every document: "Who is this about?", "Why now?", "How do they want to get there?" Read in a row, the kickers are the table of contents. The headline is this document's answer in one sentence. Read in a row, the headlines are the story.
+
 Before you hand it over, read the headlines back on their own: `grep -o '<h[12]>[^<]*</h[12]>' <file>`. Each one is a single sentence, and read top to bottom they tell the whole story. A headline with two sentences is two claims; move the second under the picture or give it its own section. This check is cheap and the slip is common, so do it every time.
