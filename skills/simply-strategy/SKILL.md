@@ -25,7 +25,7 @@ Four short files under `references/` say how. Read them before you write:
 
 The page is [assets/page.html](assets/page.html). Copy that file to the output path and fill it in. Keep the `<style>` block as it is; only the colour values may change. Keep the header, the section shape, the class names and the footer. Replace everything in square brackets, draw the pictures as inline SVG, add or drop sections to follow the material. Do not design a new page and do not write new CSS.
 
-Write the artifact beside the material as `[datetime]_simply-strategy.html`.
+Write the artifact beside the material as `YYYYMMDD_subject-name_simply-strategy.html`, for example `20260823_nvz-strategische-visie-2030_simply-strategy.html`. The date is the day you write it, as eight digits, so files sort by date in any folder listing. The subject is a short kebab-case name for the material, so a person can tell the files apart without opening them. When the material is a URL, there is no local folder to sit beside; make one for the material, save the source file in it, and write the page there.
 
 Each section has a kicker and a headline, and they do different jobs. The kicker is the question a newcomer asks, the same kind for every document: "Who is this about?", "Why now?", "How do they want to get there?" Read in a row, the kickers are the table of contents. The headline is this document's answer in one sentence. Read in a row, the headlines are the story.
 

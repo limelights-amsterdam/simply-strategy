@@ -30,8 +30,11 @@ phrase gets the same pointer. A claim without a pointer does not go on the page.
 
 ## Where the page goes
 
-Next to the material, as `simply-strategy.html`. If the material is a folder, write it in that
-folder. If it is a set of images, write it in the folder the images are in, so `<img
+Next to the material, as `YYYYMMDD_subject-name_simply-strategy.html`: today's date as eight
+digits, then a short kebab-case name for the material, then the suffix. `20260823_soob-visie-2030_simply-strategy.html`
+sorts by date and says what it is without being opened. If the material is a folder, write it in that
+folder. If the material is a URL, make a folder for it, save the source file there, and write the page
+beside it. If it is a set of images, write it in the folder the images are in, so `<img
 src="slide-6.png">` resolves. Use relative paths. Never an absolute path, never a remote image.
 
 ## When two files disagree
