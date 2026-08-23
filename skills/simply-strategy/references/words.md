@@ -30,7 +30,8 @@ has to earn that.
 - Office verbs: leverage, drive, enable, align, unlock, navigate, double down.
 - Announcements: "here's the thing", "let that sink in", "this matters because".
 - A closing paragraph of optimism. The page ends on the gaps and the sources.
-- Title case in headings. Emoji. Exclamation marks.
+- Title case in headings. A headline of more than one sentence (a second sentence is a second claim:
+  push it under the picture or give it its own section). Emoji. Exclamation marks.
 - Confidence the material did not have. "We think" stays "we think". "Indicative" stays on the page,
   next to the figure it qualifies.
 

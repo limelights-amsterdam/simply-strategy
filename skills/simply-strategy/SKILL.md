@@ -10,7 +10,7 @@ pictures and few words.
 
 Material: $ARGUMENTS
 
-Three things a strategy needs that a topic does not:
+Three things a strategy needs:
 
 - Say only what the material says. If it contains no decision, the page says so. Do not invent one.
 - Never invent a number, owner or date. If the material does not give one, the page says so in plain words.
@@ -23,10 +23,8 @@ Four short files under `references/` say how. Read them before you write:
 - [words.md](references/words.md): how the page sounds.
 - [page.md](references/page.md): what the page looks like, section by section.
 
-The page is [assets/page.html](assets/page.html). Copy that file to the output path and fill it
-in. Keep the `<style>` block as it is; only the colour values may change. Keep the header, the
-section shape, the class names and the footer. Replace everything in square brackets, draw the
-pictures as inline SVG, add or drop sections to follow the material. Do not design a new page and
-do not write new CSS.
+The page is [assets/page.html](assets/page.html). Copy that file to the output path and fill it in. Keep the `<style>` block as it is; only the colour values may change. Keep the header, the section shape, the class names and the footer. Replace everything in square brackets, draw the pictures as inline SVG, add or drop sections to follow the material. Do not design a new page and do not write new CSS.
 
-Write the artifact beside the material as `simply-strategy.html`.
+Write the artifact beside the material as `[datetime]_simply-strategy.html`.
+
+Before you hand it over, read the headlines back on their own: `grep -o '<h[12]>[^<]*</h[12]>' <file>`. Each one is a single sentence, and read top to bottom they tell the whole story. A headline with two sentences is two claims; move the second under the picture or give it its own section. This check is cheap and the slip is common, so do it every time.

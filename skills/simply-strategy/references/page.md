@@ -2,9 +2,7 @@
 
 The skeleton is `assets/page.html`. Start from it. This file says what goes in it and why.
 
-A picture book, not a poster. One page you read top to bottom, picture over words. Numbered
-sections. Each section asks one plain question, answers it in one claim, draws it, says two
-sentences, and names the page it came from. Someone who knows nothing reads it in a few minutes and can retell it.
+A picture book, not a poster. One page you read top to bottom, picture over words. Numbered sections. Each section asks one plain question, answers it in one claim, draws it, says two sentences, and names the page it came from. Someone who knows nothing reads it in a few minutes and can retell it.
 
 ## The shape
 
@@ -16,13 +14,19 @@ sentences, and names the page it came from. Someone who knows nothing reads it i
   have not said. Nothing else; the sources under each section and the footer say
   where it all comes from.
 - Then the sections, numbered. Each one has the same five parts, in this order:
-  1. Kicker: the number and the question, in plain words. "3. The problem they name"
-  2. Headline: the answer as one claim. "The allowance system is hard. Three things go wrong."
+  1. Kicker: the number and the value question, in plain words. "3. Why can you copy our services easily? "
+  2. Headline: the answer as one claim, in one sentence. "Three things go wrong because our HR system fails."
+     One sentence is the rule because a headline that needs a second one is carrying two claims,
+     and a reader who skims only the headlines then has to choose which one to remember. If the
+     second sentence is a qualification, it belongs in the words under the picture. If it is a
+     second claim, it is a second section.
   3. Picture: an inline SVG drawn for this idea (see below).
   4. One or two sentences that say what the document says, in plain words.
   5. Source line: "Source: p. 5", and the document's own sentence in its own language when it
      carries the point. "De visie is een kompas en geen routekaart."
-- The last section is always "What is decided, and what is not": two lists. Filled dots for what
+- Read only the headlines, top to bottom, and you have the whole story: together they are the
+  strategy narrative. Write them so that works.
+- The last section is always "What is decided and what is not": two lists. Filled dots for what
   the document says, each with its page. Dashed circles for what it does not say, each as a plain
   sentence: "what each building block costs", "who owns each building block". Under the lists, one
   sentence that places the document (see decision.md).
@@ -39,12 +43,14 @@ order they would ask them. Usually some of these, rarely all:
 | Who is this about | One service, six million households, twenty-two billion euro a year |
 | What kind of plan is this | A compass, not a route map |
 | The problem they name | Three things go wrong |
-| Where they want to go | One front door. You get what you are owed |
-| How they want to get there | Four building blocks. Two for citizens, two for the organisation |
-| What stops, what starts | Legacy platforms go. One foundation replaces them |
-| What it costs, in people and money | Thirty percent fewer people, money moves from people to software |
+| Where they want to go | One front door, where you get what you are owed |
+| How they want to get there | Four building blocks, two for citizens and two for the organisation |
+| What stops, what starts | Legacy platforms go and one foundation replaces them |
+| What it costs, in people and money | Thirty percent fewer people, and money moves from people to software |
 | The clearest promise in the plan | Risk moves from the citizen to the government |
-| What is decided, and what is not | Directions are chosen. Numbers, owners and dates are not in the document |
+| What is decided, and what is not | Directions are chosen, without numbers, owners or dates |
+
+Every headline in that table is one sentence. Keep it that way in yours.
 
 Drop a question the document does not answer. Do not add one it does not raise. If a deck has
 eight slides on the market and one on the choice, the page still spends most of its room on the

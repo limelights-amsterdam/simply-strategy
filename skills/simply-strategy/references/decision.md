@@ -4,13 +4,9 @@ The first guard says: if the material contains no decision, the page says so. Th
 
 ## The one test that matters
 
-A decision has a sacrifice. Search the material for words like stop, phase out, no longer, wind
-down, decline, move away from. They have to sit next to an activity, a product, a market or a
-customer. One real one is enough. "We focus more sharply" and "we say no to what does not fit" name
-nothing, so they do not count.
+A decision has a sacrifice. Search the material for words like stop, phase out, no longer, wind down, decline, move away from. They have to sit next to an activity, a product, a market or a customer. One real one is enough. "We focus more sharply" and "we say no to what does not fit" name nothing, so they do not count.
 
-Then look for what the material picks up in its place. Stop plus start is a shift, and a shift is a
-row in the From → To ledger.
+Then look for what the material picks up in its place. Stop plus start is a shift, and a shift is a row in the From → To ledger.
 
 ## Four more, when the first passes
 
@@ -23,8 +19,7 @@ row in the From → To ledger.
 
 ## Placing the material
 
-End the gaps screen with one sentence that says what kind of document this is. Use the ladder. Be
-honest about the rung:
+End the gaps screen with one sentence that says what kind of document this is. Use the ladder. Be honest about the rung:
 
 | It is a | When | The sentence says |
 |---|---|---|
@@ -34,9 +29,7 @@ honest about the rung:
 | Direction | A sacrifice or a number, but not both | The material points somewhere. It does not yet choose or commit |
 | Wish | No sacrifice, no number, no owner | The material contains no decision. It describes a hope |
 
-When the material is a wish, the page still shows the hero, the case if there is one, and the gaps.
-Leave out the ledger and the numbers, and let the gaps screen say why. That page is short. Short is
-the correct result here.
+When the material is a wish, the page still shows the hero, the case if there is one, and the gaps. Leave out the ledger and the numbers, and let the gaps screen say why. That page is short. Short is the correct result here.
 
 ## What is not yours to do
 
